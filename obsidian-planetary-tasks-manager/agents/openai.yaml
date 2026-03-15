@@ -1,0 +1,4 @@
+interface:
+  display_name: "Obsidian Planetary Tasks Manager"
+  short_description: "Normalize planetary tasks and task bases"
+  default_prompt: "Use $obsidian-planetary-tasks-manager to validate, migrate, and maintain planetary task notes and related Bases."

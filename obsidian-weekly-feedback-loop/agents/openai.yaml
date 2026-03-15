@@ -1,0 +1,4 @@
+interface:
+  display_name: "Obsidian Weekly Feedback Loop"
+  short_description: "Check weekly synthesis quality and planning closure"
+  default_prompt: "Use $obsidian-weekly-feedback-loop to evaluate this week note for closure signals and thread alignment."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Obsidian Interweave Engine"
+  short_description: "Audit and enrich links without diluting source notes"
+  default_prompt: "Use $obsidian-interweave-engine to audit link density and frontmatter memory fields for this note."
