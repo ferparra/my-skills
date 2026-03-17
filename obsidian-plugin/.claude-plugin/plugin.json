@@ -1,0 +1,20 @@
+{
+  "name": "obsidian-plugin",
+  "version": "0.1.0",
+  "description": "Personal Obsidian vault management — CLI, zettel, brokerage, tasks, exercises, portfolio, and more.",
+  "skills": [
+    "../obsidian-agent-memory-capture",
+    "../obsidian-brokerage-activity-manager",
+    "../obsidian-cli",
+    "../obsidian-exercise-kind-manager",
+    "../obsidian-interweave-engine",
+    "../obsidian-key-dates-base-manager",
+    "../obsidian-notebooklm-bases-manager",
+    "../obsidian-personal-os-router",
+    "../obsidian-planetary-tasks-manager",
+    "../obsidian-portfolio-holdings-manager",
+    "../obsidian-token-budget-guard",
+    "../obsidian-weekly-feedback-loop",
+    "../obsidian-zettel-manager"
+  ]
+}

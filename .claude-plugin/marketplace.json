@@ -1,0 +1,16 @@
+{
+  "name": "my-skills-marketplace",
+  "description": "Private Claude skill marketplace — personal productivity, Obsidian vault management, and data tooling.",
+  "plugins": [
+    {
+      "name": "obsidian-plugin",
+      "path": "obsidian-plugin",
+      "description": "Full suite of Obsidian vault management skills."
+    },
+    {
+      "name": "productivity-plugin",
+      "path": "productivity-plugin",
+      "description": "Jira sprint sync and knowledge-base search skills."
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "name": "productivity-plugin",
+  "version": "0.1.0",
+  "description": "Jira sprint sync and QMD knowledge-base search.",
+  "skills": [
+    "../jira-sprint-sync",
+    "../qmd"
+  ]
+}
