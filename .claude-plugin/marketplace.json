@@ -1,16 +1,30 @@
 {
   "name": "my-skills-marketplace",
-  "description": "Private Claude skill marketplace — personal productivity, Obsidian vault management, and data tooling.",
+  "owner": {
+    "name": "ferparra"
+  },
+  "metadata": {
+    "description": "Personal Claude skill marketplace — Obsidian vault management, Jira, and productivity tooling.",
+    "version": "1.0.0"
+  },
   "plugins": [
     {
       "name": "obsidian-plugin",
-      "path": "obsidian-plugin",
-      "description": "Full suite of Obsidian vault management skills."
+      "source": "./obsidian-plugin",
+      "description": "Full suite of Obsidian vault management skills.",
+      "version": "0.1.0",
+      "author": {
+        "name": "ferparra"
+      }
     },
     {
       "name": "productivity-plugin",
-      "path": "productivity-plugin",
-      "description": "Jira sprint sync and knowledge-base search skills."
+      "source": "./productivity-plugin",
+      "description": "Jira sprint sync and knowledge-base search skills.",
+      "version": "0.1.0",
+      "author": {
+        "name": "ferparra"
+      }
     }
   ]
 }
