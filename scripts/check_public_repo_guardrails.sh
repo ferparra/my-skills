@@ -9,7 +9,8 @@ if ! git rev-parse --verify "${BASE_REF}" >/dev/null 2>&1; then
   exit 2
 fi
 
-diff_lines="$(git diff --no-color --unified=0 "${BASE_REF}...HEAD" -- .)"
+# Exclude the scanner itself so the denylist can evolve without self-matching.
+diff_lines="$(git diff --no-color --unified=0 "${BASE_REF}...HEAD" -- . ':(exclude)scripts/check_public_repo_guardrails.sh')"
 added_lines="$(printf '%s\n' "${diff_lines}" | grep '^+' | grep -v '^+++' || true)"
 
 if [ -z "${added_lines}" ]; then
