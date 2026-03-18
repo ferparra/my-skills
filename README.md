@@ -14,6 +14,24 @@ Repository URL: [https://github.com/ferparra/my-skills](https://github.com/ferpa
 
 Clone this repository to `~/my-skills` on every local machine. Use the same path across installations so agent tooling can rely on one stable local location.
 
+## Install for Codex
+
+Install the repo's marketplace skills into Codex user-level skills with:
+
+```bash
+python3 scripts/install_codex_user_skills.py
+```
+
+The installer reads `.claude-plugin/marketplace.json`, walks each plugin's `.claude-plugin/plugin.json`, and installs every discovered `skills/<skill-name>/` directory into `$CODEX_HOME/skills` or `~/.codex/skills`.
+
+- Default mode is `symlink`, so the checkout remains the canonical source of truth.
+- Existing user-level skills with the same name are moved into `~/.codex/skill-backups/<timestamp>/` before replacement.
+- Pass skill names to install only a subset, for example `python3 scripts/install_codex_user_skills.py qmd jira-sprint-sync`.
+- Use `--mode copy` if you want detached copies instead of symlinks.
+- Restart Codex after installing so it reloads the user-level skill catalog.
+
+The installer does not modify the marketplace layout or the packaged `.skill` artifacts, so the same repo structure remains usable for Anthropic Claude plugin distribution.
+
 ## Repository contract
 
 - One top-level directory per skill.
