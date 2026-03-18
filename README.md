@@ -1,6 +1,6 @@
 # my-skills
 
-`my-skills` is the public, canonical repository for Fernando's reusable AI skills across Codex, Claude, Cursor, and related agent workflows.
+`my-skills` is the public, canonical repository for reusable AI skills across Codex, Claude, Cursor, and related agent workflows.
 
 Repository URL: [https://github.com/ferparra/my-skills](https://github.com/ferparra/my-skills)
 
@@ -21,6 +21,8 @@ Clone this repository to `~/my-skills` on every local machine. Use the same path
 - Supporting material lives beside the skill in optional `scripts/`, `references/`, and `assets/` directories.
 - Keep the matching `<skill>.skill` artifact in sync when the source skill changes.
 - Keep instructions portable and public-safe. Avoid machine-local absolute paths in reusable skill content.
+- Treat every contribution as public by default. Review changed lines for unintended PII, secrets, email addresses, or machine-local filesystem paths before opening a PR.
+- Use the pull request template and leave a PR comment summarizing validation plus the public-safety review.
 
 ## Relationship to vault-local skills
 
