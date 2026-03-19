@@ -49,7 +49,7 @@ qmd mcp stop                # Stop daemon
 
 ## Tools
 
-### structured_search
+### query
 
 Search with pre-expanded queries.
 
@@ -61,10 +61,16 @@ Search with pre-expanded queries.
     { "type": "hyde", "query": "hypothetical answer passage..." }
   ],
   "limit": 10,
-  "collection": "optional",
+  "collections": ["optional"],
   "minScore": 0.0
 }
 ```
+
+Important:
+
+- `searches` must be an array, not a JSON-encoded string.
+- Search alone is not enough for note questions. Follow `query` with `get` or `multi_get` and answer from the retrieved note content.
+- If `query` cannot initialize the local LLM backend, fall back to CLI `qmd search` or `obsidian search`, then read the hit directly.
 
 | Type | Method | Input |
 |------|--------|-------|
@@ -95,8 +101,15 @@ Retrieve multiple documents.
 
 Index health and collections. No params.
 
+### Recommended note-search sequence
+
+1. `query` to rank likely matches.
+2. `get` for the top hit, or `multi_get` if you need to compare a few candidates.
+3. Answer only after reading the relevant note content.
+
 ## Troubleshooting
 
 - **Not starting**: `which qmd`, `qmd mcp` manually
 - **No results**: `qmd collection list`, `qmd embed`
+- **`query` model init failure**: use `qmd search "keywords"` as the fallback retrieval path, then `qmd get` or `obsidian read`
 - **Slow first search**: Normal, models loading (~3GB)

@@ -17,6 +17,15 @@ Local search engine for markdown content.
 
 !`qmd status 2>/dev/null || echo "Not installed: npm install -g @tobilu/qmd"`
 
+## Vault Search Workflow
+
+1. Route the search to the narrowest relevant collection first. Use the collection table below; fall back to `all` only when intent is broad or unclear.
+2. When using the MCP `query` tool, pass `searches` as a real array of objects. Never wrap the array in a JSON-encoded string.
+3. Treat search results as candidate selection, not the final answer. Open the best hit with `get`, `multi_get`, or `obsidian read`, then answer from the note content.
+4. If the top hit is ambiguous, read the top 2-3 results before answering.
+5. If `qmd query` fails to initialize local models, use `qmd search` for keyword recall and then open the hit directly.
+6. If QMD ranking is weak, results look stale, or you need vault-native follow-up, fall back to `obsidian search` plus `obsidian read`.
+
 ## MCP: `query`
 
 ```json
@@ -29,6 +38,8 @@ Local search engine for markdown content.
   "limit": 10
 }
 ```
+
+Use this exact shape when calling the MCP tool. If you are unsure about the live schema, inspect the tool signature first and then issue the query.
 
 ### Query Types
 
@@ -112,6 +123,8 @@ Omit to search all collections.
 | `multi_get` | Retrieve multiple by glob/list |
 | `status` | Collections and health |
 
+For note lookup tasks, the expected sequence is usually `query` -> `get` (or `multi_get`) -> answer.
+
 ## CLI
 
 ```bash
@@ -121,8 +134,30 @@ vec: Y"                            # Structured
 qmd query $'expand: question'     # Explicit expand
 qmd search "keywords"             # BM25 only (no LLM)
 qmd get "#abc123"                 # By docid
+qmd get "qmd://inbox/00 Inbox/empanadas.md" -l 80
 qmd multi-get "journals/2026-*.md" -l 40  # Batch pull snippets by glob
 qmd multi-get notes/foo.md,notes/bar.md   # Comma-separated list, preserves order
+```
+
+For vault questions, prefer a two-step pattern:
+
+```bash
+qmd query "empanadas recipe" -c inbox -n 5
+qmd get "qmd://inbox/00 Inbox/empanadas.md" -l 120
+```
+
+If you need a vault-native fallback or exact-path read after ranking:
+
+```bash
+obsidian search query="empanadas" limit=5
+obsidian read path="00 Inbox/empanadas.md"
+```
+
+If the local QMD model backend is unavailable, use the zero-LLM fallback:
+
+```bash
+qmd search "empanadas" -c inbox -n 5
+qmd get "qmd://inbox/00-inbox/empanadas.md" -l 120
 ```
 
 ## HTTP API
