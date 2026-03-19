@@ -34,7 +34,7 @@ The installer does not modify the marketplace layout or the packaged `.skill` ar
 
 ## Release notes
 
-Current marketplace release: `0.2.0`
+Current marketplace release: `0.2.1`
 
 Release history lives in [CHANGELOG.md](CHANGELOG.md).
 

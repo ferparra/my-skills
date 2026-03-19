@@ -2,6 +2,18 @@
 
 All notable marketplace and repository-tooling changes are recorded here.
 
+## 0.2.1 - 2026-03-19
+
+### Changed
+
+- Bumped the Claude marketplace and both plugin manifests to `0.2.1` so upstream agents can pick up the QMD and Obsidian vault-search guidance update.
+- Updated the `qmd` and `obsidian-cli` skills to require a search-then-read workflow instead of stopping at result lists.
+- Added an explicit fallback path for QMD note lookup when local model initialization fails, using `qmd search` and `obsidian search` plus direct note reads.
+
+### Documentation
+
+- Corrected the QMD MCP query reference to use the live `searches` array shape and documented the required note-read follow-up sequence.
+
 ## 0.2.0 - 2026-03-19
 
 ### Added
