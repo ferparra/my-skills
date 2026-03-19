@@ -99,7 +99,7 @@ def infer_thread_from_periodic_notes(root: Path, jira_key: str) -> str | None:
         text = weekly_note.read_text(encoding="utf-8", errors="replace")
         for thread, key in THREAD_ROW_RE.findall(text):
             if key == jira_key:
-                return thread
+                return str(thread)
     return None
 
 

@@ -7,7 +7,7 @@ import re
 import shutil
 import sys
 from pathlib import Path
-from typing import Dict, List
+from typing import TypeAlias, TypedDict
 
 from pydantic import BaseModel, Field
 
@@ -17,10 +17,44 @@ class ClosureSignalArtifacts(BaseModel):
     schema_present: bool = False
     total_in_year: int = 0
     linked_to_week: int = 0
-    examples: List[str] = Field(default_factory=list)
+    examples: list[str] = Field(default_factory=list)
 
 
-def dependency_error(missing: List[str]) -> int:
+FrontmatterValue: TypeAlias = str | list[str]
+
+
+class ClosureSignals(TypedDict):
+    completion_count: bool
+    blocker_observed: bool
+    first_maneuver_tomorrow: bool
+
+
+class HorizonPresence(TypedDict):
+    week: bool
+    month: bool
+    quarter: bool
+    twelve_week: bool
+
+
+class ClosureArtifactSummary(TypedDict):
+    available: bool
+    schema_present: bool
+    total_in_year: int
+    linked_to_week: int
+    examples: list[str]
+
+
+class WeeklyAnalysis(TypedDict):
+    passed: bool
+    closure_signals: ClosureSignals
+    closure_signal_artifacts: ClosureArtifactSummary
+    horizon_presence: HorizonPresence
+    priority_thread_mentions: int
+    maneuver_mentions: int
+    missing_signals: list[str]
+
+
+def dependency_error(missing: list[str]) -> int:
     payload = {
         "ok": False,
         "error": "missing_dependencies",
@@ -48,7 +82,7 @@ def locate_week_file(vault_root: Path, week: str) -> Path:
     return direct
 
 
-def split_frontmatter(text: str) -> Dict[str, object]:
+def split_frontmatter(text: str) -> dict[str, FrontmatterValue]:
     if not text.startswith("---\n"):
         return {}
 
@@ -56,8 +90,8 @@ def split_frontmatter(text: str) -> Dict[str, object]:
     if len(parts) != 2:
         return {}
 
-    frontmatter: Dict[str, object] = {}
-    current_key = None
+    frontmatter: dict[str, FrontmatterValue] = {}
+    current_key: str | None = None
     for line in parts[0].splitlines()[1:]:
         if re.match(r"^[A-Za-z0-9_-]+:\s*", line):
             key, value = line.split(":", 1)
@@ -72,7 +106,9 @@ def split_frontmatter(text: str) -> Dict[str, object]:
             continue
 
         if current_key and line.startswith("  - "):
-            frontmatter[current_key].append(line.strip()[2:].strip().strip('"'))
+            current_value = frontmatter.get(current_key)
+            if isinstance(current_value, list):
+                current_value.append(line.strip()[2:].strip().strip('"'))
 
     return frontmatter
 
@@ -106,17 +142,17 @@ def collect_closure_signal_tasks(vault_root: Path, week: str, week_content: str)
     )
 
 
-def analyze(content: str, closure_signal_artifacts: ClosureSignalArtifacts) -> Dict[str, object]:
+def analyze(content: str, closure_signal_artifacts: ClosureSignalArtifacts) -> WeeklyAnalysis:
     lower = content.lower()
 
-    closure = {
+    closure: ClosureSignals = {
         "completion_count": bool(re.search(r"completion count|completed\s+\d+", lower)),
         "blocker_observed": "blocker" in lower,
         "first_maneuver_tomorrow": bool(re.search(r"tomorrow.*maneuver|maneuver.*tomorrow", lower)),
     }
 
-    horizon = {
-        "12_week": "12-week" in lower or "12 week" in lower,
+    horizon: HorizonPresence = {
+        "twelve_week": "12-week" in lower or "12 week" in lower,
         "quarter": "quarter" in lower,
         "month": "month" in lower,
         "week": "week" in lower,
@@ -130,10 +166,18 @@ def analyze(content: str, closure_signal_artifacts: ClosureSignalArtifacts) -> D
         missing.append("closure_signal_task_artifacts")
     pass_check = len(missing) == 0 and priority_threads >= 2
 
+    artifact_summary: ClosureArtifactSummary = {
+        "available": closure_signal_artifacts.available,
+        "schema_present": closure_signal_artifacts.schema_present,
+        "total_in_year": closure_signal_artifacts.total_in_year,
+        "linked_to_week": closure_signal_artifacts.linked_to_week,
+        "examples": list(closure_signal_artifacts.examples),
+    }
+
     return {
-        "pass": pass_check,
+        "passed": pass_check,
         "closure_signals": closure,
-        "closure_signal_artifacts": closure_signal_artifacts.model_dump(),
+        "closure_signal_artifacts": artifact_summary,
         "horizon_presence": horizon,
         "priority_thread_mentions": priority_threads,
         "maneuver_mentions": maneuver_mentions,
@@ -141,7 +185,7 @@ def analyze(content: str, closure_signal_artifacts: ClosureSignalArtifacts) -> D
     }
 
 
-def markdown_report(week: str, path: Path, analysis: Dict[str, object]) -> str:
+def markdown_report(week: str, path: Path, analysis: WeeklyAnalysis) -> str:
     closure = analysis["closure_signals"]
     closure_artifacts = analysis["closure_signal_artifacts"]
     horizon = analysis["horizon_presence"]
@@ -151,7 +195,7 @@ def markdown_report(week: str, path: Path, analysis: Dict[str, object]) -> str:
         f"Source: `{path}`",
         "",
         "## Compliance",
-        f"- Pass: **{analysis['pass']}**",
+        f"- Pass: **{analysis['passed']}**",
         f"- Priority thread mentions: **{analysis['priority_thread_mentions']}** (target >= 2)",
         f"- Maneuver mentions: **{analysis['maneuver_mentions']}**",
         "",
@@ -167,7 +211,7 @@ def markdown_report(week: str, path: Path, analysis: Dict[str, object]) -> str:
         f"- Closure tasks explicitly linked to week: **{closure_artifacts['linked_to_week']}**",
         "",
         "## Horizon Presence",
-        f"- 12-week: **{horizon['12_week']}**",
+        f"- 12-week: **{horizon['twelve_week']}**",
         f"- Quarter: **{horizon['quarter']}**",
         f"- Month: **{horizon['month']}**",
         f"- Week: **{horizon['week']}**",
@@ -235,7 +279,7 @@ def main() -> int:
             "compliance": analysis,
         }
         print(json.dumps(payload, indent=2))
-        return 0 if analysis["pass"] else 1
+        return 0 if analysis["passed"] else 1
 
     print(markdown_report(args.week, week_file, analysis))
     return 0

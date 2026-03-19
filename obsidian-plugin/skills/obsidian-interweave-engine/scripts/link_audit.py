@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+from __future__ import annotations
+
 import argparse
 import json
 import re
@@ -6,7 +8,7 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import TypeAlias
 
 WIKILINK_RE = re.compile(r"\[\[([^\]|#]+)(?:#[^\]|]+)?(?:\|[^\]]+)?\]\]")
 STATUS_RE = re.compile(r"#status/[a-z0-9-]+")
@@ -14,9 +16,10 @@ STATUS_RE = re.compile(r"#status/[a-z0-9-]+")
 
 CONCEPT_PREFIXES = ("10 Notes/",)
 CONTEXT_PREFIXES = ("00 Inbox/", "Projects/", "10 Projects/", "Periodic/")
+FrontmatterValue: TypeAlias = str | list[str]
 
 
-def dependency_error(missing: List[str]) -> int:
+def dependency_error(missing: list[str]) -> int:
     payload = {
         "ok": False,
         "error": "missing_dependencies",
@@ -31,7 +34,7 @@ def dependency_error(missing: List[str]) -> int:
     return 2
 
 
-def split_frontmatter(text: str) -> Tuple[Dict[str, object], str]:
+def split_frontmatter(text: str) -> tuple[dict[str, FrontmatterValue], str]:
     if not text.startswith("---\n"):
         return {}, text
     parts = text.split("\n---\n", 1)
@@ -40,8 +43,8 @@ def split_frontmatter(text: str) -> Tuple[Dict[str, object], str]:
 
     fm_text, body = parts
     fm_lines = fm_text.splitlines()[1:]
-    frontmatter: Dict[str, object] = {}
-    current_key = None
+    frontmatter: dict[str, FrontmatterValue] = {}
+    current_key: str | None = None
 
     for line in fm_lines:
         if re.match(r"^[A-Za-z0-9_-]+:\s*", line):
@@ -55,14 +58,18 @@ def split_frontmatter(text: str) -> Tuple[Dict[str, object], str]:
                 frontmatter[key] = []
                 current_key = key
         elif current_key and line.strip().startswith("- "):
-            frontmatter[current_key].append(line.strip()[2:].strip().strip('"'))
+            current_value = frontmatter.get(current_key)
+            if isinstance(current_value, list):
+                current_value.append(line.strip()[2:].strip().strip('"'))
         elif current_key and line.startswith("  - "):
-            frontmatter[current_key].append(line.strip()[2:].strip().strip('"'))
+            current_value = frontmatter.get(current_key)
+            if isinstance(current_value, list):
+                current_value.append(line.strip()[2:].strip().strip('"'))
 
     return frontmatter, body
 
 
-def classify_links(text: str) -> Tuple[List[str], List[str], List[str]]:
+def classify_links(text: str) -> tuple[list[str], list[str], list[str]]:
     links = [m.group(1).strip() for m in WIKILINK_RE.finditer(text)]
     concept = [l for l in links if l.startswith(CONCEPT_PREFIXES)]
     context = [l for l in links if l.startswith(CONTEXT_PREFIXES)]
@@ -70,7 +77,7 @@ def classify_links(text: str) -> Tuple[List[str], List[str], List[str]]:
     return concept, context, other
 
 
-def unresolved_via_obsidian(path: Path) -> List[str]:
+def unresolved_via_obsidian(path: Path) -> list[str]:
     try:
         cmd = ["obsidian", "links", f'path={str(path)}']
         result = subprocess.run(cmd, capture_output=True, text=True, check=False)
@@ -102,7 +109,7 @@ def main() -> int:
     frontmatter, body = split_frontmatter(text)
     concept_links, context_links, other_links = classify_links(text)
 
-    missing_fields = []
+    missing_fields: list[str] = []
     for required in ["connection_strength", "potential_links"]:
         if required not in frontmatter:
             missing_fields.append(required)
@@ -132,9 +139,9 @@ def main() -> int:
     }
 
     if len(concept_links) < 1:
-        payload["missing_fields"].append("concept_link_in_body")
+        missing_fields.append("concept_link_in_body")
     if len(context_links) < 1:
-        payload["missing_fields"].append("context_link_in_body")
+        missing_fields.append("context_link_in_body")
 
     print(json.dumps(payload, indent=2))
     return 0 if payload["ok"] else 1

@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
+from typing import Any, cast
 
 import yaml
 
@@ -122,16 +123,20 @@ def test_sync_portfolio_holdings_builds_current_and_history_notes(tmp_path: Path
 
 def test_render_base_contains_core_views() -> None:
     current_config = build_current_base_config()
-    assert current_config["filters"]["and"][2] == 'portfolio_holding_kind == "current_position"'
-    assert [view["name"] for view in current_config["views"]] == [
+    current_filters = cast(dict[str, list[str]], current_config["filters"])
+    current_views = cast(list[dict[str, Any]], current_config["views"])
+    assert current_filters["and"][2] == 'portfolio_holding_kind == "current_position"'
+    assert [str(view["name"]) for view in current_views] == [
         "Active Holdings",
         "Flat Or Exited",
         "Review Queue",
     ]
 
     history_config = build_history_base_config()
-    assert history_config["filters"]["and"][2] == 'portfolio_holding_kind == "holding_history"'
-    assert [view["name"] for view in history_config["views"]] == [
+    history_filters = cast(dict[str, list[str]], history_config["filters"])
+    history_views = cast(list[dict[str, Any]], history_config["views"])
+    assert history_filters["and"][2] == 'portfolio_holding_kind == "holding_history"'
+    assert [str(view["name"]) for view in history_views] == [
         "Holdings History",
         "Review Queue",
     ]

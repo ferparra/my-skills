@@ -5,6 +5,7 @@ import argparse
 import json
 from collections import defaultdict
 from pathlib import Path
+from typing import Any, TypedDict
 
 from portfolio_holdings_models import (
     BROKERAGE_ACTIVITY_GLOB,
@@ -16,6 +17,12 @@ from portfolio_holdings_models import (
     parse_number,
 )
 from sync_portfolio_holdings import build_events, load_activity_records
+from sync_portfolio_holdings import ActivityRecord
+
+
+class NoteIndexEntry(TypedDict):
+    path: str
+    frontmatter: dict[str, Any]
 
 
 def validate_glob(root: Path, glob_pattern: str, *, history: bool) -> tuple[int, list[dict[str, str]], dict[str, list[str]]]:
@@ -39,8 +46,8 @@ def validate_glob(root: Path, glob_pattern: str, *, history: bool) -> tuple[int,
     return checked, invalid, duplicates
 
 
-def note_index(root: Path, glob_pattern: str) -> dict[str, dict[str, object]]:
-    notes: dict[str, dict[str, object]] = {}
+def note_index(root: Path, glob_pattern: str) -> dict[str, NoteIndexEntry]:
+    notes: dict[str, NoteIndexEntry] = {}
     for path in sorted(root.glob(glob_pattern)):
         note = load_markdown_note(path)
         symbol = str(note.frontmatter.get("instrument_symbol") or "").strip().upper()
@@ -59,7 +66,7 @@ def reconcile_against_activity(
     current_glob: str = CURRENT_HOLDINGS_GLOB,
     history_glob: str = HOLDINGS_HISTORY_GLOB,
 ) -> dict[str, object]:
-    records_by_symbol: dict[str, list[object]] = defaultdict(list)
+    records_by_symbol: dict[str, list[ActivityRecord]] = defaultdict(list)
     for record in load_activity_records(root, activity_glob=activity_glob):
         records_by_symbol[record.instrument_symbol].append(record)
 

@@ -169,7 +169,7 @@ class PlanetaryTaskFrontmatter(BaseModel):
             raise ValueError("`task_status: completed` requires `done: true`.")
         if self.done and self.task_status != "completed":
             raise ValueError("`done: true` requires `task_status: completed`.")
-        if self.task_kind == TaskKind.EXTERNAL_TICKET and not (self.jira_sync and self.jira_key and self.jira_url):
+        if self.task_kind == "external_ticket" and not (self.jira_sync and self.jira_key and self.jira_url):
             raise ValueError("`external_ticket` tasks require `jira_sync`, `jira_key`, and `jira_url`.")
         if "type/task" not in self.tags:
             raise ValueError("`tags` must include `type/task`.")
@@ -298,10 +298,10 @@ def has_concept_link(body: str) -> bool:
 
 def classify_task_kind(frontmatter: dict[str, Any], body: str, path: Path) -> Literal["action", "external_ticket", "closure_signal"]:
     if frontmatter.get("jira_sync") or frontmatter.get("jira_key"):
-        return TaskKind.EXTERNAL_TICKET
+        return "external_ticket"
     title = extract_title(body, path.stem).lower()
     if frontmatter.get("planning_horizon") == "maneuver_board":
-        return TaskKind.CLOSURE_SIGNAL
+        return "closure_signal"
     closure_hints = (
         "completion count",
         "todays completion count",
@@ -311,8 +311,8 @@ def classify_task_kind(frontmatter: dict[str, Any], body: str, path: Path) -> Li
         "first maneuver for tomorrow",
     )
     if any(hint in title or hint in path.stem.lower() or hint in body.lower() for hint in closure_hints):
-        return TaskKind.CLOSURE_SIGNAL
-    return TaskKind.ACTION
+        return "closure_signal"
+    return "action"
 
 
 def make_task_id(path: Path, frontmatter: dict[str, Any]) -> str:
@@ -373,12 +373,12 @@ def week_link_for(frontmatter: dict[str, Any], fallback_today: date | None = Non
             continue
         try:
             fields = temporal_fields_for_date(str(candidate))
-            return fields["horizon_note"]
+            return str(fields["horizon_note"])
         except Exception:
             continue
     today = fallback_today or date.today()
     fields = temporal_fields_for_date(today.isoformat())
-    return fields["horizon_note"]
+    return str(fields["horizon_note"])
 
 
 def dump_frontmatter(frontmatter: dict[str, Any]) -> str:

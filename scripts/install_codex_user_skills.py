@@ -8,6 +8,7 @@ import os
 import shutil
 from datetime import datetime
 from pathlib import Path
+from typing import Any
 
 
 def default_codex_skills_dir() -> Path:
@@ -61,30 +62,38 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def load_json(path: Path) -> dict:
+def load_json(path: Path) -> dict[str, object]:
     try:
-        return json.loads(path.read_text(encoding="utf-8"))
+        payload = json.loads(path.read_text(encoding="utf-8"))
     except FileNotFoundError as exc:
         raise SystemExit(f"Required metadata file not found: {path}") from exc
     except json.JSONDecodeError as exc:
         raise SystemExit(f"Invalid JSON in {path}: {exc}") from exc
+    if not isinstance(payload, dict):
+        raise SystemExit(f"Expected top-level JSON object in {path}")
+    return {str(key): value for key, value in payload.items()}
 
 
 def discover_marketplace_skills(repo_root: Path) -> dict[str, Path]:
     marketplace_path = repo_root / ".claude-plugin" / "marketplace.json"
     marketplace = load_json(marketplace_path)
+    plugins = marketplace.get("plugins")
+    if not isinstance(plugins, list):
+        raise SystemExit(f"Marketplace metadata must contain a plugins list: {marketplace_path}")
 
     discovered: dict[str, Path] = {}
-    for plugin in marketplace.get("plugins", []):
+    for plugin in plugins:
+        if not isinstance(plugin, dict):
+            raise SystemExit(f"Marketplace plugin entries must be objects: {plugin!r}")
         plugin_source = plugin.get("source")
         plugin_name = plugin.get("name", "<unknown-plugin>")
-        if not plugin_source:
+        if not isinstance(plugin_source, str) or not plugin_source:
             raise SystemExit(f"Marketplace entry is missing source: {plugin_name}")
 
         plugin_root = (repo_root / plugin_source).resolve()
         plugin_config = load_json(plugin_root / ".claude-plugin" / "plugin.json")
         skills_path = plugin_config.get("skills")
-        if not skills_path:
+        if not isinstance(skills_path, str) or not skills_path:
             raise SystemExit(f"Plugin is missing skills path: {plugin_name}")
 
         skill_root = (plugin_root / skills_path).resolve()

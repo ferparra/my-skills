@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
+from __future__ import annotations
+
 import argparse
 import json
 import re
 import shutil
 import sys
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import TypeAlias
 
 WIKILINK_RE = re.compile(r"\[\[([^\]|#]+)(?:#[^\]|]+)?(?:\|[^\]]+)?\]\]")
 STATUS_RE = re.compile(r"#status/[a-z0-9-]+")
@@ -13,9 +15,10 @@ H1_RE = re.compile(r"(?m)^# ")
 
 CONCEPT_PREFIXES = ("10 Notes/",)
 CONTEXT_PREFIXES = ("00 Inbox/", "Projects/", "10 Projects/", "Periodic/")
+FrontmatterValue: TypeAlias = str | list[str]
 
 
-def dependency_error(missing: List[str]) -> int:
+def dependency_error(missing: list[str]) -> int:
     payload = {
         "ok": False,
         "error": "missing_dependencies",
@@ -30,7 +33,7 @@ def dependency_error(missing: List[str]) -> int:
     return 2
 
 
-def split_frontmatter(text: str) -> Tuple[Dict[str, object], str]:
+def split_frontmatter(text: str) -> tuple[dict[str, FrontmatterValue], str]:
     if not text.startswith("---\n"):
         return {}, text
     parts = text.split("\n---\n", 1)
@@ -39,8 +42,8 @@ def split_frontmatter(text: str) -> Tuple[Dict[str, object], str]:
 
     fm_text, body = parts
     fm_lines = fm_text.splitlines()[1:]
-    frontmatter: Dict[str, object] = {}
-    current_key = None
+    frontmatter: dict[str, FrontmatterValue] = {}
+    current_key: str | None = None
 
     for line in fm_lines:
         if re.match(r"^[A-Za-z0-9_-]+:\s*", line):
@@ -54,14 +57,18 @@ def split_frontmatter(text: str) -> Tuple[Dict[str, object], str]:
                 frontmatter[key] = []
                 current_key = key
         elif current_key and line.strip().startswith("- "):
-            frontmatter[current_key].append(line.strip()[2:].strip().strip('"'))
+            current_value = frontmatter.get(current_key)
+            if isinstance(current_value, list):
+                current_value.append(line.strip()[2:].strip().strip('"'))
         elif current_key and line.startswith("  - "):
-            frontmatter[current_key].append(line.strip()[2:].strip().strip('"'))
+            current_value = frontmatter.get(current_key)
+            if isinstance(current_value, list):
+                current_value.append(line.strip()[2:].strip().strip('"'))
 
     return frontmatter, body
 
 
-def classify_links(text: str) -> Tuple[int, int, int]:
+def classify_links(text: str) -> tuple[int, int, int]:
     links = [m.group(1).strip() for m in WIKILINK_RE.finditer(text)]
     concept = sum(1 for l in links if l.startswith(CONCEPT_PREFIXES))
     context = sum(1 for l in links if l.startswith(CONTEXT_PREFIXES))
