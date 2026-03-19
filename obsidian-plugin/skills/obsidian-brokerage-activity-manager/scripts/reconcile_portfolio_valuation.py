@@ -7,7 +7,7 @@ import json
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, TypedDict
 
 from brokerage_models import (
     BROKERAGE_ASSETS_DIR,
@@ -24,6 +24,8 @@ from brokerage_models import (
     make_activity_id,
     normalize_tags,
     provider_label,
+    note_relative_path,
+    render_asset_markdown,
     render_markdown,
 )
 from sync_brokerage_activity import (
@@ -35,10 +37,8 @@ from sync_brokerage_activity import (
     build_asset_registry,
     build_registry,
     merge_asset_frontmatter,
-    note_relative_path,
     parse_number,
     record_from_frontmatter,
-    render_asset_markdown,
     render_asset_note_body,
 )
 
@@ -60,7 +60,13 @@ class ValuationSnapshot:
     positions: dict[str, ValuationPosition]
 
 
-SECTION_CONFIG = {
+class SectionConfig(TypedDict):
+    provider: BrokerageProvider
+    instrument_market: str
+    currency: str
+
+
+SECTION_CONFIG: dict[str, SectionConfig] = {
     "AU Equities": {
         "provider": BrokerageProvider.STAKE_AU,
         "instrument_market": "ASX",

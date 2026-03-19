@@ -1,18 +1,21 @@
 from datetime import UTC, datetime
 from pathlib import Path
+import sys
+
+SCRIPTS_DIR = Path(__file__).parent.parent / "scripts"
+sys.path.insert(0, str(SCRIPTS_DIR))
 
 from exercise_models import render_markdown
-from sync_strong_workouts import SessionSummary, build_note_update, progression_for_sessions, read_strong_csv
+from sync_strong_workouts import (
+    NoteRegistryEntry,
+    SessionSummary,
+    build_note_update,
+    progression_for_sessions,
+    read_strong_csv,
+)
 
 
-class _Entry:
-    def __init__(self, path: Path, frontmatter: dict, body: str) -> None:
-        self.path = path
-        self.frontmatter = frontmatter
-        self.body = body
-
-
-def test_read_strong_csv_dedupes_exact_rows(tmp_path: Path):
+def test_read_strong_csv_dedupes_exact_rows(tmp_path: Path) -> None:
     csv_path = tmp_path / "strong_workouts.csv"
     csv_path.write_text(
         "\n".join(
@@ -30,7 +33,7 @@ def test_read_strong_csv_dedupes_exact_rows(tmp_path: Path):
     assert warnings == ["Removed 1 exact duplicate Strong rows before sync."]
 
 
-def test_progression_for_sessions_marks_improving():
+def test_progression_for_sessions_marks_improving() -> None:
     sessions = [
         SessionSummary("x.md", ["Pull-Ups"], datetime(2026, 1, 1, tzinfo=UTC), "A", 20.0, 5.0, None, None, 3, 300.0, "", 20.5),
         SessionSummary("x.md", ["Pull-Ups"], datetime(2026, 1, 8, tzinfo=UTC), "A", 22.5, 5.0, None, None, 3, 337.5, "", 23.0),
@@ -43,7 +46,7 @@ def test_progression_for_sessions_marks_improving():
     assert delta is not None and delta > 5.0
 
 
-def test_read_strong_csv_normalizes_obvious_decimal_shift_outlier(tmp_path: Path):
+def test_read_strong_csv_normalizes_obvious_decimal_shift_outlier(tmp_path: Path) -> None:
     csv_path = tmp_path / "strong_workouts.csv"
     csv_path.write_text(
         "\n".join(
@@ -62,7 +65,7 @@ def test_read_strong_csv_normalizes_obvious_decimal_shift_outlier(tmp_path: Path
     assert warnings == ["Normalized 1 obvious weight outlier row(s) for `Lat Pulldown (Cable)`."]
 
 
-def test_build_note_update_preserves_manual_training_log_and_replaces_managed_section(tmp_path: Path):
+def test_build_note_update_preserves_manual_training_log_and_replaces_managed_section(tmp_path: Path) -> None:
     note_path = tmp_path / "20 Resources/Exercises/Pull-Ups.md"
     note_path.parent.mkdir(parents=True, exist_ok=True)
     frontmatter = {
@@ -98,7 +101,7 @@ Legacy manual log stays here.
 Old managed section.
 """
     note_path.write_text(render_markdown(frontmatter, body), encoding="utf-8")
-    entry = _Entry(note_path, frontmatter, body)
+    entry = NoteRegistryEntry(note_path, frontmatter, body)
     sessions = [
         SessionSummary(
             note_path="20 Resources/Exercises/Pull-Ups.md",

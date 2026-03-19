@@ -4,16 +4,16 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from typing import Any, Dict, List
+from typing import Any
 
 from jsonschema import Draft202012Validator
 
 from notebooklm_frontmatter_utils import load_note, load_schema
 
 
-def semantic_checks(frontmatter: Dict[str, Any], derived: Dict[str, Any]) -> tuple[List[str], List[str]]:
-    errors: List[str] = []
-    warnings: List[str] = []
+def semantic_checks(frontmatter: dict[str, Any], derived: dict[str, Any]) -> tuple[list[str], list[str]]:
+    errors: list[str] = []
+    warnings: list[str] = []
 
     note_kind = frontmatter.get("notebooklm_note_kind")
     note_type = frontmatter.get("type")
@@ -33,7 +33,7 @@ def semantic_checks(frontmatter: Dict[str, Any], derived: Dict[str, Any]) -> tup
     return errors, warnings
 
 
-def validate_note(path: str, schema: Dict[str, Any]) -> Dict[str, Any]:
+def validate_note(path: str, schema: dict[str, Any]) -> dict[str, Any]:
     note = load_note(path)
     validator = Draft202012Validator(schema)
     schema_errors = sorted(

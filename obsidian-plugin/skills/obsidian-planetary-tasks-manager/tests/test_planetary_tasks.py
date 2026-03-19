@@ -1,20 +1,44 @@
 from __future__ import annotations
 
+import importlib
 import json
 import subprocess
 import sys
 from pathlib import Path
+from typing import TYPE_CHECKING, Any, Protocol, cast
 
 
-ROOT = Path(__file__).resolve().parents[3]
-SKILL_ROOT = ROOT / ".skills" / "obsidian-planetary-tasks-manager"
+ROOT = Path(__file__).resolve().parents[4]
+SKILL_ROOT = ROOT / "obsidian-plugin" / "skills" / "obsidian-planetary-tasks-manager"
 SCRIPTS = SKILL_ROOT / "scripts"
 FIXTURES = Path(__file__).resolve().parent / "fixtures"
 
 sys.path.insert(0, str(SCRIPTS))
 
-from migrate_tasks import normalize_task  # noqa: E402
-from task_models import ensure_planning_context_section, load_markdown_note  # noqa: E402
+
+class _TaskModelsModule(Protocol):
+    def ensure_planning_context_section(self, body: str, lines: list[str]) -> str: ...
+
+    def load_markdown_note(self, path: Path) -> "NoteParts": ...
+
+
+class _MigrateTasksModule(Protocol):
+    def normalize_task(self, note: "NoteParts", root: Path) -> dict[str, Any]: ...
+
+
+if TYPE_CHECKING:
+    from migrate_tasks import normalize_task as normalize_task
+    from task_models import NoteParts
+    from task_models import (
+        ensure_planning_context_section as ensure_planning_context_section,
+        load_markdown_note as load_markdown_note,
+    )
+else:
+    _migrate_tasks = cast(_MigrateTasksModule, importlib.import_module("migrate_tasks"))
+    _task_models = cast(_TaskModelsModule, importlib.import_module("task_models"))
+    normalize_task = _migrate_tasks.normalize_task
+    ensure_planning_context_section = _task_models.ensure_planning_context_section
+    load_markdown_note = _task_models.load_markdown_note
 
 
 def test_action_fixture_normalizes_to_action() -> None:

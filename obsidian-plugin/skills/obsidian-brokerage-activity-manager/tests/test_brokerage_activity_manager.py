@@ -10,6 +10,7 @@ from __future__ import annotations
 import shutil
 import sys
 from pathlib import Path
+from typing import Any, cast
 from xml.sax.saxutils import escape
 from zipfile import ZipFile
 
@@ -545,8 +546,10 @@ def test_asset_registry_rebuilds_from_existing_and_new_provider_activity(tmp_pat
 
 def test_render_base_contains_core_views() -> None:
     config = build_base_config()
-    assert config["filters"]["and"][2] == 'brokerage_activity_kind != ""'
-    view_names = [view["name"] for view in config["views"]]
+    filters = cast(dict[str, list[str]], config["filters"])
+    views = cast(list[dict[str, Any]], config["views"])
+    assert filters["and"][2] == 'brokerage_activity_kind != ""'
+    view_names = [str(view["name"]) for view in views]
     assert view_names == [
         "Activity Ledger",
         "Trade Flow",
@@ -558,8 +561,10 @@ def test_render_base_contains_core_views() -> None:
 
 def test_render_asset_base_contains_core_views() -> None:
     config = build_asset_base_config()
-    assert config["filters"]["and"][2] == 'brokerage_asset_kind != ""'
-    view_names = [view["name"] for view in config["views"]]
+    filters = cast(dict[str, list[str]], config["filters"])
+    views = cast(list[dict[str, Any]], config["views"])
+    assert filters["and"][2] == 'brokerage_asset_kind != ""'
+    view_names = [str(view["name"]) for view in views]
     assert view_names == [
         "Asset Registry",
         "Income Assets",

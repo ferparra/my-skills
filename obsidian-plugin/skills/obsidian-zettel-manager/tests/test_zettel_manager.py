@@ -10,6 +10,7 @@ from __future__ import annotations
 import subprocess
 import sys
 from pathlib import Path
+from typing import Any
 
 import pytest
 
@@ -186,14 +187,14 @@ def test_make_zettel_id_preserves_existing() -> None:
 
 def test_make_zettel_id_generates_from_path() -> None:
     path = Path("/vault/10 Notes/New Note.md")
-    fm = {}
+    fm: dict[str, object] = {}
     result = make_zettel_id(path, fm)
     assert ZETTEL_ID_RE.match(result), f"Generated ID {result!r} does not match expected pattern"
 
 
 def test_make_zettel_id_is_stable() -> None:
     path = Path("/vault/10 Notes/New Note.md")
-    fm = {}
+    fm: dict[str, object] = {}
     assert make_zettel_id(path, fm) == make_zettel_id(path, fm)
 
 
@@ -264,7 +265,7 @@ def test_classify_body_links_both() -> None:
 # ── normalize_zettel_tags ────────────────────────────────────────────────────
 
 def test_normalize_tags_injects_managed() -> None:
-    fm: dict = {"tags": ["tech/ai/agent-engineering"]}
+    fm: dict[str, object] = {"tags": ["tech/ai/agent-engineering"]}
     result = normalize_zettel_tags(fm, kind="atomic", status="processed")
     assert "type/zettel" in result
     assert "zettel-kind/atomic" in result
@@ -273,14 +274,14 @@ def test_normalize_tags_injects_managed() -> None:
 
 
 def test_normalize_tags_preserves_user_tags() -> None:
-    fm: dict = {"tags": ["resource/topic/pkm", "concept/method"]}
+    fm: dict[str, object] = {"tags": ["resource/topic/pkm", "concept/method"]}
     result = normalize_zettel_tags(fm, kind="definition", status="evergreen")
     assert "resource/topic/pkm" in result
     assert "concept/method" in result
 
 
 def test_normalize_tags_strips_stale_status_tags() -> None:
-    fm: dict = {"tags": ["status/fleeting", "tech/ai"]}
+    fm: dict[str, object] = {"tags": ["status/fleeting", "tech/ai"]}
     result = normalize_zettel_tags(fm, kind="atomic", status="processed")
     assert "status/fleeting" not in result
     assert "status/processed" in result
@@ -291,7 +292,7 @@ def test_normalize_tags_strips_stale_status_tags() -> None:
 def test_score_increases_with_backlinks() -> None:
     path = Path("/vault/10 Notes/Foo.md")
     body = "[[10 Notes/Bar|Bar]] [[10 Notes/Baz|Baz]]"
-    fm: dict = {"potential_links": ["[[10 Notes/Qux|Qux]]"]}
+    fm: dict[str, object] = {"potential_links": ["[[10 Notes/Qux|Qux]]"]}
     score_0 = score_connection_strength(path, body, fm, backlink_count=0)
     score_5 = score_connection_strength(path, body, fm, backlink_count=5)
     assert score_5 > score_0
@@ -300,7 +301,7 @@ def test_score_increases_with_backlinks() -> None:
 def test_score_max_is_ten() -> None:
     path = Path("/vault/10 Notes/Foo.md")
     body = " ".join(f"[[10 Notes/Note{i}|Note{i}]]" for i in range(20))
-    fm: dict = {"potential_links": [f"[[10 Notes/PL{i}|PL{i}]]" for i in range(10)]}
+    fm: dict[str, object] = {"potential_links": [f"[[10 Notes/PL{i}|PL{i}]]" for i in range(10)]}
     score = score_connection_strength(path, body, fm, backlink_count=100)
     assert score <= 10.0
 
@@ -308,7 +309,7 @@ def test_score_max_is_ten() -> None:
 def test_score_is_zero_for_empty_note() -> None:
     path = Path("/vault/10 Notes/Empty.md")
     body = "No links here."
-    fm: dict = {"potential_links": []}
+    fm: dict[str, object] = {"potential_links": []}
     score = score_connection_strength(path, body, fm, backlink_count=0)
     assert score == 0.0
 
@@ -373,7 +374,7 @@ def test_migrate_preserves_user_tags(tmp_path: Path) -> None:
 
 # ── subprocess: validate_zettels.py ─────────────────────────────────────────
 
-def run_validate(fixture: str, vault_root: Path | None = None) -> dict:
+def run_validate(fixture: str, vault_root: Path | None = None) -> dict[str, Any]:
     import json
 
     fixture_path = FIXTURES_DIR / fixture
@@ -389,7 +390,9 @@ def run_validate(fixture: str, vault_root: Path | None = None) -> dict:
         capture_output=True,
         text=True,
     )
-    return json.loads(result.stdout)
+    payload = json.loads(result.stdout)
+    assert isinstance(payload, dict)
+    return payload
 
 
 def test_subprocess_atomic_fixture_passes() -> None:

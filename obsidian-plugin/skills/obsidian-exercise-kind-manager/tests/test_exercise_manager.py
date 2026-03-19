@@ -1,4 +1,8 @@
 from pathlib import Path
+import sys
+
+SCRIPTS_DIR = Path(__file__).parent.parent / "scripts"
+sys.path.insert(0, str(SCRIPTS_DIR))
 
 from exercise_models import (
     ExerciseKind,
@@ -10,7 +14,7 @@ from exercise_models import (
 )
 
 
-def test_infer_hypertrophy_kind_from_category():
+def test_infer_hypertrophy_kind_from_category() -> None:
     kind, ambiguous = infer_exercise_kind(
         {
             "category": "hypertrophy",
@@ -23,11 +27,11 @@ def test_infer_hypertrophy_kind_from_category():
     assert ambiguous is False
 
 
-def test_normalize_equipment_list_from_string():
+def test_normalize_equipment_list_from_string() -> None:
     assert normalize_equipment_list("kettlebell, bench") == ["[[Kettlebell]]", "[[Bench]]"]
 
 
-def test_extract_training_metrics_for_weighted_set():
+def test_extract_training_metrics_for_weighted_set() -> None:
     body = """
 ## Training Log
 
@@ -49,7 +53,7 @@ def test_extract_training_metrics_for_weighted_set():
     assert metrics.last_performed == "2026-02-05"
 
 
-def test_validate_warmup_flow_frontmatter():
+def test_validate_warmup_flow_frontmatter() -> None:
     frontmatter = {
         "exercise_kind": "warmup_flow",
         "tags": normalize_exercise_tags({"tags": ["fitness/warmup"]}, kind=ExerciseKind.WARMUP_FLOW),

@@ -390,7 +390,7 @@ class ExerciseBriefFrontmatter(CommonExerciseFrontmatter):
     volume_tracking: VolumeTracking = VolumeTracking.NOT_COUNTED
 
 
-MODEL_BY_KIND = {
+MODEL_BY_KIND: dict[ExerciseKind, type[CommonExerciseFrontmatter]] = {
     ExerciseKind.HYPERTROPHY: HypertrophyExerciseFrontmatter,
     ExerciseKind.MOBILITY_DRILL: MobilityDrillFrontmatter,
     ExerciseKind.WARMUP_FLOW: WarmupFlowFrontmatter,
@@ -533,7 +533,7 @@ def render_markdown(frontmatter: dict[str, Any], body: str) -> str:
     return dump_frontmatter(frontmatter) + "\n" + normalized_body
 
 
-def parse_frontmatter(frontmatter: dict[str, Any]) -> BaseModel:
+def parse_frontmatter(frontmatter: dict[str, Any]) -> CommonExerciseFrontmatter:
     kind = ExerciseKind(str(frontmatter.get("exercise_kind")))
     model_cls = MODEL_BY_KIND[kind]
     return model_cls.model_validate(frontmatter)

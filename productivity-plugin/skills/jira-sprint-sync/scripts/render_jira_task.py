@@ -2,31 +2,104 @@
 from __future__ import annotations
 
 import argparse
+import importlib.util
 import sys
+from collections.abc import Iterable, Mapping
 from datetime import date, datetime, time
 from pathlib import Path
+from typing import TYPE_CHECKING, Any, Protocol, cast
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-TASK_MODEL_DIR = SCRIPT_DIR.parents[1] / "obsidian-planetary-tasks-manager" / "scripts"
-if str(TASK_MODEL_DIR) not in sys.path:
-    sys.path.insert(0, str(TASK_MODEL_DIR))
-
-from task_models import (  # noqa: E402
-    DEFAULT_AUTOGRAB,
-    DEFAULT_PLANNING_BASE,
-    DEFAULT_TASKS_BASE,
-    DEFAULT_TASKS_SUMMARY,
-    DEFAULT_TASK_HUB,
-    classify_body_links,
-    dedupe_preserve,
-    dump_json,
-    ensure_planning_context_section,
-    order_frontmatter,
-    planning_context_lines,
-    render_markdown,
-    temporal_fields_for_date,
-    validate_frontmatter,
+TASK_MODEL_PATH = (
+    SCRIPT_DIR.parents[3]
+    / "obsidian-plugin"
+    / "skills"
+    / "obsidian-planetary-tasks-manager"
+    / "scripts"
+    / "task_models.py"
 )
+
+
+class _TaskModelsModule(Protocol):
+    DEFAULT_AUTOGRAB: str
+    DEFAULT_PLANNING_BASE: str
+    DEFAULT_TASKS_BASE: str
+    DEFAULT_TASKS_SUMMARY: str
+    DEFAULT_TASK_HUB: str
+
+    def classify_body_links(self, body: str) -> dict[str, list[str]]: ...
+
+    def dedupe_preserve(self, items: Iterable[str]) -> list[str]: ...
+
+    def dump_json(self, payload: Any) -> str: ...
+
+    def ensure_planning_context_section(self, body: str, lines: list[str]) -> str: ...
+
+    def order_frontmatter(
+        self,
+        frontmatter: dict[str, Any],
+        original_key_order: list[str] | None = None,
+    ) -> Mapping[str, Any]: ...
+
+    def planning_context_lines(self, frontmatter: dict[str, Any]) -> list[str]: ...
+
+    def render_markdown(self, frontmatter: dict[str, Any], body: str) -> str: ...
+
+    def temporal_fields_for_date(self, value: str) -> dict[str, Any]: ...
+
+    def validate_frontmatter(self, frontmatter: dict[str, Any]) -> tuple[bool, list[str]]: ...
+
+
+def _load_task_models() -> _TaskModelsModule:
+    existing_module = sys.modules.get("_jira_sync_task_models")
+    if existing_module is not None:
+        return cast(_TaskModelsModule, existing_module)
+
+    spec = importlib.util.spec_from_file_location("_jira_sync_task_models", TASK_MODEL_PATH)
+    if spec is None or spec.loader is None:
+        raise ImportError(f"Unable to load task models from {TASK_MODEL_PATH}")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return cast(_TaskModelsModule, module)
+
+
+if TYPE_CHECKING:
+    if str(TASK_MODEL_PATH.parent) not in sys.path:
+        sys.path.insert(0, str(TASK_MODEL_PATH.parent))
+
+    from task_models import (
+        DEFAULT_AUTOGRAB as DEFAULT_AUTOGRAB,
+        DEFAULT_PLANNING_BASE as DEFAULT_PLANNING_BASE,
+        DEFAULT_TASKS_BASE as DEFAULT_TASKS_BASE,
+        DEFAULT_TASKS_SUMMARY as DEFAULT_TASKS_SUMMARY,
+        DEFAULT_TASK_HUB as DEFAULT_TASK_HUB,
+        classify_body_links as classify_body_links,
+        dedupe_preserve as dedupe_preserve,
+        dump_json as dump_json,
+        ensure_planning_context_section as ensure_planning_context_section,
+        order_frontmatter as order_frontmatter,
+        planning_context_lines as planning_context_lines,
+        render_markdown as render_markdown,
+        temporal_fields_for_date as temporal_fields_for_date,
+        validate_frontmatter as validate_frontmatter,
+    )
+else:
+    _task_models = _load_task_models()
+    DEFAULT_AUTOGRAB = _task_models.DEFAULT_AUTOGRAB
+    DEFAULT_PLANNING_BASE = _task_models.DEFAULT_PLANNING_BASE
+    DEFAULT_TASKS_BASE = _task_models.DEFAULT_TASKS_BASE
+    DEFAULT_TASKS_SUMMARY = _task_models.DEFAULT_TASKS_SUMMARY
+    DEFAULT_TASK_HUB = _task_models.DEFAULT_TASK_HUB
+    classify_body_links = _task_models.classify_body_links
+    dedupe_preserve = _task_models.dedupe_preserve
+    dump_json = _task_models.dump_json
+    ensure_planning_context_section = _task_models.ensure_planning_context_section
+    order_frontmatter = _task_models.order_frontmatter
+    planning_context_lines = _task_models.planning_context_lines
+    render_markdown = _task_models.render_markdown
+    temporal_fields_for_date = _task_models.temporal_fields_for_date
+    validate_frontmatter = _task_models.validate_frontmatter
 
 
 STATUS_CATEGORY_TO_TASK_STATUS = {

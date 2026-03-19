@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 from pathlib import Path
+from typing import cast
 
 import yaml
 
@@ -241,7 +242,7 @@ BASE_CONFIG = {
 }
 
 
-def dump_yaml(payload: dict) -> str:
+def dump_yaml(payload: dict[str, object]) -> str:
     return yaml.safe_dump(payload, sort_keys=False, allow_unicode=True, width=4096)
 
 
@@ -255,14 +256,16 @@ def main() -> int:
     output_path = (root / args.output).resolve() if not Path(args.output).is_absolute() else Path(args.output).resolve()
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(dump_yaml(BASE_CONFIG), encoding="utf-8")
+    views = cast(list[dict[str, object]], BASE_CONFIG["views"])
+    formulas = cast(list[object], BASE_CONFIG["formulas"])
 
     print(
         dump_json(
             {
                 "ok": True,
                 "output_path": str(output_path.relative_to(root) if output_path.is_relative_to(root) else output_path),
-                "views": [view["name"] for view in BASE_CONFIG["views"]],
-                "formula_count": len(BASE_CONFIG["formulas"]),
+                "views": [str(view["name"]) for view in views],
+                "formula_count": len(formulas),
             }
         )
     )
