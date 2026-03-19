@@ -32,6 +32,12 @@ The installer reads `.claude-plugin/marketplace.json`, walks each plugin's `.cla
 
 The installer does not modify the marketplace layout or the packaged `.skill` artifacts, so the same repo structure remains usable for Anthropic Claude plugin distribution.
 
+## Release notes
+
+Current marketplace release: `0.2.0`
+
+Release history lives in [CHANGELOG.md](CHANGELOG.md).
+
 ## Repository contract
 
 - One top-level directory per skill.
@@ -41,6 +47,19 @@ The installer does not modify the marketplace layout or the packaged `.skill` ar
 - Keep instructions portable and public-safe. Avoid machine-local absolute paths in reusable skill content.
 - Treat every contribution as public by default. Review changed lines for unintended PII, secrets, email addresses, or machine-local filesystem paths before opening a PR.
 - Use the pull request template and leave a PR comment summarizing validation plus the public-safety review.
+
+## Validation
+
+Use `uv` for repository validation and dependency management:
+
+```bash
+uv sync --extra dev
+uv run pytest
+uv run mypy
+scripts/check_public_repo_guardrails.sh origin/master
+```
+
+The CI typecheck workflow also uses `uv` and `mypy`, so local validation should match the repository gate.
 
 ## Relationship to vault-local skills
 

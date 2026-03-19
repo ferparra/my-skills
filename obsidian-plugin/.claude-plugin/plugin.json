@@ -1,6 +1,6 @@
 {
   "name": "obsidian-plugin",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Personal Obsidian vault management — CLI, zettel, brokerage, tasks, exercises, portfolio, and more.",
   "author": {
     "name": "ferparra"
