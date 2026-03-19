@@ -59,6 +59,24 @@ obsidian backlinks file="My Note"
 
 Use `--copy` on any command to copy output to clipboard. Use `silent` to prevent files from opening. Use `total` on list commands to get a count.
 
+## Vault Search Workflow
+
+Use `obsidian search` to find candidates, then `obsidian read` to inspect the actual note before answering. Do not answer from search hits, filenames, or snippets alone.
+
+```bash
+obsidian search query="empanadas" limit=5
+obsidian read path="00 Inbox/empanadas.md"
+```
+
+When QMD is available, it is often better for semantic recall and collection routing. A reliable combined pattern is:
+
+```bash
+qmd query "empanadas recipe" -c inbox -n 5
+obsidian read path="00 Inbox/empanadas.md"
+```
+
+If the first hit is ambiguous, read the top 2-3 candidate notes before answering.
+
 ## Plugin development
 
 Reload a plugin after code changes — essential for the develop/test cycle:
