@@ -2,6 +2,17 @@
 
 All notable marketplace and repository-tooling changes are recorded here.
 
+## 0.3.0 - 2026-03-21
+
+### Added
+
+- Added top-level `skills/` directory containing relative symlinks to all 15 skills across both plugins. This makes the repo discoverable by the [Vercel skills CLI](https://github.com/vercel-labs/skills) (`npx skills add ferparra/my-skills`) and any agent that follows the standard `skills/<name>/SKILL.md` layout.
+- Documented OpenClaw `extraDirs` integration and Vercel skills CLI install instructions in README.
+
+### Structure
+
+The `skills/` layout is purely additive — it does not change the canonical skill files or the existing Claude marketplace plugin structure. Each symlink resolves to the source skill directory under `obsidian-plugin/skills/` or `productivity-plugin/skills/`.
+
 ## 0.2.1 - 2026-03-19
 
 ### Changed

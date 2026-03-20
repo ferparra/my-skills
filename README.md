@@ -14,6 +14,60 @@ Repository URL: [https://github.com/ferparra/my-skills](https://github.com/ferpa
 
 Clone this repository to `~/my-skills` on every local machine. Use the same path across installations so agent tooling can rely on one stable local location.
 
+## Install with `npx skills` (any agent)
+
+Install all skills into any supported AI coding agent (Claude Code, Cursor, Codex, Cline, OpenCode, and 40+ others) using the [Vercel skills CLI](https://github.com/vercel-labs/skills):
+
+```bash
+# Install all skills globally
+npx skills add ferparra/my-skills -g
+
+# Install a single skill
+npx skills add https://github.com/ferparra/my-skills/tree/main/skills/qmd -g
+
+# List installed skills
+npx skills list
+```
+
+Skills are discovered from the top-level `skills/` directory, which contains relative symlinks to each plugin's skill directories. The `skills/` layout makes this repo compatible with the Vercel skills standard (`skills/<name>/SKILL.md`).
+
+## Install for Claude Code (marketplace)
+
+Both plugins ship as an Anthropic Claude Code marketplace. Install from within Claude Code:
+
+```
+/plugin install obsidian-plugin@my-skills-marketplace
+/plugin install productivity-plugin@my-skills-marketplace
+```
+
+The marketplace index lives at `.claude-plugin/marketplace.json`. Skills are grouped into two plugins:
+
+- **obsidian-plugin** — 13 skills for Obsidian vault management
+- **productivity-plugin** — 2 skills for Jira and QMD search
+
+## Install for OpenClaw
+
+Point `extraDirs` at each plugin's `skills/` directory in `~/.openclaw/openclaw.json`. OpenClaw expects each entry to be a directory whose immediate subdirectories are skills — do not point at the repo root, as its symlink security check will block symlinks that resolve outside that root:
+
+```json
+{
+  "skills": {
+    "load": {
+      "extraDirs": [
+        "/Users/<you>/my-skills/obsidian-plugin/skills",
+        "/Users/<you>/my-skills/productivity-plugin/skills"
+      ]
+    }
+  }
+}
+```
+
+Or via the CLI:
+
+```bash
+openclaw config set skills.load.extraDirs '[ "~/my-skills/obsidian-plugin/skills", "~/my-skills/productivity-plugin/skills" ]'
+```
+
 ## Install for Codex
 
 Install the repo's marketplace skills into Codex user-level skills with:
@@ -34,7 +88,7 @@ The installer does not modify the marketplace layout or the packaged `.skill` ar
 
 ## Release notes
 
-Current marketplace release: `0.2.1`
+Current marketplace release: `0.3.0`
 
 Release history lives in [CHANGELOG.md](CHANGELOG.md).
 
