@@ -54,8 +54,8 @@ Point `extraDirs` at each plugin's `skills/` directory in `~/.openclaw/openclaw.
   "skills": {
     "load": {
       "extraDirs": [
-        "/Users/<you>/my-skills/obsidian-plugin/skills",
-        "/Users/<you>/my-skills/productivity-plugin/skills"
+        "~/my-skills/obsidian-plugin/skills",
+        "~/my-skills/productivity-plugin/skills"
       ]
     }
   }
