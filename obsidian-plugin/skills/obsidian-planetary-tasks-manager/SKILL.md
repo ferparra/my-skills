@@ -4,7 +4,7 @@ version: 1.0.0
 description: Maintain planetary task notes, task schema, and task-related Bases in this personal Obsidian vault. Use when requests involve Planetary Tasks.base, Periodic Planning and Tasks Hub.base, task_kind enforcement, Jira-synced planetary tasks, maneuver-board closure signals, or planetary task schema migration and validation.
 metadata:
   openclaw:
-    os: [macos]
+    os: [darwin]
     requires:
       bins: [obsidian, qmd, uvx]
 ---

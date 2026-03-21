@@ -9,7 +9,7 @@ description: >
   Tana-supertag equivalent: it selects the note's schema contract.
 metadata:
   openclaw:
-    os: [macos]
+    os: [darwin]
     requires:
       bins: [obsidian, qmd, uvx]
 ---

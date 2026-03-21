@@ -3,7 +3,7 @@ name: obsidian-exercise-kind-manager
 version: 1.0.0
 metadata:
   openclaw:
-    os: [macos]
+    os: [darwin]
     requires:
       bins: [obsidian, qmd, uvx]
 description: Validate, migrate, sync, and maintain typed exercise notes in this personal Obsidian vault. Use when requests involve `exercise_kind` enforcement, Strong CSV workout imports, gym exercise schemas, `20 Resources/Exercises/*.md`, `Exercise Library.base`, exercise selection heuristics, top-set progression metrics, or primary-muscle volume accounting for progressive overload review.

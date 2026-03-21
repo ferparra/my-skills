@@ -11,7 +11,7 @@ description: >
 metadata:
   openclaw:
     os:
-      - macos
+      - darwin
     requires:
       bins:
         - obsidian

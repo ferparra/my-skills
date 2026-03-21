@@ -4,7 +4,7 @@ version: 1.0.0
 description: Audit and capture reusable agent memory patterns from this personal Obsidian vault as zettels. Use when daily or weekly execution surfaces insight, friction, or patterns that must satisfy zettel tracking fields, lifecycle tags, and concept/context linking requirements.
 metadata:
   openclaw:
-    os: [macos]
+    os: [darwin]
     requires:
       bins: [obsidian, qmd, uvx]
 ---

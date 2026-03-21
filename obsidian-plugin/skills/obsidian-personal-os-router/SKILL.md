@@ -4,7 +4,7 @@ version: 1.0.0
 description: Route Obsidian vault tasks to the minimum-context workflow before reading or editing files. Use when a request targets this personal Obsidian vault and you need progressive disclosure, strict read budgets, and fail-fast dependency checks for obsidian CLI, qmd, and downstream manager skills such as portfolio holdings, brokerage activity, planetary tasks, and zettel maintenance.
 metadata:
   openclaw:
-    os: [macos]
+    os: [darwin]
     requires:
       bins: [obsidian, qmd, uvx]
 ---
