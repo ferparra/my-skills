@@ -10,6 +10,7 @@ from __future__ import annotations
 import subprocess
 import sys
 from pathlib import Path
+from typing import Any
 
 import pytest
 
@@ -261,7 +262,7 @@ def test_infer_status_defaults_to_fleeting() -> None:
 # ── normalize_person_tags ────────────────────────────────────────────────────
 
 def test_normalize_tags_injects_managed() -> None:
-    fm: dict = {"tags": ["person", "person/autograb", "role/team-lead"]}
+    fm: dict[str, Any] = {"tags": ["person", "person/autograb", "role/team-lead"]}
     result = normalize_person_tags(fm, kind="manager", status="processed")
     assert "type/person" in result
     assert "person-kind/manager" in result
@@ -272,14 +273,14 @@ def test_normalize_tags_injects_managed() -> None:
 
 
 def test_normalize_tags_preserves_user_tags() -> None:
-    fm: dict = {"tags": ["author", "person/intellectual"]}
+    fm: dict[str, Any] = {"tags": ["author", "person/intellectual"]}
     result = normalize_person_tags(fm, kind="author", status="processed")
     assert "author" in result
     assert "person/intellectual" in result
 
 
 def test_normalize_tags_strips_stale_person_kind_tag() -> None:
-    fm: dict = {"tags": ["type/person", "person-kind/collaborator", "status/processing"]}
+    fm: dict[str, Any] = {"tags": ["type/person", "person-kind/collaborator", "status/processing"]}
     result = normalize_person_tags(fm, kind="manager", status="processed")
     assert "person-kind/collaborator" not in result
     assert "person-kind/manager" in result
@@ -292,7 +293,7 @@ def test_normalize_tags_strips_stale_person_kind_tag() -> None:
 def test_score_increases_with_backlinks() -> None:
     path = Path("/vault/People/Foo.md")
     body = "[[10 Notes/Bar|Bar]] [[Companies/Baz|Baz]]"
-    fm: dict = {"potential_links": ["[[10 Notes/Qux|Qux]]"]}
+    fm: dict[str, Any] = {"potential_links": ["[[10 Notes/Qux|Qux]]"]}
     score_0 = score_connection_strength(path, body, fm, backlink_count=0)
     score_4 = score_connection_strength(path, body, fm, backlink_count=4)
     assert score_4 > score_0
@@ -301,7 +302,7 @@ def test_score_increases_with_backlinks() -> None:
 def test_score_max_is_one() -> None:
     path = Path("/vault/People/Dense.md")
     body = " ".join(f"[[10 Notes/Note{i}|Note{i}]]" for i in range(20))
-    fm: dict = {
+    fm: dict[str, Any] = {
         "potential_links": [f"[[10 Notes/PL{i}|PL{i}]]" for i in range(10)],
         "last_interaction_date": "2026-03-20",  # very recent → max recency
     }
@@ -312,7 +313,7 @@ def test_score_max_is_one() -> None:
 def test_score_is_zero_for_empty_note() -> None:
     path = Path("/vault/People/Empty.md")
     body = "No links here."
-    fm: dict = {"potential_links": []}
+    fm: dict[str, Any] = {"potential_links": []}
     score = score_connection_strength(path, body, fm, backlink_count=0)
     assert score == 0.0
 
@@ -465,7 +466,7 @@ def test_migrate_preserves_user_tags() -> None:
 
 # ── subprocess: validate_people.py ──────────────────────────────────────────
 
-def run_validate(fixture: str, vault_root: Path | None = None) -> dict:
+def run_validate(fixture: str, vault_root: Path | None = None) -> dict[str, Any]:
     import json
     fixture_path = FIXTURES_DIR / fixture
     root = vault_root or FIXTURES_DIR
@@ -480,7 +481,8 @@ def run_validate(fixture: str, vault_root: Path | None = None) -> dict:
         capture_output=True,
         text=True,
     )
-    return json.loads(result.stdout)
+    data: dict[str, Any] = json.loads(result.stdout)
+    return data
 
 
 def test_subprocess_manager_fixture_passes() -> None:
