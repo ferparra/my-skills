@@ -6,7 +6,15 @@ metadata:
   openclaw:
     os: [darwin]
     requires:
-      bins: [obsidian, qmd]
+      anyBins: [obsidian, obsidian-cli]
+      bins: [qmd]
+    install:
+      - id: obsidian-cli-brew
+        kind: brew
+        formula: obsidian-cli
+        bins: [obsidian-cli]
+        label: Install Obsidian CLI (brew)
+        os: [darwin]
 ---
 
 # Obsidian CLI
