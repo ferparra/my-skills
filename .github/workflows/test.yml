@@ -1,0 +1,33 @@
+name: Test Skills
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  test:
+    name: "${{ matrix.skill }}"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        skill:
+          - obsidian-people-kind-manager
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.13"
+
+      - name: Run tests — ${{ matrix.skill }}
+        run: |
+          uvx --python 3.13 \
+            --with pydantic \
+            --with pyyaml \
+            --with pytest \
+            pytest skills/${{ matrix.skill }}/tests/ -v
