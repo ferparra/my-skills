@@ -2,9 +2,8 @@ name: Test Skills
 
 on:
   push:
-    branches: ["main"]
+    branches: ["master"]
   pull_request:
-    branches: ["main"]
 
 jobs:
   test:
@@ -30,4 +29,4 @@ jobs:
             --with pydantic \
             --with pyyaml \
             --with pytest \
-            pytest skills/${{ matrix.skill }}/tests/ -v
+            pytest obsidian-plugin/skills/${{ matrix.skill }}/tests/ -v
