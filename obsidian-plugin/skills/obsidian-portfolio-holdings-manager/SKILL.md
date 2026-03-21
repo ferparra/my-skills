@@ -4,7 +4,7 @@ version: 1.0.0
 description: Derive current and historical portfolio holdings in this Obsidian vault from typed brokerage activity notes. Use when requests mention actual holdings, current portfolio positions, historical holdings, holdings timelines, position history, portfolio holdings Bases, or rebuilding holdings after brokerage activity imports under `20 Resources/Investments/Brokerage Activity/**/*.md`.
 metadata:
   openclaw:
-    os: [macos]
+    os: [darwin]
     requires:
       bins: [obsidian, qmd, uvx]
 ---

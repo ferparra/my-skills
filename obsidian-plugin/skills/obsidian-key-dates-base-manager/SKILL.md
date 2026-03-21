@@ -4,7 +4,7 @@ version: 1.0.0
 description: Maintain and evolve `10 Notes/Key Dates.base` in this personal Obsidian vault. Use when asked to create, audit, or update key-date formulas, date-link fields, date-based views, or path conventions, and when verifying that generated links map to existing vault notes using Obsidian CLI and qmd.
 metadata:
   openclaw:
-    os: [macos]
+    os: [darwin]
     requires:
       bins: [obsidian, qmd]
 ---
