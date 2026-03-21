@@ -1,5 +1,6 @@
 ---
 name: jira-sprint-sync
+version: 1.0.0
 description: >
   Sync Jira issues assigned to the current user in active sprints into the Obsidian
   vault. Writes one note per issue into `Periodic/YEAR/Planetary Tasks/` with full
@@ -8,6 +9,11 @@ description: >
   truth. Use when the user asks to: sync Jira tasks, update sprint tasks, refresh
   their task list from Jira, pull active sprint issues into the vault, organise work
   tasks, or check what's on their Jira board.
+metadata:
+  openclaw:
+    requires:
+      bins:
+        - uvx
 ---
 
 # Jira Sprint Sync
