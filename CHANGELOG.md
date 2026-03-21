@@ -2,6 +2,21 @@
 
 All notable marketplace and repository-tooling changes are recorded here.
 
+## 0.3.1 - 2026-03-21
+
+### Fixed
+
+- Added the missing `obsidian-people-kind-manager.skill` zip artifact. The skill directory was merged without the packaged artifact, causing Claude Code marketplace and Vercel CLI installs to silently omit the skill.
+
+### Added
+
+- `scripts/check_skill_artifacts.py` — stdlib-only script that validates every skill directory has a matching `.skill` zip (valid, containing `SKILL.md`) and a top-level `skills/<name>` symlink. Fails fast with per-skill error output.
+- `.github/workflows/skill-artifacts-check.yml` — new PR gate that runs the artifact check on every pull request, preventing any future missing-artifact regression.
+
+### Changed
+
+- Expanded the `test.yml` skill test matrix from 1 skill to all 6 skills that have pytest tests: `obsidian-brokerage-activity-manager`, `obsidian-exercise-kind-manager`, `obsidian-people-kind-manager`, `obsidian-planetary-tasks-manager`, `obsidian-portfolio-holdings-manager`, `obsidian-zettel-manager`.
+
 ## 0.3.0 - 2026-03-21
 
 ### Added
