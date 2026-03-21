@@ -1,11 +1,19 @@
 ---
 name: qmd
+version: 1.0.0
 description: Search markdown knowledge bases, notes, and documentation using QMD. Use when users ask to search notes, find documents, or look up information.
 license: MIT
 compatibility: Requires qmd CLI or MCP server. Install via `npm install -g @tobilu/qmd`.
 metadata:
   author: tobi
   version: "2.0.0"
+  openclaw:
+    requires:
+      bins:
+        - qmd
+        - obsidian
+        - curl
+        - npm
 allowed-tools: Bash(qmd:*), mcp__qmd__*
 ---
 

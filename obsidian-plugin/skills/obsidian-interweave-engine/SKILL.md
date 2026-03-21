@@ -1,6 +1,12 @@
 ---
 name: obsidian-interweave-engine
+version: 1.0.0
 description: Audit and enrich note interweaving for this personal Obsidian vault without diluting source information. Use when linking concept/context notes, enforcing zettel tracking fields, and checking unresolved-link risk with strict dependency and budget discipline.
+metadata:
+  openclaw:
+    os: [macos]
+    requires:
+      bins: [obsidian, qmd, uvx]
 ---
 
 # Obsidian Interweave Engine

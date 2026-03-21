@@ -1,5 +1,6 @@
 ---
 name: obsidian-people-kind-manager
+version: 1.0.0
 description: >
   Validate, migrate, score, and enrich person notes in the People/ directory
   of this personal Obsidian vault. Use when requests involve person_kind
@@ -7,6 +8,15 @@ description: >
   connection_strength scoring, interaction tracking, last_interaction_date
   updates, or CRM-style queries across people notes. person_kind is the
   supertag: it selects the schema contract applied to each person note.
+metadata:
+  openclaw:
+    os:
+      - macos
+    requires:
+      bins:
+        - obsidian
+        - qmd
+        - uvx
 ---
 
 # Obsidian People Kind Manager

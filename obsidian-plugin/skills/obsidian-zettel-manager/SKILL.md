@@ -1,11 +1,17 @@
 ---
 name: obsidian-zettel-manager
+version: 1.0.0
 description: >
   Validate, migrate, and score zettel notes in this personal Obsidian vault.
   Use when requests involve zettel_kind enforcement, zettel_id generation,
   connection_strength scoring, promoting fleeting captures, or normalising
   knowledge notes in 10 Notes/ and 00 Inbox/. Treats zettel_kind as the
   Tana-supertag equivalent: it selects the note's schema contract.
+metadata:
+  openclaw:
+    os: [macos]
+    requires:
+      bins: [obsidian, qmd, uvx]
 ---
 
 # Obsidian Zettel Manager
