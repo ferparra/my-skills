@@ -33,5 +33,6 @@ jobs:
           uvx --python 3.13 \
             --with pydantic \
             --with pyyaml \
+            --with polars \
             --with pytest \
             pytest obsidian-plugin/skills/${{ matrix.skill }}/tests/ -v
