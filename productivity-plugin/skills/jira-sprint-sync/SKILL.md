@@ -11,6 +11,7 @@ description: >
   tasks, or check what's on their Jira board.
 metadata:
   openclaw:
+    os: [darwin]
     requires:
       bins:
         - uvx

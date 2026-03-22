@@ -8,6 +8,7 @@ metadata:
   author: tobi
   version: "2.0.0"
   openclaw:
+    os: [darwin]
     requires:
       bins:
         - qmd

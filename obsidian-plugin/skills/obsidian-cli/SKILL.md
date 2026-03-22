@@ -1,7 +1,14 @@
 ---
 name: obsidian-cli
 version: 1.0.0
-description: Interact with Obsidian vaults using the Obsidian CLI to read, create, search, and manage notes, tasks, properties, and more. Also supports plugin and theme development with commands to reload plugins, run JavaScript, capture errors, take screenshots, and inspect the DOM. Use when the user asks to interact with their Obsidian vault, manage notes, search vault content, perform vault operations from the command line, or develop and debug Obsidian plugins and themes.
+description: >
+  Interact with Obsidian vaults using the official Obsidian CLI (bundled inside
+  the macOS Obsidian.app — not a Homebrew package). Reads, creates, searches,
+  and manages notes, tasks, and properties. Also supports plugin and theme
+  development with commands to reload plugins, run JavaScript, capture errors,
+  take screenshots, and inspect the DOM. Requires Obsidian.app to be installed
+  and open. Use when the user asks to interact with their Obsidian vault, manage
+  notes, search vault content, or develop and debug Obsidian plugins.
 metadata:
   openclaw:
     os: [darwin]
