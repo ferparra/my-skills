@@ -25,6 +25,15 @@
       "author": {
         "name": "ferparra"
       }
+    },
+    {
+      "name": "research-plugin",
+      "source": "./research-plugin",
+      "description": "Autonomous AI-driven optimization and research skills.",
+      "version": "0.1.0",
+      "author": {
+        "name": "ferparra"
+      }
     }
   ]
 }
