@@ -373,14 +373,14 @@ def test_make_cv_entry_id_different_inputs_differ() -> None:
 
 
 def test_cv_bullet_validates_valid() -> None:
-    bullet = CvBullet(text="Built pipelines", pillars=["P1"], quantified=False)
+    bullet = CvBullet(text="Built pipelines", pillars=[CvPillar.P1], quantified=False)
     assert bullet.text == "Built pipelines"
     assert bullet.pillars == [CvPillar.P1]
 
 
 def test_cv_bullet_rejects_empty_text() -> None:
     with pytest.raises(Exception):
-        CvBullet(text="   ", pillars=["P1"])
+        CvBullet(text="   ", pillars=[CvPillar.P1])
 
 
 # ── normalize_cv_entry (migrate) ────────────────────────────────────────────
