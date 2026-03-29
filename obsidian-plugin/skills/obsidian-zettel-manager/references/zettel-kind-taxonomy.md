@@ -30,9 +30,30 @@
 ### `moc`
 - Does not carry its own propositional argument; it indexes and curates.
 - `hub_for`: list of topic domains this MOC organises (e.g., `["agent-engineering", "agentic-ai"]`).
-- Title: Topic + " Hub". Disambiguates from the primary concept note (e.g., "Agent Engineering Hub" vs "Agent Engineering").
+- Title: Topic + " Hub" for standalone MOCs. Domain/subdomain hubs use `_hub.md` filename convention.
 - Create a MOC when a topic has ≥5 linked atomics and navigation without a hub is cumbersome.
 - Aligns with existing `type/moc` tag convention.
+
+#### Domain Hub Convention
+
+The vault uses a two-level domain hierarchy with `_hub.md` files:
+
+| Hub Level | Location | `connection_strength` | Tags |
+|---|---|---|---|
+| Domain hub | `10 Notes/{Domain}/_hub.md` | `10.0` | `domain/{slug}` |
+| Subdomain hub | `10 Notes/{Domain}/{Subdomain}/_hub.md` | `8.0` | `domain/{slug}`, `subdomain/{slug}` |
+
+**Domain hub template** (15 domains):
+- `## Subdomains` — links to subdomain `_hub.md` files
+- `## Key Notes` — top atomic notes in this domain
+- `## Cross-Domain Links` — links to related domain hubs
+
+**Subdomain hub template** (49 subdomains):
+- `**Parent domain**:` — backlink to parent domain hub
+- `## Notes` — lists all atomic notes in the subdomain
+- `## Related` — links to sibling subdomain hubs
+
+Master index: `10 Notes/Domain Hubs for Vault Retrieval.md`
 
 ### `litnote`
 - One litnote per source. Captures the source's key claims and the reader's reaction or synthesis.
@@ -43,7 +64,8 @@
 
 ### `fleeting_capture`
 - Should not remain `fleeting_capture` long-term. Migrate to `atomic`, `litnote`, or `hub_synthesis` after processing.
-- Lives in `00 Inbox/` before promotion to `10 Notes/`.
+- Lives in `00 Inbox/` before promotion to `10 Notes/{Domain}/{Subdomain}/`.
+- When promoting, identify the target domain and subdomain from the note's topic. Use the domain hub's subdomain list to find the right destination.
 - `captured_from`: wikilink to the daily note or session where the capture happened (optional).
 - The migrate script warns if a `fleeting_capture` note is older than 30 days.
 - Title: prefix with "Idea - ", "Friction - ", or "Capture - " to distinguish from durable notes.
@@ -74,9 +96,9 @@ fleeting → processing → processed → evergreen
 | Status | Meaning | Typical Location |
 |---|---|---|
 | `fleeting` | Raw capture, unreviewed | `00 Inbox/` |
-| `processing` | Under active processing or in-flight enrichment | `00 Inbox/` or `10 Notes/` |
-| `processed` | Reviewed, linked, frontmatter complete | `10 Notes/` |
-| `evergreen` | Stable, well-connected, regularly revisited | `10 Notes/` |
+| `processing` | Under active processing or in-flight enrichment | `00 Inbox/` or `10 Notes/{Domain}/{Subdomain}/` |
+| `processed` | Reviewed, linked, frontmatter complete | `10 Notes/{Domain}/{Subdomain}/` |
+| `evergreen` | Stable, well-connected, regularly revisited | `10 Notes/{Domain}/{Subdomain}/` |
 
 Managed tag convention: `status/{status}` is injected by `normalize_zettel_tags` and must not be manually duplicated.
 
