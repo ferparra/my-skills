@@ -47,5 +47,5 @@ Domain hubs contain a `## Cross-Domain Links` section. Use these to discover con
 - Agentic Systems ↔ Security and Privacy (agent sandboxing)
 - Health and Performance ↔ Personal Development (habit stacks)
 - Philosophy and Psychology ↔ Personal Development (values, identity)
-- Data Engineering ↔ Work and Career (AutoGrab platform)
+- Data Engineering ↔ Work and Career (employer data platform)
 - Productivity ↔ Work and Career (professional execution)
