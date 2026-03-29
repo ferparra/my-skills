@@ -69,7 +69,9 @@ Default when collection is unknown: `-c all` (scoped to knowledge folders, exclu
 
 - Use `references/routing-map.md` for route definitions and full collection reference table.
 - Use `references/task-intent-taxonomy.md` for intent classification keywords.
+- Route `key_dates_base` work first — the broad `"review"` keyword in `weekly_feedback` would otherwise steal date-related intents such as "annual performance review" or "date link broken".
 - Route planetary task work before weekly review work so `Periodic Planning and Tasks Hub` and `Planetary Tasks.base` requests do not get absorbed by the generic `periodic` route.
-- Route exercise schema, Strong CSV sync, and `Exercise Library.base` work before generic resource/interweave handling so typed exercise-note requests resolve to the exercise manager.
+- Route exercise schema, Strong CSV sync, and `Exercise Library.base` work before generic resource/interweave handling so typed exercise-note requests (including natural-language workout logs) resolve to the exercise manager.
 - Route portfolio holdings, holdings history, and actual-holdings/base requests before brokerage export or token-guard handling so derived holdings work lands on the holdings manager.
 - Route brokerage export, transaction ledger, and `brokerage_activity_kind` requests before generic interweave or token-guard handling so investment-import work lands on the typed ledger workflow.
+- Route zettel management before weekly feedback — "hub synthesis" and "fleeting capture" are zettel signals, not weekly-review signals.
