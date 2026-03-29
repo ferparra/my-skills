@@ -85,7 +85,7 @@ The vault knowledge layer is organized into 15 domains under `10 Notes/`. Each d
 | Agentic Systems | Architecture, Context, Platforms, Observability | zettel-manager, interweave |
 | Data Engineering | Platform, Pipelines, Analytics | zettel-manager |
 | Software Engineering | Python, DevOps, Foundations | zettel-manager |
-| Work and Career | AutoGrab, Career Architecture, Sprint | planetary-tasks, zettel-manager |
+| Work and Career | Employer, Career Architecture, Sprint | planetary-tasks, zettel-manager |
 | Health and Performance | Training, Nutrition, Supplements, Biomarkers, Recovery | exercise-kind, zettel-manager |
 | Philosophy and Psychology | Stoicism, Depth Psychology, Rationalism, Literature, Core Concepts | zettel-manager, interweave |
 | Personal Development | Values and Identity, Expressive Writing, Learning Science, Thinking Models | zettel-manager |
