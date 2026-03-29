@@ -67,12 +67,12 @@
 | Collection | Folders | Use |
 |---|---|---|
 | `inbox` | `00 Inbox/` | Unprocessed captures, daily notes |
-| `notes` | `10 Notes/`, `Resilience/`, `Personal/` | Durable zettels, core knowledge |
-| `projects` | `10 Projects/`, `Projects/` | Active + legacy project notes |
-| `resources` | `20 Resources/`, `Resources/` | External references |
-| `clippings` | `Clippings/` | Web clippings awaiting processing |
+| `notes` | `10 Notes/` | Durable zettels organized by domain/subdomain, hubs, and .base files |
+| `projects` | `Projects/` | Active project execution notes |
+| `resources` | `20 Resources/` | Typed entity libraries (exercises, ingredients, biomarkers, etc.) |
+| `clippings` | `10 Notes/Reading/Clippings/` | Web clippings awaiting processing |
 | `periodic` | `Periodic/` | Weekly/daily/monthly planning |
-| `entities` | `People/`, `Companies/`, `Products/` | Person and org lookups |
+| `entities` | `People/`, `Companies/` | Person and org lookups |
 | `archive` | `Archive/` | Historical notes |
 | `all` | All above (noise excluded) | Broad cross-vault discovery |
 
