@@ -21,7 +21,7 @@
 - `weekly_feedback`
   - Keywords: weekly, review, synthesis, periodic, control plane
 - `zettel_management`
-  - Keywords: zettel, zettel_kind, zettel_id, zettel schema, connection strength, score zettels, migrate zettels, fleeting capture, promote note, evergreen note, litnote, atomic note, hub synthesis, knowledge note
+  - Keywords: zettel, zettel_kind, zettel_id, zettel schema, connection strength, score zettels, migrate zettels, fleeting capture, promote note, evergreen note, litnote, atomic note, hub synthesis, knowledge note, domain hub, _hub, hub note, which domain, browse domains, vault structure, domain hubs, navigate domain
 - `memory_capture`
   - Keywords: memory, insight, friction, pattern, durable note
 - `token_guard`
@@ -37,4 +37,5 @@
 - Evaluate `portfolio_holdings_management` before `token_guard` so active-holding reconciliation lands on the derived holdings workflow.
 - Evaluate `brokerage_activity_management` before `interweave` or `token_guard` so brokerage-export and investment-ledger requests resolve to the typed import workflow.
 - Evaluate `zettel_management` before `memory_capture` — "zettel" is a more specific signal than "memory" or "capture".
+- Route domain hub navigation and vault structure queries to `zettel_management` — these are knowledge-graph traversal requests, not generic searches.
 - Fall back to `token_guard` when uncertain.

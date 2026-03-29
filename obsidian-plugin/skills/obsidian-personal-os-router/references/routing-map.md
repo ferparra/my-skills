@@ -76,6 +76,30 @@
 | `archive` | `Archive/` | Historical notes |
 | `all` | All above (noise excluded) | Broad cross-vault discovery |
 
+## Domain Hub Reference
+
+The vault knowledge layer is organized into 15 domains under `10 Notes/`. Each domain and subdomain has a `_hub.md` navigation file.
+
+| Domain | Subdomains | Primary Skill |
+|---|---|---|
+| Agentic Systems | Architecture, Context, Platforms, Observability | zettel-manager, interweave |
+| Data Engineering | Platform, Pipelines, Analytics | zettel-manager |
+| Software Engineering | Python, DevOps, Foundations | zettel-manager |
+| Work and Career | AutoGrab, Career Architecture, Sprint | planetary-tasks, zettel-manager |
+| Health and Performance | Training, Nutrition, Supplements, Biomarkers, Recovery | exercise-kind, zettel-manager |
+| Philosophy and Psychology | Stoicism, Depth Psychology, Rationalism, Literature, Core Concepts | zettel-manager, interweave |
+| Personal Development | Values and Identity, Expressive Writing, Learning Science, Thinking Models | zettel-manager |
+| Relationships | Partnership, Family, Social | people-kind, zettel-manager |
+| Financial Stewardship | Portfolio, Strategy, Subscriptions | brokerage-activity, portfolio-holdings |
+| Knowledge Management | Vault Infrastructure, Agent Memory, Processing | zettel-manager |
+| Productivity | Planning, Goals and Habits, Projects | planetary-tasks, weekly-feedback |
+| Home and Living | IoT, Kitchen, Server | zettel-manager |
+| Recreation | Chess, Music, Outdoors, Media | zettel-manager |
+| Security and Privacy | Personal, Agentic | zettel-manager |
+| Reading | Clippings | interweave |
+
+Hub navigation entry point: `10 Notes/Domain Hubs for Vault Retrieval.md`
+
 ## Shared Read Budget
 
 - Max files: 5
