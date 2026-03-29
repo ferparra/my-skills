@@ -10,7 +10,7 @@ Use idea-level notes, typically:
 
 Use execution anchors, typically:
 - `[[Periodic/...]]`
-- `[[10 Projects/...]]` or `[[Projects/...]]`
+- `[[Projects/...]]`
 - `[[00 Inbox/...]]` when context is capture/process state
 
 ## Placement
