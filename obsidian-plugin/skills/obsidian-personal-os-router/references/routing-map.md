@@ -32,6 +32,11 @@
   - Goal: maintain `10 Notes/Key Dates.base` formulas and date-note links with path/existence checks
   - QMD collections: `periodic` (weekly/monthly/yearly notes), `inbox` (daily notes by date)
 
+- `obsidian-cv-entry-manager`
+  - Trigger: cv entry, cv_entry_kind, cv entry kind, CV Entries.base, career entry, role note, cv schema, curriculum vitae, resume, cv master, extract cv, export cv, career timeline, pillar alignment, quantification gap, achievement bullet, role history, work history, employment history
+  - Goal: standardize career entry frontmatter, validate cv_entry_kind, extract cv-master.md into typed notes, maintain CV Entries.base, and export tailored CVs
+  - QMD collections: `resources` (career entry notes), `projects` (cv-master.md and job search context)
+
 - `obsidian-interweave-engine` (PIT priority)
   - Trigger: PIT, point-in-time, snapshot, pit_status
   - Goal: keep PIT notes highly retrievable via concept/context interweaving
