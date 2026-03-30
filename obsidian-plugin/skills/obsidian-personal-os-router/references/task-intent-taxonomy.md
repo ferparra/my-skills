@@ -20,6 +20,8 @@ Route evaluation order matches the list below — first match wins.
   - Keywords: pit, point-in-time, point in time, snapshot, pit_status
 - `zettel_management`
   - Keywords: zettel, zettel_kind, zettel_id, zettel schema, connection strength, connection_strength, score zettels, migrate zettels, fleeting capture, promote note, evergreen note, litnote, atomic note, hub synthesis, rough idea note, permanent note, how should i file, file it in my note, zettel frontmatter, properly structured
+- `cv_entry_management`
+  - Keywords: cv entry, cv_entry_kind, cv entry kind, cv entries base, cv entries.base, career entry, role note, cv schema, curriculum vitae, resume, cv master, extract cv, export cv, career timeline, pillar alignment, quantification gap, achievement bullet, role history, work history, employment history
 - `weekly_feedback`
   - Keywords: weekly, weekly review, control plane, periodic note, periodic review, weekly note, what i accomplished, accomplished last week, still open, thread alignment, open closure signal, closure signal
 - `interweave`
@@ -39,4 +41,5 @@ Route evaluation order matches the list below — first match wins.
 - Evaluate `brokerage_activity_management` before `interweave` or `token_guard` so brokerage-export and investment-ledger requests resolve to the typed import workflow.
 - Evaluate `zettel_management` before `weekly_feedback` — "hub synthesis" and "fleeting capture" are zettel signals, not weekly-review signals.
 - Evaluate `zettel_management` before `memory_capture` — "zettel" is a more specific signal than "memory" or "capture".
+- Evaluate `cv_entry_management` before `weekly_feedback` and `interweave` — "career", "resume", and "role" are CV signals, not generic periodic or linking signals.
 - Fall back to `token_guard` when uncertain.

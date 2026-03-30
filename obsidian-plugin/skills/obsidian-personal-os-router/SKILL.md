@@ -58,6 +58,7 @@ Each route targets specific collections to minimise token cost. Never use `-c ob
 | `notebooklm-bases-manager` | `inbox` | `notes` |
 | `key-dates-base-manager` | `periodic` | `inbox` |
 | `weekly-feedback-loop` | `periodic` | `inbox` |
+| `cv-entry-manager` | `resources` | `projects` |
 | `interweave-engine` | `notes` | `clippings` |
 | `agent-memory-capture` | `notes` | `inbox` |
 | `token-budget-guard` | `all` | — |
@@ -75,3 +76,4 @@ Default when collection is unknown: `-c all` (scoped to knowledge folders, exclu
 - Route portfolio holdings, holdings history, and actual-holdings/base requests before brokerage export or token-guard handling so derived holdings work lands on the holdings manager.
 - Route brokerage export, transaction ledger, and `brokerage_activity_kind` requests before generic interweave or token-guard handling so investment-import work lands on the typed ledger workflow.
 - Route zettel management before weekly feedback — "hub synthesis" and "fleeting capture" are zettel signals, not weekly-review signals.
+- Route CV entry management before weekly feedback and interweave — "career", "resume", and "role" are CV signals, not generic periodic or linking signals.
