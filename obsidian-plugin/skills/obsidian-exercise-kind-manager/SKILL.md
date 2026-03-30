@@ -136,7 +136,7 @@ The fix pass updates Strong-managed frontmatter fields such as:
 ### 8. Render the Exercise Base
 
 ```bash
-uvx --from python --with pyyaml python \
+uvx --from python --with pydantic --with pyyaml python \
   .skills/obsidian-exercise-kind-manager/scripts/render_exercise_base.py \
   --output "20 Resources/Exercises/Exercise Library.base"
 ```

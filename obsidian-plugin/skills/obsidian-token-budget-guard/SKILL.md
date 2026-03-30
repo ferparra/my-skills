@@ -16,13 +16,13 @@ Use this skill before loading broad context.
 ## Workflow
 
 1. Build candidate file list with minimal search.
-2. Run `uvx --from python python scripts/token_guard.py --candidate-files "<csv>" --max-files 5 --max-chars 22000 --max-snippets 12`.
+2. Run `uvx --from python --with pydantic --with pyyaml python scripts/token_guard.py --candidate-files "<csv>" --max-files 5 --max-chars 22000 --max-snippets 12`.
 3. If guard fails, reduce scope and rerun.
 4. Proceed only when guard returns `ok: true`.
 
 ## Output Contract
 
-`uvx --from python python scripts/token_guard.py ...` returns JSON with:
+`uvx --from python --with pydantic --with pyyaml python scripts/token_guard.py ...` returns JSON with:
 - `ok`
 - `summary`
 - `limits`

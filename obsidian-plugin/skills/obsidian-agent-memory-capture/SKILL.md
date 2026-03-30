@@ -16,14 +16,14 @@ Use this skill to convert execution residue into durable memory notes.
 ## Workflow
 
 1. Target a candidate note in `00 Inbox`, `10 Notes`, or `20 Resources`.
-2. Run `uvx --from python python scripts/memory_capture_audit.py --path "<note-path>"`.
+2. Run `uvx --from python --with pydantic --with pyyaml python scripts/memory_capture_audit.py --path "<note-path>"`.
 3. Resolve missing lifecycle fields and link requirements.
 4. Keep one core idea per note.
 5. Re-run audit and stop only when compliance passes.
 
 ## Output Contract
 
-`uvx --from python python scripts/memory_capture_audit.py ...` returns JSON with:
+`uvx --from python --with pydantic --with pyyaml python scripts/memory_capture_audit.py ...` returns JSON with:
 - lifecycle compliance
 - required field checks
 - concept/context link checks
