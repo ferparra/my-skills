@@ -21,7 +21,6 @@ import shutil
 from datetime import datetime
 from pathlib import Path
 from dataclasses import dataclass, field, asdict
-from typing import List, Optional, Dict, Any
 from calendar import monthrange
 
 # Import local modules
@@ -75,7 +74,7 @@ class RepoInfo:
     """Information about a repository."""
     name: str
     private: bool
-    language: Optional[str]
+    language: str | None
     default_branch: str
     has_wiki: bool
 
@@ -84,23 +83,23 @@ class RepoInfo:
 class RepoSupplyChain:
     """Supply chain scan results for a repository."""
     status: str                    # CLEAN, WARN, VULN
-    vulnerabilities: List[Dict[str, Any]] = field(default_factory=list)
-    warnings: List[Dict[str, Any]] = field(default_factory=list)
+    vulnerabilities: list[dict[str, object]] = field(default_factory=list)
+    warnings: list[dict[str, object]] = field(default_factory=list)
 
 
 @dataclass
 class RepoPII:
     """PII scan results for a repository."""
     status: str                    # CLEAN, RISK, REVIEW
-    findings: List[Dict[str, Any]] = field(default_factory=list)
+    findings: list[dict[str, object]] = field(default_factory=list)
 
 
 @dataclass
 class RepoContributor:
     """Contributor audit results for a repository."""
     status: str                    # CLEAN, UNKNOWN
-    contributors: List[Dict[str, Any]] = field(default_factory=list)
-    unknown_contributors: List[Dict[str, Any]] = field(default_factory=list)
+    contributors: list[dict[str, object]] = field(default_factory=list)
+    unknown_contributors: list[dict[str, object]] = field(default_factory=list)
 
 
 @dataclass
@@ -108,7 +107,7 @@ class RepoResult:
     """Complete scan results for a single repository."""
     name: str
     private: bool
-    language: Optional[str]
+    language: str | None
     default_branch: str
     has_wiki: bool
     supply_chain: RepoSupplyChain
@@ -124,7 +123,7 @@ class SecurityReviewReport:
     total_repos: int
     public_repos: int
     private_repos: int
-    repositories: List[RepoResult]
+    repositories: list[RepoResult]
     overall_status: str  # GREEN, YELLOW, RED
     telegram_summary: str
 
@@ -136,9 +135,9 @@ def is_last_day_of_month() -> bool:
     return today.day == last_day
 
 
-def get_all_repos() -> List[RepoInfo]:
+def get_all_repos() -> list[RepoInfo]:
     """Get all repositories for the owner via GitHub API."""
-    repos = []
+    repos: list[RepoInfo] = []
     
     try:
         result = subprocess.run(
@@ -172,9 +171,9 @@ def get_all_repos() -> List[RepoInfo]:
     return repos
 
 
-def get_repo_contributors(owner: str, repo: str) -> List[Dict[str, Any]]:
+def get_repo_contributors(owner: str, repo: str) -> list[dict[str, object]]:
     """Get all contributors for a repository."""
-    contributors = []
+    contributors: list[dict[str, object]] = []
     
     try:
         result = subprocess.run(
@@ -202,7 +201,7 @@ def get_repo_contributors(owner: str, repo: str) -> List[Dict[str, Any]]:
     return contributors
 
 
-def is_allowed_contributor(login: str, author_email: Optional[str] = None) -> bool:
+def is_allowed_contributor(login: str, author_email: str | None = None) -> bool:
     """Check if a contributor is an allowed (known) entity."""
     # Direct login check
     if login in ALLOWED_CONTRIBUTORS:
@@ -307,7 +306,7 @@ def scan_repo_pii(owner: str, repo: str, clone_path: Path,
     return result
 
 
-def determine_overall_status(repos: List[RepoResult]) -> str:
+def determine_overall_status(repos: list[RepoResult]) -> str:
     """Determine overall security status across all repos."""
     has_vuln = False
     has_risk = False
@@ -339,19 +338,19 @@ def determine_overall_status(repos: List[RepoResult]) -> str:
         return "GREEN"
 
 
-def format_telegram_summary(repos: List[RepoInfo], 
-                            repo_results: List[RepoResult], 
+def format_telegram_summary(repos: list[RepoInfo],
+                            repo_results: list[RepoResult],
                             overall_status: str) -> str:
     """Format the Telegram summary message."""
     now = datetime.now()
     month_year = now.strftime("%B %Y")
-    
+
     # Count stats
     public_count = sum(1 for r in repos if not r.private)
     private_count = sum(1 for r in repos if r.private)
-    
+
     # Language breakdown
-    lang_counts = {}
+    lang_counts: dict[str, int] = {}
     for r in repos:
         lang = r.language or "Unknown"
         lang_counts[lang] = lang_counts.get(lang, 0) + 1
@@ -613,18 +612,18 @@ def run_security_review() -> int:
         shutil.rmtree(temp_dir, ignore_errors=True)
 
 
-def main():
+def main() -> None:
     """Main entry point."""
     import sys
-    
+
     # Check for --force flag
     force = "--force" in sys.argv
-    
+
     if not is_last_day_of_month() and not force:
         print("This skill is designed to run on the last day of the month.")
         print("Use --force to run anyway for testing.")
         sys.exit(0)
-    
+
     exit_code = run_security_review()
     sys.exit(exit_code)
 

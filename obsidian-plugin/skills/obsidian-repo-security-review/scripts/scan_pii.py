@@ -12,7 +12,16 @@ import os
 import subprocess
 from pathlib import Path
 from dataclasses import dataclass, field, asdict
-from typing import List, Optional
+
+from repo_security_config import (
+    PII_PATTERNS,
+    SCANNABLE_EXTENSIONS,
+    SCANNABLE_FILENAMES,
+    SKIP_DIRECTORIES,
+    MAX_FILE_SIZE_BYTES,
+    REDACT_MAX_LENGTH,
+    CONTEXT_LINES,
+)
 
 
 @dataclass
@@ -26,141 +35,6 @@ class PIIFinding:
     context: str        # Surrounding context (redacted)
 
 
-# Known malicious/compromised packages (for reference, not PII but security)
-KNOWN_MALICIOUS_PACKAGES = frozenset([
-    "event-stream",
-    "flatmap-stream", 
-    "ua-parser-js",
-    "coa",
-    "rc",
-    "j舅",
-])
-
-# Patterns for detecting sensitive information
-PATTERNS = {
-    # GitHub Tokens
-    "github_token_gho": {
-        "pattern": r"gho_[A-Za-z0-9]{36}",
-        "severity": "HIGH",
-        "description": "GitHub OAuth token",
-    },
-    "github_token_ghp": {
-        "pattern": r"ghp_[A-Za-z0-9]{36}",
-        "severity": "HIGH", 
-        "description": "GitHub personal access token",
-    },
-    "github_pat": {
-        "pattern": r"github_pat_[A-Za-z0-9_]{22,}",
-        "severity": "HIGH",
-        "description": "GitHub personal access token (classic)",
-    },
-    
-    # AWS Keys
-    "aws_access_key": {
-        "pattern": r"AKIA[A-Z0-9]{16}",
-        "severity": "HIGH",
-        "description": "AWS Access Key ID",
-    },
-    "aws_secret_key": {
-        "pattern": r"(?i)aws.{0,20}secret.{0,20}[\"'][A-Za-z0-9/+=]{40}[\"']",
-        "severity": "HIGH",
-        "description": "AWS Secret Access Key",
-    },
-    
-    # Private Keys
-    "private_key": {
-        "pattern": r"-----BEGIN\s+(RSA\s+|DSA\s+|EC\s+|PGP\s+)?PRIVATE\s+KEY-----",
-        "severity": "HIGH",
-        "description": "Private key file",
-    },
-    
-    # Generic API Keys (high entropy strings in API context)
-    "api_key_generic": {
-        "pattern": r"(?i)(api[_-]?key|apikey|api[_-]?secret|secret[_-]?key)[\s:=]+['\"]?[A-Za-z0-9]{32,64}['\"]?",
-        "severity": "MEDIUM",
-        "description": "Generic API key",
-    },
-    
-    # Stripe Keys
-    "stripe_key": {
-        "pattern": r"sk_live_[A-Za-z0-9]{24,}",
-        "severity": "HIGH",
-        "description": "Stripe live API key",
-    },
-    "stripe_key_test": {
-        "pattern": r"sk_test_[A-Za-z0-9]{24,}",
-        "severity": "MEDIUM",
-        "description": "Stripe test API key",
-    },
-    
-    # Phone numbers - Australian mobile
-    "phone_au_mobile": {
-        "pattern": r"\b04[0-9]{7}\b",
-        "severity": "HIGH",
-        "description": "Australian mobile phone number",
-    },
-    
-    # Phone numbers - International US format
-    "phone_us": {
-        "pattern": r"\+?1?\s*[-.]?\s*\(?[0-9]{3}\)?\s*[-.]?\s*[0-9]{3}\s*[-.]?\s*[0-9]{4}",
-        "severity": "MEDIUM",
-        "description": "US phone number",
-    },
-    
-    # Email addresses (non-github.com)
-    "email_personal": {
-        "pattern": r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}",
-        "severity": "MEDIUM",
-        "description": "Email address",
-        "exclude_domains": ["github.com", "users.noreply.github.com"],
-    },
-    
-    # Passwords in config files
-    "password_literal": {
-        "pattern": r"(?i)(password|passwd|pwd|secret)\s*[:=]\s*['\"][^'\"]{8,128}['\"]",
-        "severity": "HIGH",
-        "description": "Hardcoded password",
-    },
-    
-    # Slack tokens
-    "slack_token": {
-        "pattern": r"xox[baprs]-[0-9]{10,13}-[0-9]{10,13}-[a-zA-Z0-9]{24,}",
-        "severity": "HIGH",
-        "description": "Slack token",
-    },
-    
-    # Telegram bot token
-    "telegram_token": {
-        "pattern": r"[0-9]{8,10}:[A-Za-z0-9_-]{35}",
-        "severity": "HIGH",
-        "description": "Telegram bot token",
-    },
-    
-    # JWT tokens
-    "jwt_token": {
-        "pattern": r"eyJ[A-Za-z0-9_-]\.eyJ[A-Za-z0-9_-]\.[A-Za-z0-9_-]+",
-        "severity": "HIGH",
-        "description": "JWT token",
-    },
-}
-
-# File extensions to scan
-SCANNABLE_EXTENSIONS = frozenset([
-    '.py', '.js', '.ts', '.jsx', '.tsx', '.json', '.yaml', '.yml',
-    '.txt', '.md', '.rst', '.toml', '.env', '.ini', '.cfg',
-    '.sh', '.bash', '.zsh', '.fish', '.ps1', '.bat', '.cmd',
-    '.rb', '.go', '.rs', '.java', '.kt', '.swift', '.c', '.cpp',
-    '.h', '.hpp', '.cs', '.php', '.pl', '.r', '.scala', '.vb',
-    '.html', '.htm', '.xml', '.sql', '.graphql', '.vue', '.svelte',
-])
-
-# Directories to skip
-SKIP_DIRECTORIES = frozenset([
-    '.git', 'node_modules', '__pycache__', '.venv', 'venv',
-    '.pytest_cache', '.mypy_cache', '.tox', 'build', 'dist',
-    '.eggs', '*.egg-info', 'vendor', 'third_party', 'third-party',
-    '.next', '.nuxt', '.cache', '.tmp', 'tmp', 'temp', '.temp',
-])
 
 
 def should_scan_file(file_path: Path) -> bool:
@@ -176,25 +50,20 @@ def should_scan_file(file_path: Path) -> bool:
         return True
     
     # Check if filename suggests it's a config/secrets file
-    scanable_names = frozenset([
-        'Makefile', 'Dockerfile', 'docker-compose', 'Gemfile', 
-        'Podfile', 'Package.swift', 'Cargo.toml', 'go.mod',
-        'requirements.txt', 'Pipfile', 'setup.py', 'build.gradle',
-    ])
-    if file_path.name in scanable_names:
+    if file_path.name in SCANNABLE_FILENAMES:
         return True
     
     return False
 
 
-def redact_secret(text: str, max_length: int = 20) -> str:
+def redact_secret(text: str, max_length: int = REDACT_MAX_LENGTH) -> str:
     """Redact a secret for safe display."""
     if len(text) <= max_length:
         return "*" * len(text)
     return text[:max_length // 2] + "*" * (len(text) - max_length // 2)
 
 
-def get_line_context(content: str, line_num: int, context_lines: int = 2) -> str:
+def get_line_context(content: str, line_num: int, context_lines: int = CONTEXT_LINES) -> str:
     """Get surrounding context for a line number."""
     lines = content.split('\n')
     start = max(0, line_num - context_lines)
@@ -202,17 +71,17 @@ def get_line_context(content: str, line_num: int, context_lines: int = 2) -> str
     return '\n'.join(lines[start:end])
 
 
-def scan_file(file_path: Path) -> List[PIIFinding]:
+def scan_file(file_path: Path) -> list[PIIFinding]:
     """
     Scan a single file for PII.
-    
+
     Args:
         file_path: Path to the file to scan
-        
+
     Returns:
         List of PIIFinding objects
     """
-    findings = []
+    findings: list[PIIFinding] = []
     
     if not file_path.exists() or not file_path.is_file():
         return findings
@@ -224,17 +93,17 @@ def scan_file(file_path: Path) -> List[PIIFinding]:
         except (UnicodeDecodeError, PermissionError):
             return findings
         
-        # Skip very large files (>5MB)
-        if len(content) > 5 * 1024 * 1024:
+        # Skip very large files
+        if len(content) > MAX_FILE_SIZE_BYTES:
             return findings
         
     except Exception:
         return findings
     
-    for finding_type, config in PATTERNS.items():
-        pattern = config["pattern"]
-        severity = config["severity"]
-        exclude_domains = config.get("exclude_domains", [])
+    for finding_type, config in PII_PATTERNS.items():
+        pattern = config.pattern
+        severity = config.severity
+        exclude_domains = config.exclude_domains
         
         try:
             regex = re.compile(pattern, re.IGNORECASE if pattern.startswith('(?i)') else 0)
@@ -273,17 +142,17 @@ def scan_file(file_path: Path) -> List[PIIFinding]:
     return findings
 
 
-def scan_git_history(clone_path: Path) -> List[PIIFinding]:
+def scan_git_history(clone_path: Path) -> list[PIIFinding]:
     """
     Scan git commit messages for PII.
-    
+
     Args:
         clone_path: Path to the cloned repository
-        
+
     Returns:
         List of PIIFinding objects
     """
-    findings = []
+    findings: list[PIIFinding] = []
     
     try:
         # Get commit messages
@@ -327,18 +196,18 @@ def scan_git_history(clone_path: Path) -> List[PIIFinding]:
     return findings
 
 
-def scan_github_issues_and_prs(owner: str, repo: str) -> List[PIIFinding]:
+def scan_github_issues_and_prs(owner: str, repo: str) -> list[PIIFinding]:
     """
     Scan GitHub Issues and PRs for PII.
-    
+
     Args:
         owner: Repository owner
         repo: Repository name
-        
+
     Returns:
         List of PIIFinding objects
     """
-    findings = []
+    findings: list[PIIFinding] = []
     
     try:
         # Get issues
@@ -382,21 +251,21 @@ def scan_github_issues_and_prs(owner: str, repo: str) -> List[PIIFinding]:
     return findings
 
 
-def scan_repo_clone(clone_path: Path, owner: str, repo: str, 
-                    has_wiki: bool = False) -> List[PIIFinding]:
+def scan_repo_clone(clone_path: Path, owner: str, repo: str,
+                    has_wiki: bool = False) -> list[PIIFinding]:
     """
     Scan a cloned repository for PII.
-    
+
     Args:
         clone_path: Path to the cloned repository
         owner: Repository owner
         repo: Repository name
         has_wiki: Whether the repo has a wiki enabled
-        
+
     Returns:
         List of PIIFinding objects
     """
-    all_findings = []
+    all_findings: list[PIIFinding] = []
     
     # Scan all files
     for root, dirs, files in os.walk(clone_path):
@@ -421,23 +290,23 @@ def scan_repo_clone(clone_path: Path, owner: str, repo: str,
     return all_findings
 
 
-def format_findings_summary(findings: List[PIIFinding]) -> str:
+def format_findings_summary(findings: list[PIIFinding]) -> str:
     """Format a list of findings into a human-readable summary."""
     if not findings:
         return "No PII detected"
-    
-    by_type = {}
+
+    by_type: dict[str, list[PIIFinding]] = {}
     for f in findings:
         if f.type not in by_type:
             by_type[f.type] = []
         by_type[f.type].append(f)
-    
-    lines = []
+
+    lines: list[str] = []
     for pii_type, type_findings in sorted(by_type.items(), key=lambda x: -len(x[1])):
         severity = type_findings[0].severity
         count = len(type_findings)
         lines.append(f"  [{severity}] {pii_type}: {count} occurrence(s)")
-    
+
     return '\n'.join(lines)
 
 
