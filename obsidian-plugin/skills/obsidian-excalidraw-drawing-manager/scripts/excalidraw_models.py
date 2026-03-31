@@ -8,7 +8,8 @@ from collections import Counter
 from datetime import date, datetime
 from enum import StrEnum
 from pathlib import Path
-from typing import Any, Literal, Union
+from collections.abc import Sequence
+from typing import Any, Literal, Union, cast
 
 import yaml
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, field_validator, model_validator
@@ -145,7 +146,7 @@ class BaseElement(BaseModel):
     boundElements: list[BoundElementRef] | None = None
     link: str | None = None
     locked: bool = False
-    roundness: dict | None = None
+    roundness: dict[Any, Any] | None = None
 
 
 class RectangleElement(BaseElement):
@@ -275,7 +276,7 @@ class ExcalidrawDrawing(BaseModel):
     type: Literal["excalidraw"] = "excalidraw"
     version: int
     source: str | None = None
-    elements: list[ExcalidrawElement]
+    elements: Sequence[ExcalidrawElement]
     appState: AppState = Field(default_factory=AppState)
 
     @field_validator("version")
@@ -355,7 +356,7 @@ def load_markdown_note(path: Path) -> NoteParts:
     return NoteParts(path=path, frontmatter=frontmatter, body=body)
 
 
-def extract_excalidraw_json(body: str, file_path: Path | None = None) -> dict | None:
+def extract_excalidraw_json(body: str, file_path: Path | None = None) -> dict[str, Any] | None:
     """Extract and parse the Excalidraw JSON from ## Drawing section."""
     match = JSON_BLOCK.search(body)
     if not match:
@@ -375,7 +376,7 @@ def extract_excalidraw_json(body: str, file_path: Path | None = None) -> dict | 
         )
     else:
         try:
-            return json.loads(content)
+            return cast(dict[str, Any], json.loads(content))
         except json.JSONDecodeError as e:
             raise ValueError(f"Failed to parse JSON: {e}")
 
@@ -398,7 +399,10 @@ def extract_text_element_ids(body: str) -> list[tuple[str, str]]:
 
 def parse_element(raw: dict[str, Any]) -> BaseElement:
     """Parse a raw element dict into typed element model."""
-    element_type = ElementType(raw.get("type"))
+    type_value = raw.get("type")
+    if type_value is None:
+        raise ValueError("Element missing required 'type' field")
+    element_type = ElementType(type_value)
     model_cls = MODEL_BY_TYPE[element_type]
     return model_cls.model_validate(raw)
 
@@ -424,7 +428,7 @@ def validate_frontmatter(frontmatter: dict[str, Any]) -> tuple[bool, list[str]]:
 # ============================================================================
 
 
-def check_duplicate_ids(elements: list[ExcalidrawElement]) -> tuple[list[str], list[str]]:
+def check_duplicate_ids(elements: Sequence[ExcalidrawElement]) -> tuple[list[str], list[str]]:
     """Check for duplicate element IDs."""
     errors = []
     id_counts = Counter(el.id for el in elements)
@@ -434,7 +438,7 @@ def check_duplicate_ids(elements: list[ExcalidrawElement]) -> tuple[list[str], l
     return errors, []
 
 
-def check_text_bindings(elements: list[ExcalidrawElement]) -> tuple[list[str], list[str]]:
+def check_text_bindings(elements: Sequence[ExcalidrawElement]) -> tuple[list[str], list[str]]:
     """Check that text element containerIds reference valid elements."""
     errors = []
     element_ids = {el.id for el in elements}
@@ -449,7 +453,7 @@ def check_text_bindings(elements: list[ExcalidrawElement]) -> tuple[list[str], l
     return errors, []
 
 
-def check_arrow_bindings(elements: list[ExcalidrawElement]) -> tuple[list[str], list[str]]:
+def check_arrow_bindings(elements: Sequence[ExcalidrawElement]) -> tuple[list[str], list[str]]:
     """Check that arrow bindings reference valid elements."""
     errors = []
     element_ids = {el.id for el in elements}
@@ -469,7 +473,7 @@ def check_arrow_bindings(elements: list[ExcalidrawElement]) -> tuple[list[str], 
     return errors, []
 
 
-def check_bidirectional_bindings(elements: list[ExcalidrawElement]) -> tuple[list[str], list[str]]:
+def check_bidirectional_bindings(elements: Sequence[ExcalidrawElement]) -> tuple[list[str], list[str]]:
     """Check bidirectional consistency between containers and text."""
     errors = []
     element_map = {el.id: el for el in elements}
@@ -501,7 +505,7 @@ def check_bidirectional_bindings(elements: list[ExcalidrawElement]) -> tuple[lis
     return errors, []
 
 
-def check_zero_dimensions(elements: list[ExcalidrawElement]) -> tuple[list[str], list[str]]:
+def check_zero_dimensions(elements: Sequence[ExcalidrawElement]) -> tuple[list[str], list[str]]:
     """Check for zero-dimension shapes (warning only)."""
     warnings = []
     for el in elements:
@@ -513,7 +517,7 @@ def check_zero_dimensions(elements: list[ExcalidrawElement]) -> tuple[list[str],
     return [], warnings
 
 
-def check_text_original_text(elements: list[ExcalidrawElement]) -> tuple[list[str], list[str]]:
+def check_text_original_text(elements: Sequence[ExcalidrawElement]) -> tuple[list[str], list[str]]:
     """Check for text/originalText mismatch (warning only)."""
     warnings = []
     for el in elements:
@@ -526,7 +530,7 @@ def check_text_original_text(elements: list[ExcalidrawElement]) -> tuple[list[st
     return [], warnings
 
 
-def check_color_values(elements: list[ExcalidrawElement]) -> tuple[list[str], list[str]]:
+def check_color_values(elements: Sequence[ExcalidrawElement]) -> tuple[list[str], list[str]]:
     """Check for invalid color values (warning only)."""
     warnings = []
     color_pattern = re.compile(r"^(#[0-9a-fA-F]{3,8}|transparent)$")
@@ -539,7 +543,7 @@ def check_color_values(elements: list[ExcalidrawElement]) -> tuple[list[str], li
     return [], warnings
 
 
-def check_orphaned_groups(elements: list[ExcalidrawElement]) -> tuple[list[str], list[str]]:
+def check_orphaned_groups(elements: Sequence[ExcalidrawElement]) -> tuple[list[str], list[str]]:
     """Check for groupIds that appear only once (warning only)."""
     warnings = []
     all_group_ids: list[str] = []
@@ -553,7 +557,7 @@ def check_orphaned_groups(elements: list[ExcalidrawElement]) -> tuple[list[str],
     return [], warnings
 
 
-def check_text_elements_sync(body: str, elements: list[ExcalidrawElement]) -> tuple[list[str], list[str]]:
+def check_text_elements_sync(body: str, elements: Sequence[ExcalidrawElement]) -> tuple[list[str], list[str]]:
     """Check that ## Text Elements section is in sync with actual text elements."""
     warnings = []
     markdown_text_ids = {id_ for _, id_ in extract_text_element_ids(body)}

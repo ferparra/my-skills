@@ -9,6 +9,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent / "scripts"))
 
 import pytest
 from excalidraw_models import (
+    ElementType,
     ExcalidrawFrontmatter,
     TextElement,
     RectangleElement,
@@ -27,7 +28,7 @@ from pydantic import ValidationError
 
 
 class TestFrontmatter:
-    def test_valid_frontmatter(self):
+    def test_valid_frontmatter(self) -> None:
         """Valid frontmatter passes."""
         fm = {
             "excalidraw-plugin": "parsed",
@@ -37,21 +38,21 @@ class TestFrontmatter:
         assert ok
         assert not errors
 
-    def test_missing_plugin_field(self):
+    def test_missing_plugin_field(self) -> None:
         """Missing excalidraw-plugin field fails."""
         fm = {"tags": ["excalidraw"]}
         ok, errors = validate_frontmatter(fm)
         assert not ok
         assert len(errors) > 0
 
-    def test_wrong_plugin_value(self):
+    def test_wrong_plugin_value(self) -> None:
         """Wrong plugin value fails."""
         fm = {"excalidraw-plugin": "raw", "tags": ["excalidraw"]}
         ok, errors = validate_frontmatter(fm)
         assert not ok
         assert any("parsed" in str(e) for e in errors)
 
-    def test_missing_tag(self):
+    def test_missing_tag(self) -> None:
         """Missing excalidraw tag fails."""
         fm = {"excalidraw-plugin": "parsed", "tags": []}
         ok, errors = validate_frontmatter(fm)
@@ -60,7 +61,7 @@ class TestFrontmatter:
 
 
 class TestElements:
-    def test_text_element(self):
+    def test_text_element(self) -> None:
         """Text element parses correctly."""
         data = {
             "id": "text1",
@@ -87,7 +88,7 @@ class TestElements:
         assert el.text == "Hello"
         assert el.containerId is None
 
-    def test_rectangle_element(self):
+    def test_rectangle_element(self) -> None:
         """Rectangle element parses correctly."""
         data = {
             "id": "rect1",
@@ -104,9 +105,9 @@ class TestElements:
         }
         el = RectangleElement.model_validate(data)
         assert el.id == "rect1"
-        assert el.type == "rectangle"
+        assert el.type == ElementType.RECTANGLE
 
-    def test_arrow_with_bindings(self):
+    def test_arrow_with_bindings(self) -> None:
         """Arrow with bindings parses correctly."""
         data = {
             "id": "arrow1",
@@ -125,12 +126,14 @@ class TestElements:
             "versionNonce": 1,
         }
         el = ArrowElement.model_validate(data)
+        assert el.startBinding is not None
         assert el.startBinding.elementId == "rect1"
+        assert el.endBinding is not None
         assert el.endBinding.elementId == "rect2"
 
 
 class TestDrawing:
-    def test_valid_drawing(self):
+    def test_valid_drawing(self) -> None:
         """Valid drawing parses."""
         data = {
             "type": "excalidraw",
@@ -142,7 +145,7 @@ class TestDrawing:
         assert drawing.version == 2
         assert drawing.type == "excalidraw"
 
-    def test_wrong_version(self):
+    def test_wrong_version(self) -> None:
         """Wrong version fails."""
         data = {
             "type": "excalidraw",
@@ -154,12 +157,12 @@ class TestDrawing:
 
 
 class TestAntiPatterns:
-    def test_duplicate_ids(self):
+    def test_duplicate_ids(self) -> None:
         """Duplicate IDs detected."""
         elements = [
             RectangleElement(
                 id="dup",
-                type="rectangle",
+                type=ElementType.RECTANGLE,
                 x=0,
                 y=0,
                 width=100,
@@ -170,7 +173,7 @@ class TestAntiPatterns:
             ),
             RectangleElement(
                 id="dup",
-                type="rectangle",
+                type=ElementType.RECTANGLE,
                 x=200,
                 y=0,
                 width=100,
@@ -184,12 +187,12 @@ class TestAntiPatterns:
         assert len(errors) == 1
         assert "dup" in errors[0]
 
-    def test_broken_text_binding(self):
+    def test_broken_text_binding(self) -> None:
         """Broken text binding detected."""
         elements = [
             TextElement(
                 id="text1",
-                type="text",
+                type=ElementType.TEXT,
                 x=0,
                 y=0,
                 width=100,
@@ -211,12 +214,12 @@ class TestAntiPatterns:
         assert len(errors) == 1
         assert "nonexistent" in errors[0]
 
-    def test_broken_arrow_binding(self):
+    def test_broken_arrow_binding(self) -> None:
         """Broken arrow binding detected."""
         elements = [
             ArrowElement(
                 id="arrow1",
-                type="arrow",
+                type=ElementType.ARROW,
                 x=0,
                 y=0,
                 width=200,
@@ -234,7 +237,7 @@ class TestAntiPatterns:
 
 
 class TestMarkdownParsing:
-    def test_extract_json(self):
+    def test_extract_json(self) -> None:
         """Extract JSON from markdown."""
         body = """
 # Excalidraw Data
@@ -250,7 +253,7 @@ class TestMarkdownParsing:
         assert result is not None
         assert result["type"] == "excalidraw"
 
-    def test_extract_text_elements(self):
+    def test_extract_text_elements(self) -> None:
         """Extract text element IDs."""
         body = """
 ## Text Elements
