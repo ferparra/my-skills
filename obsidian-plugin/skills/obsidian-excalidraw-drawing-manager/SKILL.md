@@ -2,11 +2,9 @@
 name: obsidian-excalidraw-drawing-manager
 version: 1.0.0
 description: >
-  Validate Excalidraw drawings (.excalidraw.md files) in this personal Obsidian vault.
-  Use when requests involve excalidraw plugin validation, drawing element binding integrity,
-  excalidraw schema enforcement, or **/*.excalidraw.md file audits. Detects anti-patterns:
-  broken text/arrow bindings, duplicate element IDs, bidirectional binding mismatches,
-  zero-dimension shapes, and markdown/JSON sync issues.
+  Validate Excalidraw drawings (.excalidraw.md) with Pydantic v2 models. Detects broken bindings,
+  duplicate IDs, zero-dimension shapes, invalid colors. Use for excalidraw validation, schema
+  enforcement, drawing integrity checks. Outputs {"ok": bool} for autoresearcher.
 metadata:
   openclaw:
     os: [darwin]

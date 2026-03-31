@@ -5,7 +5,7 @@ import argparse
 from pathlib import Path
 from typing import Any
 
-from config import ExcalidrawConfig
+from excalidraw_config import ExcalidrawConfig
 from models import (
     dump_json,
     extract_excalidraw_json,
