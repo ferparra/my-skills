@@ -44,7 +44,7 @@ PLACEHOLDER_PATTERNS = [
 
 # Regex for wiki-links and markdown links (to check description field)
 WIKI_LINK_RE = re.compile(r"\[\[[^\]]+\]\]")
-MD_LINK_RE = re.compile(r"\[([^\]]+)\]\([^\)]+\)")
+MD_LINK_RE = re.compile(r"\[([^\]]+)\]\(([^\)]+)\)")
 
 # Semver regex
 SEMVER_RE = re.compile(r"^\d+\.\d+\.\d+$")
@@ -225,8 +225,8 @@ def check_skill(skill_dir: Path) -> tuple[list[str], list[str]]:
     Check a single skill's SKILL.md for compliance.
     Returns (errors, warnings) lists.
     """
-    errors = []
-    warnings = []
+    errors: list[str] = []
+    warnings: list[str] = []
     skill_name = skill_dir.name
     skill_md = skill_dir / "SKILL.md"
     rel_path = skill_md.relative_to(REPO_ROOT)

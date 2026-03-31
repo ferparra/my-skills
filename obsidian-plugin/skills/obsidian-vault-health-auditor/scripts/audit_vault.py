@@ -155,7 +155,7 @@ def check_misplaced_notes(
     misplaced = []
     for note in notes:
         kind_field, kind_value = infer_kind_field(note.frontmatter)
-        if not kind_field:
+        if not kind_field or not kind_value:
             continue
         expected_dir = get_expected_directory(kind_field, kind_value)
         if not expected_dir:
@@ -191,7 +191,7 @@ def check_duplicate_zettel_ids(
             def get_created(p: str) -> str:
                 try:
                     fm, _ = split_frontmatter(Path(p).read_text(encoding="utf-8", errors="replace"))
-                    return fm.get("created", "0")
+                    return str(fm.get("created", "0"))
                 except Exception:
                     return "0"
             sorted_paths = sorted(paths, key=get_created)

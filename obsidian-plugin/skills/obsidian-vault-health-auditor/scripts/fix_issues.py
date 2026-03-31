@@ -162,7 +162,7 @@ def fix_duplicate_zettel_ids(
     vault_root: Path,
 ) -> list[dict[str, Any]]:
     """Remove duplicate zettel IDs, keeping oldest, regenerating others."""
-    results = []
+    results: list[dict] = []
     paths = dup.paths
     if not paths or len(paths) <= 1:
         return results

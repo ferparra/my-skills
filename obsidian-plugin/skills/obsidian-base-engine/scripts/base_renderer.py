@@ -68,6 +68,9 @@ BASE_REGISTRY: dict[str, dict[str, Any]] = {
             "formula.review_badge": {"displayName": "Review"},
             "formula.source_files_label": {"displayName": "Sources"},
         },
+        "views": [
+            {"name": "Activity Ledger", "type": "table"},
+        ],
     },
     "exercise": {
         "kind_field": "exercise_kind",
@@ -132,6 +135,9 @@ BASE_REGISTRY: dict[str, dict[str, Any]] = {
             "formula.trend_badge": {"displayName": "Trend Badge"},
             "formula.analysis_status": {"displayName": "Analysis"},
         },
+        "views": [
+            {"name": "Selection Board", "type": "table"},
+        ],
     },
     "people": {
         "kind_field": "person_kind",
@@ -157,6 +163,9 @@ BASE_REGISTRY: dict[str, dict[str, Any]] = {
             "formula.strength_label": {"displayName": "Strength"},
             "formula.recency_label": {"displayName": "Recency"},
         },
+        "views": [
+            {"name": "All People", "type": "table"},
+        ],
     },
     "cv_entry": {
         "kind_field": "cv_entry_kind",
@@ -195,6 +204,9 @@ BASE_REGISTRY: dict[str, dict[str, Any]] = {
             "formula.recency_badge": {"displayName": "Recency"},
             "formula.title_display": {"displayName": "Entry"},
         },
+        "views": [
+            {"name": "Career Timeline", "type": "table"},
+        ],
     },
 }
 

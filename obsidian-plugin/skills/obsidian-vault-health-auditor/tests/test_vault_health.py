@@ -21,21 +21,24 @@ SCRIPTS_DIR = Path(__file__).parent.parent / "scripts"
 sys.path.insert(0, str(SCRIPTS_DIR))
 
 from vault_health_models import (
+    DuplicateZettelId,
+    extract_zettel_id,
+    KNOWN_KINDS,
+    load_markdown_note,
+    MIN_CONNECTION_STRENGTH,
+    NoteParts,
+    split_frontmatter,
+    STALE_THRESHOLD_DAYS,
+    VaultHealthReport,
+    AuditSummary,
+)
+from audit_vault import (
     check_duplicate_zettel_ids,
     check_low_connection_strength,
     check_misplaced_notes,
     check_orphaned_notes,
     check_schema_drift,
     check_stale_notes,
-    DuplicateZettelId,
-    extract_zettel_id,
-    KNOWN_KINDS,
-    load_markdown_note,
-    LOW_CONNECTION_STRENGTH_THRESHOLD,
-    NoteParts,
-    split_frontmatter,
-    STALE_THRESHOLD_DAYS,
-    VaultHealthReport,
 )
 
 
@@ -275,32 +278,32 @@ def test_note_with_outgoing_links_not_orphaned() -> None:
 
 def test_report_ok_when_no_issues() -> None:
     report = VaultHealthReport(
-        summary={
-            "total_notes": 10,
-            "broken_links": 0,
-            "orphaned_notes": 0,
-            "low_connection_strength": 0,
-            "schema_drift": 0,
-            "misplaced_notes": 0,
-            "duplicate_zettel_ids": 0,
-            "stale_notes": 0,
-        }
+        summary=AuditSummary(
+            total_notes=10,
+            broken_links=0,
+            orphaned_notes=0,
+            low_connection_strength=0,
+            schema_drift=0,
+            misplaced_notes=0,
+            duplicate_zettel_ids=0,
+            stale_notes=0,
+        )
     )
     assert report.ok is True
 
 
 def test_report_not_ok_when_issues_present() -> None:
     report = VaultHealthReport(
-        summary={
-            "total_notes": 10,
-            "broken_links": 2,
-            "orphaned_notes": 0,
-            "low_connection_strength": 0,
-            "schema_drift": 0,
-            "misplaced_notes": 0,
-            "duplicate_zettel_ids": 0,
-            "stale_notes": 0,
-        }
+        summary=AuditSummary(
+            total_notes=10,
+            broken_links=2,
+            orphaned_notes=0,
+            low_connection_strength=0,
+            schema_drift=0,
+            misplaced_notes=0,
+            duplicate_zettel_ids=0,
+            stale_notes=0,
+        )
     )
     assert report.ok is False
 
