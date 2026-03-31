@@ -76,7 +76,7 @@ def fix_schema_drift(
     kind_field: str,
     kind_value: str,
     allowed_values: list[str],
-) -> dict[str, Any]:
+) -> FixAction:
     """Add FIXME tag for schema drift requiring manual review."""
     text = path.read_text(encoding="utf-8", errors="replace")
     frontmatter, body = split_frontmatter(text)
@@ -94,24 +94,21 @@ def fix_schema_drift(
     shutil.copy2(path, backup)
     path.write_text(output, encoding="utf-8")
 
-    return {
-        "path": str(path),
-        "action": "inject_fixme_tag",
-        "kind_field": kind_field,
-        "kind_value": kind_value,
-        "allowed_values": allowed_values,
-        "backup": str(backup),
-    }
+    return FixAction(
+        action="inject_fixme_tag",
+        path=str(path),
+        backup=str(backup),
+    )
 
 
 def fix_misplaced_note(
     report: MisplacedNote,
     vault_root: Path,
-) -> dict[str, Any]:
+) -> FixAction:
     """Move a misplaced note to its expected directory and update backlinks."""
     source = vault_root / report.path
     if not report.move_target:
-        return {"path": str(source), "action": "skip", "reason": "no_move_target"}
+        return FixAction(action="skip", path=str(source))
     target = vault_root / report.move_target
 
     # Ensure target directory exists
@@ -148,14 +145,12 @@ def fix_misplaced_note(
     shutil.copy2(source, backup)
     shutil.move(str(source), str(target))
 
-    return {
-        "action": "move_and_update_links",
-        "source": str(source.relative_to(vault_root)),
-        "target": str(target.relative_to(vault_root)),
-        "backlinks_updated": len(changes),
-        "backlinks_updated_files": changes,
-        "backup": str(backup),
-    }
+    return FixAction(
+        action="move_and_update_links",
+        path=str(source.relative_to(vault_root)),
+        target_path=str(target.relative_to(vault_root)),
+        backup=str(backup),
+    )
 
 
 def fix_duplicate_zettel_ids(
@@ -230,12 +225,10 @@ def apply_fixes(
             continue
 
         if mode == "check":
-            result.changes.append({
-                "path": str(path),
-                "action": "would_inject_fixme_tag",
-                "kind_field": drift.kind_field,
-                "kind_value": drift.value,
-            })
+            result.changes.append(FixAction(
+                action="would_inject_fixme_tag",
+                path=str(path),
+            ))
             result.skipped += 1
         else:
             change = fix_schema_drift(path, drift.kind_field, drift.value, drift.allowed_values)
@@ -245,34 +238,32 @@ def apply_fixes(
     # Misplaced notes
     for misplaced in report.misplaced_notes:
         if mode == "check":
-            result.changes.append({
-                "path": misplaced.path,
-                "action": "would_move",
-                "expected": misplaced.expected_dir,
-                "actual": misplaced.actual_dir,
-            })
+            result.changes.append(FixAction(
+                action="would_move",
+                path=misplaced.path,
+                target_path=misplaced.move_target,
+            ))
             result.skipped += 1
         else:
             change = fix_misplaced_note(misplaced, vault_root)
             result.changes.append(change)
-            if change.get("action") == "move_and_update_links":
+            if change.action == "move_and_update_links":
                 result.fixed += 1
 
     # Duplicate zettel IDs
     for dup in report.duplicate_zettel_ids:
         if mode == "check":
-            result.changes.append({
-                "action": "would_fix_duplicates",
-                "zettel_id": dup.zettel_id,
-                "paths": dup.paths,
-                "primary": dup.primary_path,
-            })
+            result.changes.append(FixAction(
+                action="would_fix_duplicates",
+                path=dup.primary_path or dup.paths[0],
+                zettel_id=dup.zettel_id,
+            ))
             result.skipped += len(dup.paths) - 1
         else:
             changes = fix_duplicate_zettel_ids(dup, vault_root)
             for c in changes:
                 result.changes.append(c)
-                if c["action"] == "regenerate_id":
+                if c.action == "regenerate_id":
                     result.fixed += 1
 
     result.ok = len(result.errors) == 0
