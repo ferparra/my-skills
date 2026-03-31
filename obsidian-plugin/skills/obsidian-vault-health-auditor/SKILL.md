@@ -3,6 +3,7 @@ name: obsidian-vault-health-auditor
 version: 1.0.0
 dependencies:
   - obsidian-base-engine
+pipeline: {}
 description: >
   Systematically audit an Obsidian vault for health issues including broken
   wiki-links, orphaned notes, schema drift, misplaced files, duplicate zettel

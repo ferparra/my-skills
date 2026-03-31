@@ -3,6 +3,39 @@ name: obsidian-cv-entry-manager
 version: 1.0.0
 dependencies:
   - obsidian-interweave-engine
+pipeline:
+  inputs:
+    - name: cv_entry_kind
+      type: string
+      required: false
+      description: Filter by CV entry kind (role, education, certification, award, community)
+    - name: glob
+      type: string
+      required: false
+      default: "20 Resources/Career/**/*.md"
+      description: Glob pattern for CV entry notes
+    - name: mode
+      type: string
+      required: false
+      default: check
+      description: Mode (check, fix, extract, export)
+  outputs:
+    - name: validated_cv_entries
+      type: file
+      path: "20 Resources/Career/{kind}/{slug}.md"
+      description: Validated CV entry notes
+    - name: cv_base
+      type: file
+      path: "20 Resources/Career/CV Entries.base"
+      description: CV Entries Base
+    - name: cv_report
+      type: json
+      path: ".skills/cv-report.json"
+      description: Validation/migration report
+    - name: cv_export
+      type: file
+      path: "cv-export.md"
+      description: Pillars-filtered CV export
 description: >
   Validate, migrate, extract, and export structured CV entry notes in this
   personal Obsidian vault. Use when requests involve cv_entry_kind enforcement,

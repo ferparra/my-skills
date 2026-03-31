@@ -3,6 +3,30 @@ name: jira-sprint-sync
 version: 1.0.0
 dependencies:
   - obsidian-planetary-tasks-manager
+pipeline:
+  inputs:
+    - name: jql
+      type: string
+      required: false
+      description: Custom JQL filter (defaults to assignee=currentUser() AND sprint in openSprints())
+    - name: max_results
+      type: integer
+      required: false
+      default: 100
+      description: Maximum number of issues to fetch
+  outputs:
+    - name: synced_tasks
+      type: file
+      path: "Periodic/{year}/Planetary Tasks/{key} - {summary}.md"
+      description: Synced Jira task notes
+    - name: tasks_summary
+      type: file
+      path: "00 Inbox/Tasks.md"
+      description: Quick-reference summary note
+    - name: sync_report
+      type: json
+      path: ".skills/jira-sync-report.json"
+      description: Jira sync report
 description: >
   Sync Jira issues assigned to the current user in active sprints into the Obsidian
   vault. Writes one note per issue into `Periodic/YEAR/Planetary Tasks/` with full

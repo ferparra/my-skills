@@ -13,7 +13,8 @@ dependencies:
   - obsidian-interweave-engine
   - obsidian-agent-memory-capture
   - obsidian-token-budget-guard
-description: >
+pipeline: {}
+description: Route vault requests to the appropriate kind manager skill based on intent classification.
 metadata:
   openclaw:
     os: [darwin]

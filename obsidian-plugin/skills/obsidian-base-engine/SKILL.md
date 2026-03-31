@@ -2,6 +2,7 @@
 name: obsidian-base-engine
 version: 1.0.0
 dependencies: []
+pipeline: {}
 description: >
   Shared base rendering engine for Obsidian kind-manager skills. Provides the
   BaseRenderer class, formula parser, and view composition utilities used by

@@ -3,6 +3,35 @@ name: obsidian-people-kind-manager
 version: 1.0.0
 dependencies:
   - obsidian-interweave-engine
+pipeline:
+  inputs:
+    - name: person_kind
+      type: string
+      required: false
+      description: Filter by person kind (manager, collaborator, stakeholder, etc.)
+    - name: glob
+      type: string
+      required: false
+      default: "People/**/*.md"
+      description: Glob pattern for person notes
+    - name: mode
+      type: string
+      required: false
+      default: check
+      description: Mode (check, fix, enrich)
+  outputs:
+    - name: validated_people
+      type: file
+      path: "People/{slug}.md"
+      description: Validated person notes
+    - name: people_report
+      type: json
+      path: ".skills/people-report.json"
+      description: Validation report
+    - name: enrichment_data
+      type: json
+      path: ".skills/people-enrichment.json"
+      description: Interaction signal enrichment data
 description: >
   Validate, migrate, score, and enrich person notes in the People/ directory
   of this personal Obsidian vault. Use when requests involve person_kind

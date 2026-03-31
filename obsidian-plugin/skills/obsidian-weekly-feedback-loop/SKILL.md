@@ -3,6 +3,7 @@ name: obsidian-weekly-feedback-loop
 version: 1.0.0
 dependencies:
   - obsidian-planetary-tasks-manager
+pipeline: {}
 description: Evaluate weekly Obsidian planning notes for closed-loop execution quality in this personal vault. Use when checking thread alignment, closure signals, and daily-weekly maneuver continuity under strict dependency and context-budget constraints.
 metadata:
   openclaw:

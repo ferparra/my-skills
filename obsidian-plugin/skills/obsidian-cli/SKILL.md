@@ -2,6 +2,7 @@
 name: obsidian-cli
 version: 1.0.0
 dependencies: []
+pipeline: {}
 description: >
   Interact with Obsidian vaults using the official Obsidian CLI (bundled inside
   the macOS Obsidian.app — not a Homebrew package). Reads, creates, searches,

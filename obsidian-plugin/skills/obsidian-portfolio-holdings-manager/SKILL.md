@@ -3,6 +3,34 @@ name: obsidian-portfolio-holdings-manager
 version: 1.0.0
 dependencies:
   - obsidian-brokerage-activity-manager
+pipeline:
+  inputs:
+    - name: mode
+      type: string
+      required: false
+      default: check
+      description: Mode (check or fix)
+  outputs:
+    - name: holdings_notes
+      type: file
+      path: "20 Resources/Investments/Portfolio Holdings/{symbol}.md"
+      description: Current holdings notes
+    - name: holdings_history_notes
+      type: file
+      path: "20 Resources/Investments/Portfolio Holdings History/{symbol}.md"
+      description: Per-symbol holdings history notes
+    - name: holdings_base
+      type: file
+      path: "20 Resources/Investments/Portfolio Holdings/Portfolio Holdings.base"
+      description: Current holdings Base
+    - name: holdings_history_base
+      type: file
+      path: "20 Resources/Investments/Portfolio Holdings History/Portfolio Holdings History.base"
+      description: Holdings history Base
+    - name: holdings_report
+      type: json
+      path: ".skills/holdings-report.json"
+      description: Holdings sync report
 description: Derive current and historical portfolio holdings in this Obsidian vault from typed brokerage activity notes. Use when requests mention actual holdings, current portfolio positions, historical holdings, holdings timelines, position history, portfolio holdings Bases, or rebuilding holdings after brokerage activity imports under `20 Resources/Investments/Brokerage Activity/**/*.md`.
 metadata:
   openclaw:

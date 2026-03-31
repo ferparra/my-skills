@@ -4,6 +4,35 @@ version: 1.0.0
 description: Maintain planetary task notes, task schema, and task-related Bases in this personal Obsidian vault. Use when requests involve Planetary Tasks.base, Periodic Planning and Tasks Hub.base, task_kind enforcement, Jira-synced planetary tasks, maneuver-board closure signals, or planetary task schema migration and validation.
 dependencies:
   - obsidian-cli
+pipeline:
+  inputs:
+    - name: task_kind
+      type: string
+      required: false
+      description: Filter by task kind (action, external_ticket, closure_signal)
+    - name: glob
+      type: string
+      required: false
+      default: "Periodic/*/Planetary Tasks/*.md"
+      description: Glob pattern for task notes
+    - name: mode
+      type: string
+      required: false
+      default: check
+      description: Mode (check or fix)
+  outputs:
+    - name: validated_tasks
+      type: file
+      path: "Periodic/{year}/Planetary Tasks/{slug}.md"
+      description: Validated task notes
+    - name: task_report
+      type: json
+      path: ".skills/planetary-tasks-report.json"
+      description: Validation/migration report
+    - name: migration_summary
+      type: json
+      path: ".skills/planetary-tasks-migration.json"
+      description: Migration changes summary
 metadata:
   openclaw:
     os: [darwin]

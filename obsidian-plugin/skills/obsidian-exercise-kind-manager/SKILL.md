@@ -2,6 +2,43 @@
 name: obsidian-exercise-kind-manager
 version: 1.0.0
 dependencies: []
+pipeline:
+  inputs:
+    - name: exercise_kind
+      type: string
+      required: false
+      description: Filter by exercise kind (hypertrophy, strength, mobility_drill, etc.)
+    - name: glob
+      type: string
+      required: false
+      default: "20 Resources/Exercises/*.md"
+      description: Glob pattern for exercise notes
+    - name: mode
+      type: string
+      required: false
+      default: check
+      description: Mode (check or fix)
+    - name: csv
+      type: file
+      required: false
+      description: Strong CSV export file for workout sync
+  outputs:
+    - name: validated_exercises
+      type: file
+      path: "20 Resources/Exercises/{slug}.md"
+      description: Validated exercise notes
+    - name: exercise_base
+      type: file
+      path: "20 Resources/Exercises/Exercise Library.base"
+      description: Exercise library Base
+    - name: exercise_report
+      type: json
+      path: ".skills/exercise-report.json"
+      description: Validation/migration report
+    - name: strong_sync_report
+      type: json
+      path: ".skills/strong-sync-report.json"
+      description: Strong CSV sync report
 metadata:
   openclaw:
     os: [darwin]

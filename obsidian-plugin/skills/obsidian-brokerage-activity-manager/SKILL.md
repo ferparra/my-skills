@@ -2,6 +2,43 @@
 name: obsidian-brokerage-activity-manager
 version: 1.0.0
 dependencies: []
+pipeline:
+  inputs:
+    - name: input_file
+      type: file
+      required: false
+      description: Path to brokerage export CSV/XLSX
+    - name: provider
+      type: string
+      required: false
+      default: auto
+      description: Brokerage provider (auto, betashares, stake_au, stake_us, generic_csv)
+    - name: mode
+      type: string
+      required: false
+      default: check
+      description: Mode (check or fix)
+  outputs:
+    - name: brokerage_activity_notes
+      type: file
+      path: "20 Resources/Investments/Brokerage Activity/{date}/{slug}.md"
+      description: Normalized activity notes
+    - name: brokerage_assets_notes
+      type: file
+      path: "20 Resources/Investments/Brokerage Assets/{symbol}.md"
+      description: Derived asset notes
+    - name: activity_base
+      type: file
+      path: "20 Resources/Investments/Brokerage Activity/Brokerage Activity.base"
+      description: Activity ledger Base
+    - name: assets_base
+      type: file
+      path: "20 Resources/Investments/Brokerage Assets/Brokerage Assets.base"
+      description: Asset registry Base
+    - name: sync_report
+      type: json
+      path: ".skills/brokerage-sync-report.json"
+      description: Import/deduplication report
 description: Parse, normalize, validate, and sync brokerage activity exports into typed Obsidian activity notes, asset notes, and portfolio Bases. Use when requests mention Betashares, Stake, brokerage CSV or XLSX exports, transaction histories, dividend or distribution logs, buy or sell activity, ticker-indexed asset notes, `brokerage_activity_kind`, `brokerage_asset_kind`, investment ledger notes, `Brokerage Activity.base`, `Brokerage Assets.base`, or idempotent import and dedupe workflows for stock brokerage records.
 metadata:
   openclaw:

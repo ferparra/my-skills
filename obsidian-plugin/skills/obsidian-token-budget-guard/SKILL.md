@@ -2,6 +2,7 @@
 name: obsidian-token-budget-guard
 version: 1.1.0
 dependencies: []
+pipeline: {}
 description: >
   Enforce strict context and token budget gates for this personal Obsidian vault
   before substantial note reads or edits. Use when candidate files are known and
