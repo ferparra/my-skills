@@ -1,23 +1,8 @@
 ---
 name: game-theory-engine
+version: "1.0.0"
 dependencies: []
-description: >
-  Strictly typed game theory decision engine for life and work decisions.
-  Takes a plain-English problem with players and incentives, builds a formal
-  game-theoretic model, runs simulations (quick analytical or Monte Carlo),
-  and returns a ranked list of options by expected value with reasoning and
-  practical impact. Designed as an API-grade primitive for AI agent councils
-  — fast enough to run multiple times per day, structured JSON output for
-  upstream gap analysis and self-improvement pipelines. Use whenever anyone
-  says "what should I do about...", "help me decide", "game theory this",
-  "rank my options", "expected value of...", "simulate this decision",
-  "Nash equilibrium", "what are the incentives", "decision engine",
-  "model this situation", "principal agent", "strategic options",
-  "decision analysis", "payoff matrix", or describes any situation with
-  multiple parties, competing interests, or uncertain outcomes where they
-  need a structured recommendation. Also trigger when another agent or
-  skill passes a decision problem for formal analysis. Even a casual
-  "I can't decide between X and Y" should trigger this skill.
+description: Game theory decision engine for life and work decisions. Takes a plain-English problem with players and incentives, builds a formal game-theoretic model, runs simulations, and returns ranked options by expected value with reasoning. Designed for AI agent councils with structured JSON output.
 ---
 
 # Game Theory Decision Engine
@@ -34,6 +19,10 @@ council of AI agents that need structured data for downstream processing.
 Every output has both a human-readable surface and a machine-readable
 substrate. Speed is the default — most decisions don't need Monte Carlo,
 they need clear thinking applied fast.
+
+## Workflow
+
+Apply game theory to decisions: (1) formalize the problem—extract players, incentives, constraints, and uncertainty; (2) select execution mode—Snap, Standard, or Deep; (3) build payoff matrix and run simulations; (4) rank options by expected value; (5) run introspection diagnostics and generate baseline JSON.
 
 ---
 

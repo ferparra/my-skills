@@ -2,13 +2,7 @@
 name: bootstrapping-autoresearch
 version: 0.1.0
 dependencies: []
-description: >
-  Bootstraps autoresearch projects — autonomous AI-driven optimization loops.
-  Generates prepare.py (read-only eval harness), train.py (agent-editable solution),
-  and program.md (Claude Code experiment instructions) for any measurable optimization
-  problem. Use when the user wants to set up automated experiments, optimize a metric,
-  run autonomous research, apply Karpathy's autoresearch pattern, or create a
-  self-improving optimization loop.
+description: Bootstrap autoresearch projects — autonomous AI-driven optimization loops. Generates prepare.py (read-only eval), train.py (agent-editable), and program.md (Claude Code instructions) for measurable optimization problems. Use for automated experiments, metric optimization, and self-improving loops.
 metadata:
   openclaw:
     os: [darwin, linux]

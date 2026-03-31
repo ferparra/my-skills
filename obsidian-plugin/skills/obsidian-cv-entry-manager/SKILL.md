@@ -36,13 +36,7 @@ pipeline:
       type: file
       path: "cv-export.md"
       description: Pillars-filtered CV export
-description: >
-  Validate, migrate, extract, and export structured CV entry notes in this
-  personal Obsidian vault. Use when requests involve cv_entry_kind enforcement,
-  career entry schema, CV Entries.base, extracting cv-master.md into typed
-  role/education/credential notes, pillar-filtered CV export, quantification
-  gap tracking, or career timeline queries. cv_entry_kind is the supertag:
-  it selects the schema contract applied to each career entry note.
+description: Validate, migrate, extract, and export structured CV entry notes in Obsidian. Use for cv_entry_kind enforcement, career entry schema, CV Entries.base, extracting cv-master.md into typed notes, pillar-filtered CV export, and career timeline queries.
 metadata:
   openclaw:
     os: [darwin]
@@ -195,7 +189,7 @@ uvx --from python --with pydantic --with pyyaml python \
   `obsidian-interweave-engine`.
 - **Preserve existing metadata.** Only inject missing canonical fields.
 - **`bullets` are preserved exactly as authored** — never reorder or deduplicate.
-- **FIXME placeholders** are safe to search: `grep -r "FIXME" "20 Resources/Career/"`.
+- Custom fields added by the migrator are preserved during re-migration.
 - **Keep YAML valid** — validate output before writing.
 - **`extract_cv_master.py` is idempotent** via `cv_entry_id` — re-extraction
   updates existing notes, not duplicates.

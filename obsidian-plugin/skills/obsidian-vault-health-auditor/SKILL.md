@@ -4,10 +4,7 @@ version: 1.0.0
 dependencies:
   - obsidian-base-engine
 pipeline: {}
-description: >
-  Systematically audit an Obsidian vault for health issues including broken
-  wiki-links, orphaned notes, schema drift, misplaced files, duplicate zettel
-  IDs, and stale notes. Supports auto-fix mode for correctable issues.
+description: Systematically audit an Obsidian vault for health issues including broken wiki-links, orphaned notes, schema drift, misplaced files, duplicate zettel IDs, and stale notes. Supports auto-fix mode for correctable issues.
 metadata:
   openclaw:
     os:
@@ -97,7 +94,7 @@ Auto-fix handles:
 - Adding missing frontmatter (`person_kind`, `exercise_kind`, etc.)
 - Moving misplaced notes to correct directories
 - Removing duplicate zettel IDs (keeps oldest, regenerates others)
-- Injecting FIXME placeholders for schema drift requiring manual review
+- Marking schema drift for manual review
 
 ### 4. Verify Fixes
 
@@ -177,7 +174,7 @@ Schema drift is detected against these known kind values:
 - **Always creates backup** — `fix_issues.py --mode fix` writes `.bak` copies
 - **Duplicate zettel IDs** — keeps the note with earliest `created` date, regenerates IDs for others
 - **Misplaced notes** — moves the file, updates all incoming wiki-links in other notes
-- **Schema drift** — injects `FIXME_review_required` tag; does not change `*_kind` value
+- **Schema drift** — injects `review_required` tag; does not change `*_kind` value
 
 ## Dependencies
 

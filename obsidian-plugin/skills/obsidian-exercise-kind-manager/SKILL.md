@@ -44,7 +44,7 @@ metadata:
     os: [darwin]
     requires:
       bins: [obsidian, qmd, uvx]
-description: Validate, migrate, sync, and maintain typed exercise notes in this personal Obsidian vault. Use when requests involve `exercise_kind` enforcement, Strong CSV workout imports, gym exercise schemas, `20 Resources/Exercises/*.md`, `Exercise Library.base`, exercise selection heuristics, top-set progression metrics, or primary-muscle volume accounting for progressive overload review.
+description: Validate, migrate, sync, and maintain typed exercise notes in Obsidian. Use for exercise_kind enforcement, Strong CSV workout imports, gym exercise schemas, Exercise Library.base, top-set progression metrics, and primary-muscle volume accounting.
 ---
 
 # Obsidian Exercise Kind Manager

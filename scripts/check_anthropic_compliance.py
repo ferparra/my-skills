@@ -51,12 +51,19 @@ SEMVER_RE = re.compile(r"^\d+\.\d+\.\d+$")
 
 
 def find_all_skill_dirs() -> list[Path]:
-    """Find all skill directories across all SKILL_dirs."""
+    """Find all skill directories across all SKILL_dirs.
+
+    Skips symlinks in the top-level `skills/` directory to avoid
+    double-checking skills that live under plugin directories.
+    """
     skill_dirs = []
     for base_dir in SKILL_dirs:
         if not base_dir.is_dir():
             continue
         for p in base_dir.iterdir():
+            # Skip symlinks — they point to plugin directories already scanned
+            if p.is_symlink():
+                continue
             if p.is_dir() and (p / "SKILL.md").exists():
                 skill_dirs.append(p)
     return sorted(skill_dirs)

@@ -27,6 +27,10 @@ Local search engine for markdown content.
 
 !`qmd status 2>/dev/null || echo "Not installed: npm install -g @tobilu/qmd"`
 
+## Workflow
+
+Search markdown knowledge bases using QMD's lexical and semantic search. Route queries to appropriate collections, use MCP tools for structured searches, and follow with vault reads for detailed answers.
+
 ## Vault Search Workflow
 
 1. Route the search to the narrowest relevant collection first. Use the collection table below; fall back to `all` only when intent is broad or unclear.

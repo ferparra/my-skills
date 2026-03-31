@@ -39,7 +39,7 @@ pipeline:
       type: json
       path: ".skills/brokerage-sync-report.json"
       description: Import/deduplication report
-description: Parse, normalize, validate, and sync brokerage activity exports into typed Obsidian activity notes, asset notes, and portfolio Bases. Use when requests mention Betashares, Stake, brokerage CSV or XLSX exports, transaction histories, dividend or distribution logs, buy or sell activity, ticker-indexed asset notes, `brokerage_activity_kind`, `brokerage_asset_kind`, investment ledger notes, `Brokerage Activity.base`, `Brokerage Assets.base`, or idempotent import and dedupe workflows for stock brokerage records.
+description: Parse, normalize, validate, and sync brokerage activity exports into typed Obsidian notes and Bases. Use for Betashares, Stake, CSV/XLSX exports, transaction histories, dividends, and idempotent import workflows for stock brokerage records.
 metadata:
   openclaw:
     os: [darwin]

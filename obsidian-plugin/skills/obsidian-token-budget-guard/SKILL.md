@@ -3,12 +3,7 @@ name: obsidian-token-budget-guard
 version: 1.1.0
 dependencies: []
 pipeline: {}
-description: >
-  Enforce strict context and token budget gates for this personal Obsidian vault
-  before substantial note reads or edits. Use when candidate files are known and
-  you must validate max files, max chars, and max snippet counts with fail-fast
-  obsidian/qmd dependency checks. Includes pre-flight estimation to predict token
-  costs before executing broad queries.
+description: Enforce strict context and token budget gates before substantial note reads or edits. Validate max files, max chars, and max snippet counts with fail-fast dependency checks. Includes pre-flight estimation to predict token costs before executing broad queries.
 metadata:
   openclaw:
     os: [darwin]

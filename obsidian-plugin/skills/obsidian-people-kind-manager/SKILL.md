@@ -32,13 +32,7 @@ pipeline:
       type: json
       path: ".skills/people-enrichment.json"
       description: Interaction signal enrichment data
-description: >
-  Validate, migrate, score, and enrich person notes in the People/ directory
-  of this personal Obsidian vault. Use when requests involve person_kind
-  enforcement, People/ schema compliance, relationship graph enrichment,
-  connection_strength scoring, interaction tracking, last_interaction_date
-  updates, or CRM-style queries across people notes. person_kind is the
-  supertag: it selects the schema contract applied to each person note.
+description: Validate, migrate, score, and enrich person notes in the People/ directory. Use for person_kind enforcement, People/ schema compliance, relationship graph enrichment, connection_strength scoring, interaction tracking, and CRM-style queries.
 metadata:
   openclaw:
     os:
@@ -114,8 +108,8 @@ uvx --from python --with pydantic --with pyyaml python \
   --glob "People/**/*.md" --mode fix
 ```
 
-Injects `person_kind`, `status`, normalised tags, kind-specific FIXME
-placeholders. Never rewrites note bodies. Skips ambiguous notes silently (they
+Injects `person_kind`, `status`, normalised tags, and kind-specific review
+markers. Never rewrites note bodies. Skips ambiguous notes silently (they
 appear in results with `skipped: true`).
 
 ### 6. Enrich Interaction Signals
@@ -190,7 +184,7 @@ uvx --from python --with pydantic --with pyyaml python \
   Never overwrite explicit user values.
 - **`status: dormant` is manual only.** The migrator never downgrades an active
   status to dormant.
-- **FIXME placeholders** are safe to search: `grep -r "FIXME" People/`.
+- Custom fields added by the migrator are preserved during re-migration.
 - **Keep YAML valid** — validate output before writing.
 
 ## QMD Collection Routing

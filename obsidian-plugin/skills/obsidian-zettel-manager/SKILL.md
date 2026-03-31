@@ -32,12 +32,7 @@ pipeline:
       type: json
       path: ".skills/zettel-scores.json"
       description: Connection strength scores
-description: >
-  Validate, migrate, and score zettel notes in this personal Obsidian vault.
-  Use when requests involve zettel_kind enforcement, zettel_id generation,
-  connection_strength scoring, promoting fleeting captures, or normalising
-  knowledge notes in 10 Notes/ and 00 Inbox/. Treats zettel_kind as the
-  Tana-supertag equivalent: it selects the note's schema contract.
+description: Validate, migrate, and score zettel notes in Obsidian. Use for zettel_kind enforcement, zettel_id generation, connection_strength scoring, promoting fleeting captures, and normalising knowledge notes in 10 Notes/ and 00 Inbox/.
 metadata:
   openclaw:
     os: [darwin]
