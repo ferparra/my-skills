@@ -20,17 +20,19 @@ SCRIPTS_DIR = Path(__file__).parent.parent / "scripts"
 
 sys.path.insert(0, str(SCRIPTS_DIR))
 
-from vault_health_models import (
-    DuplicateZettelId,
-    extract_zettel_id,
+from vault_health_config import (
     KNOWN_KINDS,
-    load_markdown_note,
     MIN_CONNECTION_STRENGTH,
-    NoteParts,
-    split_frontmatter,
     STALE_THRESHOLD_DAYS,
-    VaultHealthReport,
+)
+from vault_health_models import (
     AuditSummary,
+    DuplicateZettelId,
+    NoteParts,
+    VaultHealthReport,
+    extract_zettel_id,
+    load_markdown_note,
+    split_frontmatter,
 )
 from audit_vault import (
     check_duplicate_zettel_ids,

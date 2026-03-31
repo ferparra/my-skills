@@ -26,16 +26,16 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from vault_health_config import KNOWN_KINDS
 from vault_health_models import (
     DuplicateZettelId,
     FixAction,
     FixResult,
-    load_report,
     MisplacedNote,
-    save_report,
     VaultHealthReport,
     dump_json,
-    KNOWN_KINDS,
+    load_report,
+    save_report,
     split_frontmatter,
 )
 

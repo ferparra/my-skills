@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-import re
 from datetime import date, datetime
 from enum import Enum
 from pathlib import Path
@@ -12,56 +11,17 @@ from typing import Any, Iterable
 import yaml
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
-WIKILINK_RE = re.compile(r"\[\[([^\]|#]+)(?:#[^\]|]+)?(?:\|[^\]]+)?\]\]")
-ISO_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
-FRONTMATTER_DELIM = "\n---\n"
-ZETTEL_ID_RE = re.compile(r"^(\d{14})$")
-
-# Kind field to expected directory mapping
-KIND_DIRECTORY_MAP: dict[str, str] = {
-    "person_kind": "People/",
-    "exercise_kind": "20 Resources/Exercises/",
-    "brokerage_activity_kind": "20 Resources/Investments/Brokerage Activity/",
-    "portfolio_holding_kind": "20 Resources/Investments/Portfolio Holdings/",
-    "cv_entry_kind": "20 Resources/Career/",
-    "zettel_kind": "30 Zettelkasten/",
-    "key_date_kind": "20 Resources/Key Dates/",
-    "planetary_task_kind": "20 Resources/Planetary Tasks/",
-}
-
-# Known kind taxonomies
-KNOWN_KINDS: dict[str, set[str]] = {
-    "person_kind": {
-        "manager", "collaborator", "stakeholder", "customer_contact",
-        "mentor", "author", "acquaintance",
-    },
-    "exercise_kind": {
-        "hypertrophy", "strength", "mobility_drill", "warmup_flow", "exercise_brief",
-    },
-    "brokerage_activity_kind": {
-        "trade_buy", "trade_sell", "distribution", "distribution_reinvestment",
-        "cash_deposit", "cash_withdrawal", "fee", "tax", "fx", "adjustment", "cash_interest",
-    },
-    "cv_entry_kind": {
-        "role", "education", "certification", "award", "community",
-    },
-    "zettel_kind": {
-        "atomic", "literature", "project", "archive",
-    },
-    "key_date_kind": {
-        "birthday", "anniversary", "deadline", "milestone", "holiday",
-    },
-    "planetary_task_kind": {
-        "habit", "chore", "deep_work", "review", "meeting",
-    },
-    "portfolio_holding_kind": {
-        "current_position", "closed_position", "watchlist",
-    },
-}
-
-STALE_THRESHOLD_DAYS = 90
-ZOMBIE_THRESHOLD_DAYS = 180
-MIN_CONNECTION_STRENGTH = 2.0
+from vault_health_config import (
+    FRONTMATTER_DELIM,
+    ISO_DATE_RE,
+    KIND_DIRECTORY_MAP,
+    KNOWN_KINDS,
+    MIN_CONNECTION_STRENGTH,
+    STALE_THRESHOLD_DAYS,
+    WIKILINK_RE,
+    ZETTEL_ID_RE,
+    ZOMBIE_THRESHOLD_DAYS,
+)
 
 
 class NoteParts(BaseModel):

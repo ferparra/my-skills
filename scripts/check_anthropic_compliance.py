@@ -1,77 +1,29 @@
 from __future__ import annotations
 
-import re
 import sys
 import yaml
-from pathlib import Path
-from pydantic import BaseModel
 
-REPO_ROOT = Path(__file__).parent.parent
-
-
-class ParsedFrontmatter(BaseModel):
-    """Parsed SKILL.md frontmatter with body and line offset."""
-    frontmatter: dict[str, object]
-    body: str
-    body_start_line: int
-
-
-class ValidationResult(BaseModel):
-    """Validation result with separate error and warning lists."""
-    errors: list[str] = []
-    warnings: list[str] = []
-
-# All skill directories to scan
-SKILL_dirs: list[Path] = [
-    REPO_ROOT / "obsidian-plugin" / "skills",
-    REPO_ROOT / "productivity-plugin" / "skills",
-    REPO_ROOT / "research-plugin" / "skills",
-    REPO_ROOT / "skills",
-]
-
-# Maximum file size in bytes (128KB)
-MAX_SKILL_SIZE = 128 * 1024
-
-# Known Hermes tool references (for warning only)
-KNOWN_TOOLS: set[str] = {
-    "browser_navigate", "browser_click", "browser_type", "browser_screenshot",
-    "bash", "shell", "terminal", "run", "exec",
-    "write_file", "read_file", "edit_file", "delete_file",
-    "search", "grep", "find",
-    "http_request", "curl", "wget",
-    "uvx", "pip", "pip install",
-    "git", "clone", "commit", "push", "pull",
-    "docker", "docker run", "docker build",
-    "obsidian", "qmd",
-    "Claude", "claude",
-}
-
-# Placeholder patterns
-PLACEHOLDER_PATTERNS = [
-    re.compile(r"\bTODO\b", re.IGNORECASE),
-    re.compile(r"\bFIXME\b", re.IGNORECASE),
-    re.compile(r"\bplaceholder\b", re.IGNORECASE),
-    re.compile(r"\bfill\s+in\b", re.IGNORECASE),
-    re.compile(r"\bTBD\b", re.IGNORECASE),
-    re.compile(r"\bXXX\b", re.IGNORECASE),
-]
-
-# Regex for wiki-links and markdown links (to check description field)
-WIKI_LINK_RE = re.compile(r"\[\[[^\]]+\]\]")
-MD_LINK_RE = re.compile(r"\[([^\]]+)\]\(([^\)]+)\)")
-
-# Semver regex
-SEMVER_RE = re.compile(r"^\d+\.\d+\.\d+$")
+from config import (
+    KNOWN_TOOLS,
+    MAX_SKILL_SIZE,
+    MD_LINK_RE,
+    PLACEHOLDER_PATTERNS,
+    REPO_ROOT,
+    SEMVER_RE,
+    SKILL_DIRS,
+    WIKI_LINK_RE,
+)
+from models import ParsedFrontmatter, ValidationResult
 
 
 def find_all_skill_dirs() -> list[Path]:
-    """Find all skill directories across all SKILL_dirs.
+    """Find all skill directories across all SKILL_DIRS.
 
     Skips symlinks in the top-level `skills/` directory to avoid
     double-checking skills that live under plugin directories.
     """
     skill_dirs = []
-    for base_dir in SKILL_dirs:
+    for base_dir in SKILL_DIRS:
         if not base_dir.is_dir():
             continue
         for p in base_dir.iterdir():

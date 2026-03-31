@@ -25,32 +25,33 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from vault_health_config import (
+    KIND_DIRECTORY_MAP,
+    KNOWN_KINDS,
+    STALE_THRESHOLD_DAYS,
+    ZETTEL_ID_RE,
+    ZOMBIE_THRESHOLD_DAYS,
+)
 from vault_health_models import (
     AuditSummary,
     BrokenLink,
     DuplicateZettelId,
-    KIND_DIRECTORY_MAP,
-    KNOWN_KINDS,
-    load_markdown_note,
-    load_report,
     LowConnectionStrength,
     MisplacedNote,
     NoteParts,
     OrphanedNote,
     SchemaDrift,
     StaleNote,
-    STALE_THRESHOLD_DAYS,
     VaultHealthReport,
-    ZOMBIE_THRESHOLD_DAYS,
     dump_json,
     extract_zettel_id,
     get_expected_directory,
     get_note_age_days,
     infer_kind_field,
+    load_markdown_note,
+    load_report,
     save_report,
-    SchemaDrift,
     split_frontmatter,
-    ZETTEL_ID_RE,
 )
 
 # ── Check functions ────────────────────────────────────────────────────────────
