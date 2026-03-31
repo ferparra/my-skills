@@ -1,6 +1,7 @@
 ---
 name: obsidian-exercise-kind-manager
 version: 1.0.0
+dependencies: []
 metadata:
   openclaw:
     os: [darwin]

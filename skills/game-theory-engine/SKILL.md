@@ -1,5 +1,6 @@
 ---
 name: game-theory-engine
+dependencies: []
 description: >
   Strictly typed game theory decision engine for life and work decisions.
   Takes a plain-English problem with players and incentives, builds a formal

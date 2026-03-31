@@ -1,6 +1,7 @@
 ---
 name: bootstrapping-autoresearch
 version: 0.1.0
+dependencies: []
 description: >
   Bootstraps autoresearch projects — autonomous AI-driven optimization loops.
   Generates prepare.py (read-only eval harness), train.py (agent-editable solution),

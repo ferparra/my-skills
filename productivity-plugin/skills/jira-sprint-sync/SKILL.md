@@ -1,6 +1,8 @@
 ---
 name: jira-sprint-sync
 version: 1.0.0
+dependencies:
+  - obsidian-planetary-tasks-manager
 description: >
   Sync Jira issues assigned to the current user in active sprints into the Obsidian
   vault. Writes one note per issue into `Periodic/YEAR/Planetary Tasks/` with full

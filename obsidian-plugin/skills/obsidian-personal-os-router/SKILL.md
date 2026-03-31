@@ -1,7 +1,19 @@
 ---
 name: obsidian-personal-os-router
 version: 1.0.0
-description: Route Obsidian vault tasks to the minimum-context workflow before reading or editing files. Use when a request targets this personal Obsidian vault and you need progressive disclosure, strict read budgets, and fail-fast dependency checks for obsidian CLI, qmd, and downstream manager skills such as portfolio holdings, brokerage activity, planetary tasks, and zettel maintenance.
+dependencies:
+  - obsidian-planetary-tasks-manager
+  - obsidian-exercise-kind-manager
+  - obsidian-portfolio-holdings-manager
+  - obsidian-brokerage-activity-manager
+  - obsidian-notebooklm-bases-manager
+  - obsidian-key-dates-base-manager
+  - obsidian-weekly-feedback-loop
+  - obsidian-cv-entry-manager
+  - obsidian-interweave-engine
+  - obsidian-agent-memory-capture
+  - obsidian-token-budget-guard
+description: >
 metadata:
   openclaw:
     os: [darwin]

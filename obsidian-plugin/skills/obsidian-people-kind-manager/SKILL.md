@@ -1,6 +1,8 @@
 ---
 name: obsidian-people-kind-manager
 version: 1.0.0
+dependencies:
+  - obsidian-interweave-engine
 description: >
   Validate, migrate, score, and enrich person notes in the People/ directory
   of this personal Obsidian vault. Use when requests involve person_kind

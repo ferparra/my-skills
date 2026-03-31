@@ -1,6 +1,8 @@
 ---
 name: obsidian-cv-entry-manager
 version: 1.0.0
+dependencies:
+  - obsidian-interweave-engine
 description: >
   Validate, migrate, extract, and export structured CV entry notes in this
   personal Obsidian vault. Use when requests involve cv_entry_kind enforcement,

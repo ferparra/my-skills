@@ -1,6 +1,7 @@
 ---
 name: obsidian-brokerage-activity-manager
 version: 1.0.0
+dependencies: []
 description: Parse, normalize, validate, and sync brokerage activity exports into typed Obsidian activity notes, asset notes, and portfolio Bases. Use when requests mention Betashares, Stake, brokerage CSV or XLSX exports, transaction histories, dividend or distribution logs, buy or sell activity, ticker-indexed asset notes, `brokerage_activity_kind`, `brokerage_asset_kind`, investment ledger notes, `Brokerage Activity.base`, `Brokerage Assets.base`, or idempotent import and dedupe workflows for stock brokerage records.
 metadata:
   openclaw:

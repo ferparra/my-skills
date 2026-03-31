@@ -1,6 +1,8 @@
 ---
 name: obsidian-zettel-manager
 version: 1.0.0
+dependencies:
+  - obsidian-interweave-engine
 description: >
   Validate, migrate, and score zettel notes in this personal Obsidian vault.
   Use when requests involve zettel_kind enforcement, zettel_id generation,

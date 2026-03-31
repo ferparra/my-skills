@@ -1,6 +1,7 @@
 ---
 name: obsidian-notebooklm-bases-manager
 version: 1.0.0
+dependencies: []
 metadata:
   openclaw:
     os: [darwin]

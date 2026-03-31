@@ -1,6 +1,7 @@
 ---
 name: obsidian-token-budget-guard
 version: 1.0.0
+dependencies: []
 description: Enforce strict context and token budget gates for this personal Obsidian vault before substantial note reads or edits. Use when candidate files are known and you must validate max files, max chars, and max snippet counts with fail-fast obsidian/qmd dependency checks.
 metadata:
   openclaw:
