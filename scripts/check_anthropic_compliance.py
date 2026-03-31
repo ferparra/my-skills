@@ -4,8 +4,22 @@ import re
 import sys
 import yaml
 from pathlib import Path
+from pydantic import BaseModel
 
 REPO_ROOT = Path(__file__).parent.parent
+
+
+class ParsedFrontmatter(BaseModel):
+    """Parsed SKILL.md frontmatter with body and line offset."""
+    frontmatter: dict
+    body: str
+    body_start_line: int
+
+
+class ValidationResult(BaseModel):
+    """Validation result with separate error and warning lists."""
+    errors: list[str] = []
+    warnings: list[str] = []
 
 # All skill directories to scan
 SKILL_dirs: list[Path] = [
@@ -69,10 +83,9 @@ def find_all_skill_dirs() -> list[Path]:
     return sorted(skill_dirs)
 
 
-def parse_frontmatter(content: str) -> tuple[dict, str, int]:
-    """
-    Parse YAML frontmatter from SKILL.md content.
-    Returns (frontmatter_dict, body_content, line_where_body_starts).
+def parse_frontmatter(content: str) -> ParsedFrontmatter:
+    """Parse YAML frontmatter from SKILL.md content.
+
     Raises ValueError if YAML is invalid.
     """
     if not content.startswith("---"):
@@ -97,7 +110,11 @@ def parse_frontmatter(content: str) -> tuple[dict, str, int]:
     if frontmatter is None:
         frontmatter = {}
 
-    return frontmatter, body, content.count("\n", 0, end_marker + 4)
+    return ParsedFrontmatter(
+        frontmatter=frontmatter,
+        body=body,
+        body_start_line=content.count("\n", 0, end_marker + 4),
+    )
 
 
 def check_frontmatter_fields(fm: dict, skill_path: Path) -> list[str]:
@@ -167,13 +184,10 @@ def check_frontmatter_fields(fm: dict, skill_path: Path) -> list[str]:
     return errors
 
 
-def check_body_content(body: str, skill_path: Path) -> tuple[list[str], list[str]]:
-    """
-    Check body content requirements.
-    Returns (errors, warnings) lists.
-    """
-    errors = []
-    warnings = []
+def check_body_content(body: str, skill_path: Path) -> ValidationResult:
+    """Check body content requirements."""
+    errors: list[str] = []
+    warnings: list[str] = []
 
     # Must not exceed 128KB
     if len(body.encode("utf-8")) > MAX_SKILL_SIZE:
@@ -217,14 +231,11 @@ def check_body_content(body: str, skill_path: Path) -> tuple[list[str], list[str
         # Only warn once per skill
         warnings.append(f"unknown tool referenced: `{tool}` (may not be a Hermes tool)")
 
-    return errors, warnings
+    return ValidationResult(errors=errors, warnings=warnings)
 
 
-def check_skill(skill_dir: Path) -> tuple[list[str], list[str]]:
-    """
-    Check a single skill's SKILL.md for compliance.
-    Returns (errors, warnings) lists.
-    """
+def check_skill(skill_dir: Path) -> ValidationResult:
+    """Check a single skill's SKILL.md for compliance."""
     errors: list[str] = []
     warnings: list[str] = []
     skill_name = skill_dir.name
@@ -235,25 +246,25 @@ def check_skill(skill_dir: Path) -> tuple[list[str], list[str]]:
         content = skill_md.read_text(encoding="utf-8")
     except Exception as e:
         errors.append(f"could not read SKILL.md: {e}")
-        return errors, warnings
+        return ValidationResult(errors=errors, warnings=warnings)
 
     # Parse frontmatter
     try:
-        fm, body, _ = parse_frontmatter(content)
+        parsed = parse_frontmatter(content)
     except ValueError as e:
         errors.append(f"frontmatter parse error: {e}")
-        return errors, warnings
+        return ValidationResult(errors=errors, warnings=warnings)
 
     # Check frontmatter fields
-    fm_errors = check_frontmatter_fields(fm, skill_dir)
+    fm_errors = check_frontmatter_fields(parsed.frontmatter, skill_dir)
     errors.extend(fm_errors)
 
     # Check body content
-    body_errors, body_warnings = check_body_content(body, skill_dir)
-    errors.extend(body_errors)
-    warnings.extend(body_warnings)
+    body_result = check_body_content(parsed.body, skill_dir)
+    errors.extend(body_result.errors)
+    warnings.extend(body_result.warnings)
 
-    return errors, warnings
+    return ValidationResult(errors=errors, warnings=warnings)
 
 
 def main() -> None:
@@ -265,13 +276,13 @@ def main() -> None:
 
     for skill_dir in skill_dirs:
         rel_path = skill_dir.relative_to(REPO_ROOT)
-        errors, warnings = check_skill(skill_dir)
+        result = check_skill(skill_dir)
 
-        if errors:
-            all_errors[str(rel_path)] = errors
-        if warnings:
-            all_warnings[str(rel_path)] = warnings
-        if not errors:
+        if result.errors:
+            all_errors[str(rel_path)] = result.errors
+        if result.warnings:
+            all_warnings[str(rel_path)] = result.warnings
+        if not result.errors:
             ok_count += 1
 
     # Print results
