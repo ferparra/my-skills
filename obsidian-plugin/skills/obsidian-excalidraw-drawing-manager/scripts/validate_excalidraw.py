@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from excalidraw_config import ExcalidrawConfig
-from models import (
+from excalidraw_models import (
     dump_json,
     extract_excalidraw_json,
     load_markdown_note,
