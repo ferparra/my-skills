@@ -1,17 +1,19 @@
-"""Pydantic models for skill validation."""
+"""Models for skill validation."""
 from __future__ import annotations
 
-from pydantic import BaseModel
+from dataclasses import dataclass, field
 
 
-class ParsedFrontmatter(BaseModel):
+@dataclass
+class ParsedFrontmatter:
     """Parsed SKILL.md frontmatter with body and line offset."""
     frontmatter: dict[str, object]
     body: str
     body_start_line: int
 
 
-class ValidationResult(BaseModel):
+@dataclass
+class ValidationResult:
     """Validation result with separate error and warning lists."""
-    errors: list[str] = []
-    warnings: list[str] = []
+    errors: list[str] = field(default_factory=list)
+    warnings: list[str] = field(default_factory=list)
