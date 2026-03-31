@@ -320,6 +320,27 @@ ROUTES = [
         ],
     ),
     RouteSpec(
+        route_id="excalidraw_drawing_management",
+        keywords=[
+            "excalidraw",
+            "excalidraw.md",
+            "excalidraw plugin",
+            "excalidraw schema",
+            "excalidraw data",
+            "excalidraw element",
+            "excalidraw drawing",
+            "drawing validation",
+            "drawing binding",
+            "canvas drawing",
+        ],
+        selected_skill="obsidian-excalidraw-drawing-manager",
+        required_commands=[
+            'qmd query "excalidraw drawing diagram" -c notes -l 8',
+            'qmd query "excalidraw" -c inbox -l 5',
+            'uvx --from python --with pydantic --with pyyaml python .skills/obsidian-excalidraw-drawing-manager/scripts/validate_excalidraw.py --glob "**/*.excalidraw.md" --mode check',
+        ],
+    ),
+    RouteSpec(
         route_id="interweave",
         keywords=[
             "interweave",
