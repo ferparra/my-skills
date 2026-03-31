@@ -1,0 +1,10 @@
+name: Skill Dependency Check
+on: [pull_request]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Check skill dependencies
+        run: python3 scripts/check_skill_dependencies.py

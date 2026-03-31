@@ -30,6 +30,10 @@ TASK_FRONTMATTER_ORDER = [
     "timeframe",
     "domain",
     "thread",
+    "goal_kind",
+    "project_kind",
+    "person_kind",
+    "company_kind",
     "project",
     "goal",
     "people",
@@ -85,6 +89,34 @@ class TaskKind(StrEnum):
     CLOSURE_SIGNAL = "closure_signal"
 
 
+class GoalKind(StrEnum):
+    HEALTH_GOAL = "health_goal"
+    CAREER_GOAL = "career_goal"
+    RELATIONSHIP_GOAL = "relationship_goal"
+    CAPABILITY_GOAL = "capability_goal"
+
+
+class ProjectKind(StrEnum):
+    INITIATIVE = "initiative"
+    REPORTING_STREAM = "reporting_stream"
+    PLATFORM_WORKSTREAM = "platform_workstream"
+    DELIVERY_SYSTEM = "delivery_system"
+
+
+class PersonKind(StrEnum):
+    MANAGER = "manager"
+    COLLABORATOR = "collaborator"
+    STAKEHOLDER = "stakeholder"
+    CUSTOMER_CONTACT = "customer_contact"
+
+
+class CompanyKind(StrEnum):
+    EMPLOYER = "employer"
+    CUSTOMER = "customer"
+    PARTNER = "partner"
+    VENDOR = "vendor"
+
+
 class Timeframe(StrEnum):
     ANYTIME = "anytime"
     SOMEDAY = "someday"
@@ -138,6 +170,10 @@ class PlanetaryTaskFrontmatter(BaseModel):
     timeframe: Literal["anytime", "someday", "dated"]
     domain: str
     thread: str
+    goal_kind: Literal["health_goal", "career_goal", "relationship_goal", "capability_goal"] | None = None
+    project_kind: Literal["initiative", "reporting_stream", "platform_workstream", "delivery_system"] | None = None
+    person_kind: Literal["manager", "collaborator", "stakeholder", "customer_contact"] | None = None
+    company_kind: Literal["employer", "customer", "partner", "vendor"] | None = None
     source_note: str
     horizon_note: str
     context: list[str]
@@ -511,6 +547,8 @@ def planning_context_lines(frontmatter: dict[str, Any]) -> list[str]:
         lines.append(f"- Project: {frontmatter['project']}")
     if frontmatter.get("goal"):
         lines.append(f"- Goal: {frontmatter['goal']}")
+    if frontmatter.get("goal_kind"):
+        lines.append(f"- Goal kind: `{frontmatter['goal_kind']}`")
     if frontmatter.get("people"):
         lines.append(f"- People: {', '.join(frontmatter['people'])}")
     if frontmatter.get("companies"):

@@ -1,0 +1,45 @@
+name: Multi-Kind Import Pipeline
+description: Validate, migrate, and render multiple kind managers in sequence
+
+# Pipeline steps in execution order
+# The composer resolves dependencies and executes in correct order
+steps:
+  - skill: obsidian-planetary-tasks-manager
+    mode: validate
+    description: Validate all planetary task notes for schema compliance
+
+  - skill: obsidian-planetary-tasks-manager
+    mode: migrate
+    depends_on: [obsidian-planetary-tasks-manager]
+    description: Migrate task notes to canonical schema
+
+  - skill: obsidian-people-kind-manager
+    mode: validate
+    description: Validate all person notes for schema compliance
+
+  - skill: obsidian-people-kind-manager
+    mode: migrate
+    depends_on: [obsidian-people-kind-manager]
+    description: Migrate person notes to canonical schema
+
+  - skill: obsidian-people-kind-manager
+    mode: enrich
+    depends_on: [obsidian-people-kind-manager]
+    description: Enrich person notes with interaction signals
+
+  - skill: obsidian-interweave-engine
+    mode: enrich
+    depends_on:
+      - obsidian-planetary-tasks-manager
+      - obsidian-people-kind-manager
+    description: Add concept and context links across all notes
+
+# Input overrides (applied to first step unless specified)
+inputs:
+  task_kind: action
+  # person_kind: collaborator
+
+# Output configuration
+output:
+  manifest: pipeline_run.json
+  verbose: true

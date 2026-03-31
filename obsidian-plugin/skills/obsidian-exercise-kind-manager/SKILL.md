@@ -1,12 +1,50 @@
 ---
 name: obsidian-exercise-kind-manager
 version: 1.0.0
+dependencies: []
+pipeline:
+  inputs:
+    - name: exercise_kind
+      type: string
+      required: false
+      description: Filter by exercise kind (hypertrophy, strength, mobility_drill, etc.)
+    - name: glob
+      type: string
+      required: false
+      default: "20 Resources/Exercises/*.md"
+      description: Glob pattern for exercise notes
+    - name: mode
+      type: string
+      required: false
+      default: check
+      description: Mode (check or fix)
+    - name: csv
+      type: file
+      required: false
+      description: Strong CSV export file for workout sync
+  outputs:
+    - name: validated_exercises
+      type: file
+      path: "20 Resources/Exercises/{slug}.md"
+      description: Validated exercise notes
+    - name: exercise_base
+      type: file
+      path: "20 Resources/Exercises/Exercise Library.base"
+      description: Exercise library Base
+    - name: exercise_report
+      type: json
+      path: ".skills/exercise-report.json"
+      description: Validation/migration report
+    - name: strong_sync_report
+      type: json
+      path: ".skills/strong-sync-report.json"
+      description: Strong CSV sync report
 metadata:
   openclaw:
     os: [darwin]
     requires:
       bins: [obsidian, qmd, uvx]
-description: Validate, migrate, sync, and maintain typed exercise notes in this personal Obsidian vault. Use when requests involve `exercise_kind` enforcement, Strong CSV workout imports, gym exercise schemas, `20 Resources/Exercises/*.md`, `Exercise Library.base`, exercise selection heuristics, top-set progression metrics, or primary-muscle volume accounting for progressive overload review.
+description: Validate, migrate, sync, and maintain typed exercise notes in Obsidian. Use for exercise_kind enforcement, Strong CSV workout imports, gym exercise schemas, Exercise Library.base, top-set progression metrics, and primary-muscle volume accounting.
 ---
 
 # Obsidian Exercise Kind Manager
@@ -136,7 +174,7 @@ The fix pass updates Strong-managed frontmatter fields such as:
 ### 8. Render the Exercise Base
 
 ```bash
-uvx --from python --with pyyaml python \
+uvx --from python --with pydantic --with pyyaml python \
   .skills/obsidian-exercise-kind-manager/scripts/render_exercise_base.py \
   --output "20 Resources/Exercises/Exercise Library.base"
 ```
