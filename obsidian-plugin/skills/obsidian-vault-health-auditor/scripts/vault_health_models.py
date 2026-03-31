@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import re
 from datetime import date, datetime
-from enum import StrEnum
+from enum import Enum
 from pathlib import Path
 from typing import Any, Iterable
 
