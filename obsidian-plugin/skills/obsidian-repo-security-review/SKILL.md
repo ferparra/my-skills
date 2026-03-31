@@ -4,10 +4,8 @@ version: 1.0.0
 dependencies: []
 pipeline: {}
 description: >
-  Monthly repository security review skill for Fernando's GitHub account (ferparra).
-  Performs comprehensive security audits across all 14 public and private repositories,
-  checking for supply chain vulnerabilities, PII/doxxing exposure, and unauthorized
-  contributors. Generates structured JSON reports and delivers Telegram summaries.
+  Monthly GitHub security review for 14 repositories. Checks for CVE vulnerabilities,
+  exposed PII, and unauthorized contributors. Delivers JSON reports and Telegram summaries.
 metadata:
   openclaw:
     os:
@@ -117,7 +115,7 @@ For each PUBLIC repository, the skill:
 1. **Clones the repo** with `--depth 1` to save bandwidth
 2. **Scans all files** for sensitive patterns:
    - API keys and tokens (AWS keys, GitHub tokens, Stripe keys, etc.)
-   - Phone numbers (Australian format: 04xxxxxxxx, International: +1-xxx-xxx-xxxx)
+   - Phone numbers (Australian format: 04########, International: +1-###-###-####)
    - Email addresses (personal emails not ending in @github.com)
    - Physical addresses (street addresses, zip codes)
    - AWS access keys (AKIA...)

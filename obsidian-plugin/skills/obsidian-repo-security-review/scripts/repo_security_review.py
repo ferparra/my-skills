@@ -223,8 +223,8 @@ def audit_contributors(owner: str, repo: str) -> RepoContributor:
     result = RepoContributor(status="CLEAN")
     
     for contrib in contributors_data:
-        login = contrib.get("login", "")
-        
+        login = str(contrib.get("login", ""))
+
         if is_allowed_contributor(login):
             result.contributors.append({
                 "login": login,
@@ -375,7 +375,7 @@ def format_telegram_summary(repos: list[RepoInfo],
     if vuln_repos:
         for repo in vuln_repos:
             vulns = repo.supply_chain.vulnerabilities
-            vuln_str = ", ".join([v.get("cve_id", "Unknown") for v in vulns[:3]])
+            vuln_str = ", ".join([str(v.get("cve_id", "Unknown")) for v in vulns[:3]])
             lines.append(f"• {repo.name}: VULN — {len(vulns)} HIGH/CRITICAL CVE(s) found")
             lines.append(f"  → {vuln_str}")
     elif warn_repos:
@@ -415,7 +415,7 @@ def format_telegram_summary(repos: list[RepoInfo],
         for repo in unknown_repos:
             unknown = repo.contributors.unknown_contributors
             if unknown:
-                contrib_names = ", ".join([c.get("login", "unknown") for c in unknown[:3]])
+                contrib_names = ", ".join([str(c.get("login", "unknown")) for c in unknown[:3]])
                 lines.append(f"• {repo.name}: UNKNOWN — {contrib_names} has push access")
     else:
         lines.append("• All repos: CLEAN")
