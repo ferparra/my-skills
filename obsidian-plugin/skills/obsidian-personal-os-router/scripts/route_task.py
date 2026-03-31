@@ -320,6 +320,32 @@ ROUTES = [
         ],
     ),
     RouteSpec(
+        route_id="excalidraw_visual_validation",
+        keywords=[
+            "excalidraw render",
+            "excalidraw png",
+            "excalidraw visual",
+            "excalidraw layout",
+            "excalidraw overlap",
+            "excalidraw spacing",
+            "render excalidraw",
+            "visual validation",
+            "diagram render",
+            "excalidraw screenshot",
+            "excalidraw quality",
+            "excalidraw composition",
+            "excalidraw balance",
+            "render diagram",
+            "diagram quality",
+        ],
+        selected_skill="obsidian-excalidraw-visual-validator",
+        required_commands=[
+            'qmd query "excalidraw drawing diagram" -c notes -l 8',
+            'uvx --from python --with pydantic --with pyyaml python .skills/obsidian-excalidraw-drawing-manager/scripts/validate_excalidraw.py --glob "**/*.excalidraw.md" --mode report',
+            'uvx --from python --with pydantic --with pyyaml --with playwright python .skills/obsidian-excalidraw-visual-validator/scripts/validate_visual.py --glob "**/*.excalidraw.md" --mode check --render',
+        ],
+    ),
+    RouteSpec(
         route_id="excalidraw_drawing_management",
         keywords=[
             "excalidraw",

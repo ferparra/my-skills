@@ -16,6 +16,10 @@ Route evaluation order matches the list below — first match wins.
   - Keywords: betashares, brokerage activity, brokerage csv, brokerage export, transaction history, trade history, dividend log, distribution reinvestment, etf distribution, received a distribution, investment ledger, portfolio ledger, brokerage_activity_kind, brokerage_asset_kind, brokerage assets base, ticker asset, asset registry
 - `notebooklm_base`
   - Keywords: notebooklm base, notebook lm base, notebooklm frontmatter, notebooklm metadata, notebooklm notebooks base, notebooklm notebooks, notebook list, ai notebook, notebooklm
+- `excalidraw_visual_validation`
+  - Keywords: excalidraw render, excalidraw png, excalidraw visual, excalidraw layout, excalidraw overlap, excalidraw spacing, render excalidraw, visual validation, diagram render, excalidraw screenshot, excalidraw quality, excalidraw composition
+- `excalidraw_drawing_management`
+  - Keywords: excalidraw, excalidraw.md, excalidraw plugin, excalidraw schema, excalidraw data, excalidraw element, excalidraw drawing, drawing validation, drawing binding, canvas drawing
 - `pit_snapshot`
   - Keywords: pit, point-in-time, point in time, snapshot, pit_status
 - `zettel_management`
@@ -41,9 +45,8 @@ Route evaluation order matches the list below — first match wins.
 - Evaluate `brokerage_activity_management` before `interweave` or `token_guard` so brokerage-export and investment-ledger requests resolve to the typed import workflow.
 - Evaluate `zettel_management` before `weekly_feedback` — "hub synthesis" and "fleeting capture" are zettel signals, not weekly-review signals.
 - Evaluate `zettel_management` before `memory_capture` — "zettel" is a more specific signal than "memory" or "capture".
-<<<<<<< HEAD
-- Evaluate `cv_entry_management` before `weekly_feedback` and `interweave` — "career", "resume", and "role" are CV signals, not generic periodic or linking signals.
-=======
 - Route domain hub navigation and vault structure queries to `zettel_management` — these are knowledge-graph traversal requests, not generic searches.
->>>>>>> origin/master
+- Evaluate `cv_entry_management` before `weekly_feedback` and `interweave` — "career", "resume", and "role" are CV signals, not generic periodic or linking signals.
+- Evaluate `excalidraw_visual_validation` before `excalidraw_drawing_management` — visual quality checks (overlap, spacing, composition) are more specific than general schema validation.
+- Evaluate `excalidraw_drawing_management` before `interweave` — excalidraw schema and binding issues are structural problems, not linking tasks.
 - Fall back to `token_guard` when uncertain.
