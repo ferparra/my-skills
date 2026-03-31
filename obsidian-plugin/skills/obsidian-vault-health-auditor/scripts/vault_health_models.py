@@ -160,12 +160,22 @@ class VaultHealthReport(BaseModel):
         return self
 
 
+class FixAction(BaseModel):
+    """Single fix action result."""
+    action: str  # "keep_primary", "regenerate_id", "move_note", etc.
+    path: str
+    zettel_id: str | None = None
+    new_zettel_id: str | None = None
+    backup: str | None = None
+    target_path: str | None = None
+
+
 class FixResult(BaseModel):
     ok: bool = True
     fixed: int = 0
     skipped: int = 0
     errors: list[str] = Field(default_factory=list)
-    changes: list[dict[str, Any]] = Field(default_factory=list)
+    changes: list[FixAction] = Field(default_factory=list)
 
 
 # ── Parsing utilities ──────────────────────────────────────────────────────────

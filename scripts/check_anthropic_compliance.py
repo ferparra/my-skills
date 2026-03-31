@@ -11,7 +11,7 @@ REPO_ROOT = Path(__file__).parent.parent
 
 class ParsedFrontmatter(BaseModel):
     """Parsed SKILL.md frontmatter with body and line offset."""
-    frontmatter: dict
+    frontmatter: dict[str, object]
     body: str
     body_start_line: int
 
@@ -117,7 +117,7 @@ def parse_frontmatter(content: str) -> ParsedFrontmatter:
     )
 
 
-def check_frontmatter_fields(fm: dict, skill_path: Path) -> list[str]:
+def check_frontmatter_fields(fm: dict[str, object], skill_path: Path) -> list[str]:
     """Check required frontmatter fields. Returns list of error strings."""
     errors = []
 

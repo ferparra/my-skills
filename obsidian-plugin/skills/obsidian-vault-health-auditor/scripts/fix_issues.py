@@ -28,6 +28,7 @@ from typing import Any
 
 from vault_health_models import (
     DuplicateZettelId,
+    FixAction,
     FixResult,
     load_report,
     MisplacedNote,
@@ -160,9 +161,9 @@ def fix_misplaced_note(
 def fix_duplicate_zettel_ids(
     dup: DuplicateZettelId,
     vault_root: Path,
-) -> list[dict[str, Any]]:
+) -> list[FixAction]:
     """Remove duplicate zettel IDs, keeping oldest, regenerating others."""
-    results: list[dict] = []
+    results: list[FixAction] = []
     paths = dup.paths
     if not paths or len(paths) <= 1:
         return results
@@ -184,12 +185,12 @@ def fix_duplicate_zettel_ids(
             backup = path.with_suffix(path.suffix + ".b4_fix")
             shutil.copy2(path, backup)
             path.write_text(output, encoding="utf-8")
-            results.append({
-                "action": "keep_primary",
-                "path": path_str,
-                "zettel_id": dup.zettel_id,
-                "backup": str(backup),
-            })
+            results.append(FixAction(
+                action="keep_primary",
+                path=path_str,
+                zettel_id=dup.zettel_id,
+                backup=str(backup),
+            ))
         else:
             # Others - regenerate zettel_id
             text = path.read_text(encoding="utf-8", errors="replace")
@@ -201,13 +202,13 @@ def fix_duplicate_zettel_ids(
             backup = path.with_suffix(path.suffix + ".b4_fix")
             shutil.copy2(path, backup)
             path.write_text(output, encoding="utf-8")
-            results.append({
-                "action": "regenerate_id",
-                "path": path_str,
-                "old_id": dup.zettel_id,
-                "new_id": new_id,
-                "backup": str(backup),
-            })
+            results.append(FixAction(
+                action="regenerate_id",
+                path=path_str,
+                zettel_id=dup.zettel_id,
+                new_zettel_id=new_id,
+                backup=str(backup),
+            ))
 
     return results
 
