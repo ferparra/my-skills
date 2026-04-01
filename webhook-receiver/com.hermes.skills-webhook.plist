@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.hermes.skills-webhook</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/bin/python3</string>
+        <string>/Users/fernando/my-skills/webhook-receiver/webhook_receiver.py</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/fernando/my-skills/webhook-receiver</string>
+
+    <key>StandardOutPath</key>
+    <string>/Users/fernando/.hermes/webhook-receiver.stdout.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/fernando/.hermes/webhook-receiver.stderr.log</string>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>KeepAlive</key>
+    <true/>
+
+    <key>HardResourceLimits</key>
+    <dict>
+        <key>NumberOfFiles</key>
+        <integer>1024</integer>
+    </dict>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PYTHONDONTWRITEBYTECODE</key>
+        <string>1</string>
+    </dict>
+</dict>
+</plist>
