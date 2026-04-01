@@ -172,6 +172,9 @@ def check_overlaps(
     # Filter non-deleted elements
     active_elements = [el for el in elements if not getattr(el, "isDeleted", False)]
 
+    # Build element map for containerId lookup
+    element_map = {el.id: el for el in active_elements}
+
     # Compute bboxes
     bboxes_with_ids: list[tuple[str, BBox]] = [
         (el.id, compute_bbox(el)) for el in active_elements
@@ -180,6 +183,15 @@ def check_overlaps(
     # Pairwise overlap check
     for i, (id_a, bb_a) in enumerate(bboxes_with_ids):
         for id_b, bb_b in bboxes_with_ids[i + 1 :]:
+            # Skip container-child pairs (text inside container)
+            element_a = element_map[id_a]
+            element_b = element_map[id_b]
+
+            if isinstance(element_a, TextElement) and element_a.containerId == id_b:
+                continue
+            if isinstance(element_b, TextElement) and element_b.containerId == id_a:
+                continue
+
             if bb_a.intersects(bb_b):
                 overlap_area = bb_a.intersection_area(bb_b)
                 smaller_area = min(bb_a.area, bb_b.area)
@@ -208,6 +220,9 @@ def check_spacing(
     active_elements = [el for el in elements if not getattr(el, "isDeleted", False)]
     if len(active_elements) < 2:
         return errors, warnings
+
+    # Build element map for containerId lookup
+    element_map = {el.id: el for el in active_elements}
 
     bboxes_with_ids: list[tuple[str, BBox]] = [
         (el.id, compute_bbox(el)) for el in active_elements
@@ -240,6 +255,19 @@ def check_spacing(
                 dy = max(0, max(bb_a.y, bb_b.y) - min(bb_a.y2, bb_b.y2))
                 gap = sqrt(dx**2 + dy**2)
                 if abs(gap - min_gap) < 1e-6:
+                    element_a = element_map[id_a]
+                    element_b = element_map[id_b]
+
+                    # Skip container-child pairs (text inside container)
+                    if isinstance(element_a, TextElement) and element_a.containerId == id_b:
+                        break
+                    if isinstance(element_b, TextElement) and element_b.containerId == id_a:
+                        break
+
+                    # Skip pairs involving arrows (arrows are linear, proximity less meaningful)
+                    if isinstance(element_a, ArrowElement) or isinstance(element_b, ArrowElement):
+                        break
+
                     close_pairs.append((id_a, id_b, min_gap))
                     break
 
@@ -380,6 +408,21 @@ def _point_to_bbox_distance(px: float, py: float, bbox: BBox) -> float:
     return sqrt(dx**2 + dy**2)
 
 
+def _line_intersects_bbox(x1: float, y1: float, x2: float, y2: float, bbox: BBox) -> bool:
+    """Check if line segment intersects bbox."""
+    # Check if either endpoint is inside
+    if bbox.x <= x1 <= bbox.x2 and bbox.y <= y1 <= bbox.y2:
+        return True
+    if bbox.x <= x2 <= bbox.x2 and bbox.y <= y2 <= bbox.y2:
+        return True
+    # Check if line segment box overlaps bbox
+    if max(x1, x2) < bbox.x or min(x1, x2) > bbox.x2:
+        return False
+    if max(y1, y2) < bbox.y or min(y1, y2) > bbox.y2:
+        return False
+    return True
+
+
 def check_composition(
     elements: Sequence[ExcalidrawElement], config: VisualValidatorConfig
 ) -> tuple[list[str], list[str]]:
@@ -492,6 +535,75 @@ def check_size_hierarchy(
     return errors, warnings
 
 
+def check_dangling_arrows(
+    elements: Sequence[ExcalidrawElement], config: VisualValidatorConfig
+) -> tuple[list[str], list[str]]:
+    """Check for arrows with no bindings (dangling arrows)."""
+    errors: list[str] = []
+    warnings: list[str] = []
+
+    active_elements = [el for el in elements if not getattr(el, "isDeleted", False)]
+
+    for el in active_elements:
+        if not isinstance(el, ArrowElement):
+            continue
+
+        # Check if arrow has NEITHER startBinding NOR endBinding
+        if not el.startBinding and not el.endBinding:
+            warnings.append(f"Arrow {el.id} has no bindings (dangling arrow)")
+
+    return errors, warnings
+
+
+def check_arrow_crossings(
+    elements: Sequence[ExcalidrawElement], config: VisualValidatorConfig
+) -> tuple[list[str], list[str]]:
+    """Check if arrows cross through unrelated elements."""
+    errors: list[str] = []
+    warnings: list[str] = []
+
+    active_elements = [el for el in elements if not getattr(el, "isDeleted", False)]
+
+    # Build element index with bboxes
+    element_bboxes = {el.id: compute_bbox(el) for el in active_elements}
+
+    for el in active_elements:
+        if not isinstance(el, ArrowElement):
+            continue
+        if not el.points or len(el.points) < 2:
+            continue
+
+        # Get arrow endpoints
+        start_x = el.x + el.points[0][0]
+        start_y = el.y + el.points[0][1]
+        end_x = el.x + el.points[-1][0]
+        end_y = el.y + el.points[-1][1]
+
+        # Get bound element IDs (these are related, so we skip them)
+        related_ids = set()
+        if el.startBinding and el.startBinding.elementId:
+            related_ids.add(el.startBinding.elementId)
+        if el.endBinding and el.endBinding.elementId:
+            related_ids.add(el.endBinding.elementId)
+
+        # Check intersection with all unrelated elements
+        for other_el in active_elements:
+            if other_el.id == el.id:
+                continue  # Skip self
+            if other_el.id in related_ids:
+                continue  # Skip related elements
+
+            other_bbox = element_bboxes.get(other_el.id)
+            if not other_bbox:
+                continue
+
+            # Check if arrow line segment crosses the bbox
+            if _line_intersects_bbox(start_x, start_y, end_x, end_y, other_bbox):
+                warnings.append(f"Arrow {el.id} crosses through element {other_el.id}")
+
+    return errors, warnings
+
+
 # All checks registry
 ALL_CHECKS = [
     check_overlaps,
@@ -500,6 +612,8 @@ ALL_CHECKS = [
     check_arrow_accuracy,
     check_composition,
     check_size_hierarchy,
+    check_dangling_arrows,
+    check_arrow_crossings,
 ]
 
 
