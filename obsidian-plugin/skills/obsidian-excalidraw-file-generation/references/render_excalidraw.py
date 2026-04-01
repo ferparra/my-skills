@@ -18,16 +18,17 @@ import sys
 import zlib
 from pathlib import Path
 from base64 import b64decode
+from typing import Any, cast
 
 
-def extract_json_from_excalidraw_md(raw: str) -> dict:
+def extract_json_from_excalidraw_md(raw: str) -> dict[str, Any]:
     """Extract and decompress JSON from an .excalidraw.md file."""
     # Try ```json block first
     json_match = re.search(r"```json\s*(.*?)\s*```", raw, re.DOTALL)
     if json_match:
         json_text = json_match.group(1).strip()
         try:
-            return json.loads(json_text)
+            return cast(dict[str, Any], json.loads(json_text))
         except json.JSONDecodeError as e:
             print(f"WARNING: ```json block found but invalid JSON: {e}", file=sys.stderr)
 
@@ -44,12 +45,12 @@ def extract_json_from_excalidraw_md(raw: str) -> dict:
             # Try zlib decompress first
             try:
                 decompressed = zlib.decompress(decoded)
-                return json.loads(decompressed)
+                return cast(dict[str, Any], json.loads(decompressed))
             except zlib.error:
                 # Try raw decompress (no header)
                 try:
                     decompressed = zlib.decompress(decoded, -15)
-                    return json.loads(decompressed)
+                    return cast(dict[str, Any], json.loads(decompressed))
                 except zlib.error:
                     pass
             # Last resort: try LZString decompress via Node.js
@@ -59,15 +60,18 @@ def extract_json_from_excalidraw_md(raw: str) -> dict:
             lz_path = os.path.join(os.path.dirname(__file__), "..", "node_modules", "lz-string", "libs", "lz-string.js")
             if not os.path.exists(lz_path):
                 lz_path = "/tmp/node_modules/lz-string/libs/lz-string.js"
+            # Plain string (no f-string) to prevent mypy treating JS identifiers as Python names
+            node_script = (
+                "const LZString=require('%s');"
+                "const d=LZString.decompressFromBase64('%s');"
+                "if(d){console.log(d)}else{process.exit(1)}"
+            ) % (lz_path, compressed_text)
             result = subprocess.run(
-                ["node", "-e",
-                 f"const LZString=require('{lz_path}');"
-                 f"const d=LZString.decompressFromBase64('{compressed_text}');"
-                 f"if(d){{console.log(d)}}else{{process.exit(1)}}"],
+                ["node", "-e", node_script],
                 capture_output=True, text=True, timeout=30
             )
             if result.returncode == 0:
-                return json.loads(result.stdout)
+                return cast(dict[str, Any], json.loads(result.stdout))
             else:
                 print(f"WARNING: LZString decompress failed: {result.stderr[:200]}", file=sys.stderr)
         except Exception as e:
@@ -79,7 +83,7 @@ def extract_json_from_excalidraw_md(raw: str) -> dict:
     )
 
 
-def validate_excalidraw(data: dict) -> list[str]:
+def validate_excalidraw(data: dict[str, Any]) -> list[str]:
     """Validate Excalidraw JSON structure. Returns list of errors (empty = valid)."""
     errors: list[str] = []
     if data.get("type") != "excalidraw":
@@ -93,7 +97,7 @@ def validate_excalidraw(data: dict) -> list[str]:
     return errors
 
 
-def compute_bounding_box(elements: list[dict]) -> tuple[float, float, float, float]:
+def compute_bounding_box(elements: list[dict[str, Any]]) -> tuple[float, float, float, float]:
     """Compute bounding box (min_x, min_y, max_x, max_y) across all elements."""
     min_x = float("inf")
     min_y = float("inf")
@@ -136,7 +140,7 @@ def render(
     """Render an .excalidraw.md file to PNG. Returns the output PNG path."""
     # Import playwright here so validation errors show before import errors
     try:
-        from playwright.sync_api import sync_playwright
+        from playwright.sync_api import sync_playwright  # type: ignore[import-not-found]
     except ImportError:
         print("ERROR: playwright not installed.", file=sys.stderr)
         print("Run: python3 -m playwright install chromium", file=sys.stderr)

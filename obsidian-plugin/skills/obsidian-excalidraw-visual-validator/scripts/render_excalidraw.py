@@ -4,7 +4,7 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 from visual_validator_config import VisualValidatorConfig
 from visual_validator_models import (
@@ -14,6 +14,7 @@ from visual_validator_models import (
     load_markdown_note,
     parse_drawing,
 )
+from typing import cast
 
 HTML_TEMPLATE = """<!DOCTYPE html>
 <html>
@@ -52,11 +53,11 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 """
 
 
-def _extract_json_flexible(body: str, file_path: Path) -> dict:
+def _extract_json_flexible(body: str, file_path: Path) -> dict[str, Any]:
     """Extract JSON, handling both plain and compressed formats."""
     from visual_validator_models import extract_excalidraw_json
     try:
-        return extract_excalidraw_json(body, file_path)
+        return cast(dict[str, Any], extract_excalidraw_json(body, file_path))
     except ValueError as e:
         if "compressed-json" not in str(e):
             raise
@@ -69,16 +70,20 @@ def _extract_json_flexible(body: str, file_path: Path) -> dict:
         lz_path = os.path.join(os.path.dirname(__file__), "..", "node_modules", "lz-string", "libs", "lz-string.js")
         if not os.path.exists(lz_path):
             lz_path = "/tmp/node_modules/lz-string/libs/lz-string.js"
+        # Node.js script — plain string (no f-string interpolation to avoid
+        # mypy falsely treating JS identifiers as Python names)
+        node_script = (
+            "const LZ=require('%s');"
+            "const d=LZ.decompressFromBase64('%s');"
+            "if(d){console.log(d)}else{process.exit(1)}"
+        ) % (lz_path, cleaned)
         result = subprocess.run(
-            ["node", "-e",
-             f"const LZ=require('{lz_path}');"
-             f"const d=LZ.decompressFromBase64('{cleaned}');"
-             f"if(d){console.log(d)}else{process.exit(1)}"],
+            ["node", "-e", node_script],
             capture_output=True, text=True, timeout=30
         )
         if result.returncode != 0:
             raise ValueError(f"LZString decompression failed: {result.stderr[:200]}") from e
-        return json.loads(result.stdout)
+        return cast(dict[str, Any], json.loads(result.stdout))
 
 
 
