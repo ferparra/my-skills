@@ -557,6 +557,68 @@ def check_orphaned_groups(elements: Sequence[ExcalidrawElement]) -> tuple[list[s
     return [], warnings
 
 
+def check_enum_fields(elements: Sequence[ExcalidrawElement]) -> tuple[list[str], list[str]]:
+    """Check for invalid enum field values."""
+    errors = []
+    valid_fill_styles = {"solid", "hachure", "cross-hatch"}
+    valid_stroke_styles = {"solid", "dashed", "dotted"}
+
+    for el in elements:
+        if el.fillStyle not in valid_fill_styles:
+            errors.append(
+                f"Element '{el.id}' has invalid fillStyle: '{el.fillStyle}' "
+                f"(valid: {', '.join(sorted(valid_fill_styles))})"
+            )
+
+        if el.strokeStyle not in valid_stroke_styles:
+            errors.append(
+                f"Element '{el.id}' has invalid strokeStyle: '{el.strokeStyle}' "
+                f"(valid: {', '.join(sorted(valid_stroke_styles))})"
+            )
+
+    return errors, []
+
+
+def check_numeric_ranges(elements: Sequence[ExcalidrawElement]) -> tuple[list[str], list[str]]:
+    """Check for out-of-range numeric field values."""
+    errors = []
+
+    for el in elements:
+        # Check opacity (0-100)
+        if el.opacity < 0 or el.opacity > 100:
+            errors.append(f"Element '{el.id}' has opacity out of range: {el.opacity} (valid: 0-100)")
+
+        # Check roughness (0-2)
+        if el.roughness < 0 or el.roughness > 2:
+            errors.append(f"Element '{el.id}' has roughness out of range: {el.roughness} (valid: 0-2)")
+
+        # Check fontFamily (1-5) for text elements
+        if isinstance(el, TextElement):
+            if el.fontFamily < 1 or el.fontFamily > 5:
+                errors.append(
+                    f"Element '{el.id}' has fontFamily out of range: {el.fontFamily} (valid: 1-5)"
+                )
+
+    return errors, []
+
+
+def check_arrow_points_structure(elements: Sequence[ExcalidrawElement]) -> tuple[list[str], list[str]]:
+    """Check arrow points array structure."""
+    errors = []
+
+    for el in elements:
+        if isinstance(el, ArrowElement):
+            for i, point in enumerate(el.points):
+                if not isinstance(point, list) or len(point) != 2:
+                    errors.append(
+                        f"Arrow element '{el.id}' has invalid points[{i}]: {point} "
+                        f"(expected array with exactly 2 elements [x, y])"
+                    )
+
+    return errors, []
+
+
+
 def check_text_elements_sync(body: str, elements: Sequence[ExcalidrawElement]) -> tuple[list[str], list[str]]:
     """Check that ## Text Elements section is in sync with actual text elements."""
     warnings = []
@@ -583,6 +645,9 @@ ALL_CHECKS = [
     check_text_original_text,
     check_color_values,
     check_orphaned_groups,
+    check_enum_fields,
+    check_numeric_ranges,
+    check_arrow_points_structure,
 ]
 
 
@@ -591,13 +656,16 @@ def validate_drawing(drawing: ExcalidrawDrawing, body: str) -> tuple[list[str], 
     errors: list[str] = []
     warnings: list[str] = []
 
+    # Filter out deleted elements before running checks
+    active_elements = [el for el in drawing.elements if not el.isDeleted]
+
     for check in ALL_CHECKS:
-        e, w = check(drawing.elements)
+        e, w = check(active_elements)
         errors.extend(e)
         warnings.extend(w)
 
     # Check text elements sync separately since it needs the body
-    e, w = check_text_elements_sync(body, drawing.elements)
+    e, w = check_text_elements_sync(body, active_elements)
     errors.extend(e)
     warnings.extend(w)
 
