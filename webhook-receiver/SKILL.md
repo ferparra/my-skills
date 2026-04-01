@@ -40,6 +40,7 @@ webhook_receiver.py (HMAC validated)
 | File | Location | Role |
 |------|----------|------|
 | `webhook_receiver.py` | `~/my-skills/webhook-receiver/` | HTTP server, HMAC validation, skill extraction |
+| `start-receiver.sh` | `~/my-skills/webhook-receiver/` | Shell wrapper — keeps home-dir paths out of plist |
 | `refresh_personal_os_skills.py` | `~/.hermes/scripts/` | git pull + symlink refresh |
 | `com.hermes.skills-webhook.plist` | `~/Library/LaunchAgents/` | LaunchAgent keep-alive config |
 | `skills-webhook.yml` | `.github/workflows/` | GitHub Actions → sends webhook on push to master |
@@ -70,6 +71,7 @@ tailscale funnel status
 
 **4. Install the LaunchAgent**
 ```bash
+chmod +x ~/my-skills/webhook-receiver/start-receiver.sh
 cp ~/my-skills/webhook-receiver/com.hermes.skills-webhook.plist ~/Library/LaunchAgents/
 launchctl load ~/Library/LaunchAgents/com.hermes.skills-webhook.plist
 # Confirm it's running:
