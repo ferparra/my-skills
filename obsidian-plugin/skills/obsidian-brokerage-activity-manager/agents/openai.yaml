@@ -1,4 +1,0 @@
-interface:
-  display_name: "Obsidian Brokerage Activity Manager"
-  short_description: "Import brokerage CSVs into a typed ledger Base"
-  default_prompt: "Use $obsidian-brokerage-activity-manager to import brokerage exports into typed brokerage activity notes and ticker-indexed asset notes, merge duplicates idempotently, enforce brokerage_activity_kind and brokerage_asset_kind, and maintain Brokerage Activity.base plus Brokerage Assets.base."

@@ -1,4 +1,0 @@
-interface:
-  display_name: "Obsidian Token Budget Guard"
-  short_description: "Enforce strict context and token budget gates"
-  default_prompt: "Use $obsidian-token-budget-guard to validate candidate reads against strict token budgets before editing."

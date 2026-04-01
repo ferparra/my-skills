@@ -1,8 +1,0 @@
-interface:
-  display_name: "Obsidian Zettel Manager"
-  short_description: "Validate, migrate, and score zettel knowledge notes"
-  default_prompt: >
-    Use $obsidian-zettel-manager to validate zettel_kind, assign zettel_id,
-    normalise frontmatter, and score connection_strength for knowledge notes
-    in this vault. Treat zettel_kind as the supertag: it selects the note's
-    schema contract enforced by Pydantic v2.

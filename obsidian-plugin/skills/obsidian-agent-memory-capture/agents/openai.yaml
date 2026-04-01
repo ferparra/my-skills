@@ -1,4 +1,0 @@
-interface:
-  display_name: "Obsidian Agent Memory Capture"
-  short_description: "Capture reusable zettels from execution insights"
-  default_prompt: "Use $obsidian-agent-memory-capture to audit this note against zettel memory standards."

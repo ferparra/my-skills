@@ -1,4 +1,0 @@
-interface:
-  display_name: "Obsidian NotebookLM Bases Manager"
-  short_description: "Manage NotebookLM Bases and frontmatter"
-  default_prompt: "Use $obsidian-notebooklm-bases-manager to create or audit a NotebookLM base and validate its note frontmatter."

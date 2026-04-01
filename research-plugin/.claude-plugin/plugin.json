@@ -1,9 +1,0 @@
-{
-  "name": "research-plugin",
-  "version": "0.3.1",
-  "description": "Autonomous AI-driven optimization and research skills.",
-  "author": {
-    "name": "ferparra"
-  },
-  "skills": "./skills/"
-}

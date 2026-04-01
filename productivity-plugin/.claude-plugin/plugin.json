@@ -1,9 +1,0 @@
-{
-  "name": "productivity-plugin",
-  "version": "0.3.1",
-  "description": "Jira sprint sync and QMD knowledge-base search.",
-  "author": {
-    "name": "ferparra"
-  },
-  "skills": "./skills/"
-}

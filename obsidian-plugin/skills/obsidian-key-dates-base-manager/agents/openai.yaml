@@ -1,4 +1,0 @@
-interface:
-  display_name: "Obsidian Key Dates Base"
-  short_description: "Manage Key Dates.base date-link logic"
-  default_prompt: "Use $obsidian-key-dates-base-manager to maintain 10 Notes/Key Dates.base and verify links against existing date notes."
