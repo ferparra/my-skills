@@ -86,6 +86,22 @@ def point_to_bbox_distance(px: float, py: float, bbox: dict) -> float:
     return sqrt(dx**2 + dy**2)
 
 
+def line_intersects_bbox(x1: float, y1: float, x2: float, y2: float, bbox: dict) -> bool:
+    """Check if line segment intersects bbox."""
+    # Check if either endpoint is inside
+    if bbox["x"] <= x1 <= bbox["x2"] and bbox["y"] <= y1 <= bbox["y2"]:
+        return True
+    if bbox["x"] <= x2 <= bbox["x2"] and bbox["y"] <= y2 <= bbox["y2"]:
+        return True
+    # Check intersection with 4 edges (simplified: if line crosses bbox)
+    # Line fully left/right/above/below bbox?
+    if max(x1, x2) < bbox["x"] or min(x1, x2) > bbox["x2"]:
+        return False
+    if max(y1, y2) < bbox["y"] or min(y1, y2) > bbox["y2"]:
+        return False
+    return True  # Segment box overlaps bbox
+
+
 # ── Schema check functions ───────────────────────────────────────────────────
 
 
@@ -226,14 +242,87 @@ def check_orphaned_groups(elements: list[dict]) -> tuple[list[str], list[str]]:
     return [], warnings
 
 
+def check_enum_fields(elements: list[dict]) -> tuple[list[str], list[str]]:
+    """Check for invalid enum field values."""
+    errors = []
+    valid_fill_styles = {"solid", "hachure", "cross-hatch"}
+    valid_stroke_styles = {"solid", "dashed", "dotted"}
+
+    for el in elements:
+        fill_style = el.get("fillStyle")
+        if fill_style and fill_style not in valid_fill_styles:
+            errors.append(
+                f"Element '{el['id']}' has invalid fillStyle: '{fill_style}' "
+                f"(valid: {', '.join(sorted(valid_fill_styles))})"
+            )
+
+        stroke_style = el.get("strokeStyle")
+        if stroke_style and stroke_style not in valid_stroke_styles:
+            errors.append(
+                f"Element '{el['id']}' has invalid strokeStyle: '{stroke_style}' "
+                f"(valid: {', '.join(sorted(valid_stroke_styles))})"
+            )
+
+    return errors, []
+
+
+def check_numeric_ranges(elements: list[dict]) -> tuple[list[str], list[str]]:
+    """Check for out-of-range numeric field values."""
+    errors = []
+
+    for el in elements:
+        # Check opacity (0-100)
+        opacity = el.get("opacity")
+        if opacity is not None and (opacity < 0 or opacity > 100):
+            errors.append(
+                f"Element '{el['id']}' has opacity out of range: {opacity} (valid: 0-100)"
+            )
+
+        # Check roughness (0-2)
+        roughness = el.get("roughness")
+        if roughness is not None and (roughness < 0 or roughness > 2):
+            errors.append(
+                f"Element '{el['id']}' has roughness out of range: {roughness} (valid: 0-2)"
+            )
+
+        # Check fontFamily (1-5) for text elements
+        if el["type"] == "text":
+            font_family = el.get("fontFamily")
+            if font_family is not None and (font_family < 1 or font_family > 5):
+                errors.append(
+                    f"Element '{el['id']}' has fontFamily out of range: {font_family} (valid: 1-5)"
+                )
+
+    return errors, []
+
+
+def check_arrow_points_structure(elements: list[dict]) -> tuple[list[str], list[str]]:
+    """Check arrow points array structure."""
+    errors = []
+
+    for el in elements:
+        if el["type"] == "arrow":
+            points = el.get("points", [])
+            for i, point in enumerate(points):
+                if not isinstance(point, list) or len(point) != 2:
+                    errors.append(
+                        f"Arrow element '{el['id']}' has invalid points[{i}]: {point} "
+                        f"(expected array with exactly 2 elements [x, y])"
+                    )
+
+    return errors, []
+
+
 # ── Visual check functions ───────────────────────────────────────────────────
 
 
 def check_overlaps(elements: list[dict]) -> tuple[list[str], list[str]]:
     """Check for overlapping elements."""
-    # NOTE: Baseline intentionally does NOT filter container-child pairs
     errors: list[str] = []
     warnings: list[str] = []
+
+    # Build element map for containerId lookup
+    element_map = {el["id"]: el for el in elements}
 
     # Compute bboxes
     bboxes_with_ids: list[tuple[str, dict]] = [(el["id"], compute_bbox(el)) for el in elements]
@@ -241,6 +330,15 @@ def check_overlaps(elements: list[dict]) -> tuple[list[str], list[str]]:
     # Pairwise overlap check
     for i, (id_a, bb_a) in enumerate(bboxes_with_ids):
         for id_b, bb_b in bboxes_with_ids[i + 1 :]:
+            # Skip if one element is text inside the other's container
+            element_a = element_map[id_a]
+            element_b = element_map[id_b]
+
+            if element_a.get("type") == "text" and element_a.get("containerId") == id_b:
+                continue
+            if element_b.get("type") == "text" and element_b.get("containerId") == id_a:
+                continue
+
             if bbox_intersects(bb_a, bb_b):
                 overlap_area = intersection_area(bb_a, bb_b)
                 smaller_area = min(bb_a["area"], bb_b["area"])
@@ -262,6 +360,9 @@ def check_spacing(elements: list[dict]) -> tuple[list[str], list[str]]:
 
     if len(elements) < 2:
         return errors, warnings
+
+    # Build element map for containerId and binding lookup
+    element_map = {el["id"]: el for el in elements}
 
     bboxes_with_ids: list[tuple[str, dict]] = [(el["id"], compute_bbox(el)) for el in elements]
 
@@ -292,6 +393,19 @@ def check_spacing(elements: list[dict]) -> tuple[list[str], list[str]]:
                 dy = max(0, max(bb_a["y"], bb_b["y"]) - min(bb_a["y2"], bb_b["y2"]))
                 gap = sqrt(dx**2 + dy**2)
                 if abs(gap - min_gap) < 1e-6:
+                    element_a = element_map[id_a]
+                    element_b = element_map[id_b]
+
+                    # Skip container-child pairs (text inside container)
+                    if element_a.get("type") == "text" and element_a.get("containerId") == id_b:
+                        break
+                    if element_b.get("type") == "text" and element_b.get("containerId") == id_a:
+                        break
+
+                    # Skip pairs involving arrows (arrows are linear, proximity less meaningful)
+                    if element_a.get("type") == "arrow" or element_b.get("type") == "arrow":
+                        break
+
                     close_pairs.append((id_a, id_b, min_gap))
                     break
 
@@ -506,6 +620,72 @@ def check_size_hierarchy(elements: list[dict]) -> tuple[list[str], list[str]]:
     return errors, warnings
 
 
+def check_dangling_arrows(elements: list[dict]) -> tuple[list[str], list[str]]:
+    """Check for arrows with no bindings (dangling arrows)."""
+    errors: list[str] = []
+    warnings: list[str] = []
+
+    for el in elements:
+        if el["type"] != "arrow":
+            continue
+
+        start_binding = el.get("startBinding")
+        end_binding = el.get("endBinding")
+
+        # Check if arrow has NEITHER startBinding NOR endBinding
+        if not start_binding and not end_binding:
+            warnings.append(f"Arrow {el['id']} has no bindings (dangling arrow)")
+
+    return errors, warnings
+
+
+def check_arrow_crossings(elements: list[dict]) -> tuple[list[str], list[str]]:
+    """Check if arrows cross through unrelated elements."""
+    errors: list[str] = []
+    warnings: list[str] = []
+
+    # Build element index with bboxes
+    element_bboxes = {el["id"]: compute_bbox(el) for el in elements}
+
+    for el in elements:
+        if el["type"] != "arrow":
+            continue
+        if not el.get("points") or len(el["points"]) < 2:
+            continue
+
+        # Get arrow endpoints
+        start_x = el["x"] + el["points"][0][0]
+        start_y = el["y"] + el["points"][0][1]
+        end_x = el["x"] + el["points"][-1][0]
+        end_y = el["y"] + el["points"][-1][1]
+
+        # Get bound element IDs (these are related, so we skip them)
+        related_ids = set()
+        start_binding = el.get("startBinding")
+        end_binding = el.get("endBinding")
+        if start_binding and start_binding.get("elementId"):
+            related_ids.add(start_binding["elementId"])
+        if end_binding and end_binding.get("elementId"):
+            related_ids.add(end_binding["elementId"])
+
+        # Check intersection with all unrelated elements
+        for other_el in elements:
+            if other_el["id"] == el["id"]:
+                continue  # Skip self
+            if other_el["id"] in related_ids:
+                continue  # Skip related elements
+
+            other_bbox = element_bboxes.get(other_el["id"])
+            if not other_bbox:
+                continue
+
+            # Check if arrow line segment crosses the bbox
+            if line_intersects_bbox(start_x, start_y, end_x, end_y, other_bbox):
+                warnings.append(f"Arrow {el['id']} crosses through element {other_el['id']}")
+
+    return errors, warnings
+
+
 # ── Main entry point ─────────────────────────────────────────────────────────
 
 ALL_CHECKS = [
@@ -517,18 +697,25 @@ ALL_CHECKS = [
     check_text_original_text,
     check_color_values,
     check_orphaned_groups,
+    check_enum_fields,
+    check_numeric_ranges,
+    check_arrow_points_structure,
     check_overlaps,
     check_spacing,
     check_text_overflow,
     check_arrow_accuracy,
     check_composition,
     check_size_hierarchy,
+    check_dangling_arrows,
+    check_arrow_crossings,
 ]
 
 
 def validate_all(elements: list[dict]) -> tuple[list[str], list[str]]:
     """Run all checks on elements. Returns (errors, warnings)."""
-    # Baseline: NO isDeleted filtering (agent should add this)
+    # Filter out deleted elements before running checks
+    elements = [el for el in elements if not el.get("isDeleted", False)]
+
     all_errors: list[str] = []
     all_warnings: list[str] = []
 
