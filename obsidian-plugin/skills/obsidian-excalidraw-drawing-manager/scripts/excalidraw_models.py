@@ -366,13 +366,25 @@ def extract_excalidraw_json(body: str, file_path: Path | None = None) -> dict[st
     content = match.group(2).strip()
 
     if is_compressed:
+        # Remove chunking (double newlines every 256 chars) and all newlines
+        cleaned = content.replace("\n\n", "").replace("\n", "")
+        import subprocess, os, json
+        # Try skill-local lz-string first, then /tmp
+        lz_path = os.path.join(os.path.dirname(__file__), "..", "node_modules", "lz-string", "libs", "lz-string.js")
+        if not os.path.exists(lz_path):
+            lz_path = "/tmp/node_modules/lz-string/libs/lz-string.js"
+        result = subprocess.run(
+            ["node", "-e",
+             f"const LZ=require('{lz_path}');"
+             f"const d=LZ.decompressFromBase64('{cleaned}');"
+             f"if(d){{console.log(d)}}else{{process.exit(1)}}"],
+            capture_output=True, text=True, timeout=30
+        )
+        if result.returncode == 0:
+            return cast(dict[str, Any], json.loads(result.stdout))
         raise ValueError(
-            "compressed-json format detected. Please decompress first:\n"
-            "1. Open file in Obsidian\n"
-            "2. Command palette → 'Decompress current Excalidraw file'\n"
-            "3. Re-run validation\n"
-            "\n"
-            "The Excalidraw plugin uses pako compression which is not compatible with Python's zlib."
+            f"LZString decompression failed. Try opening in Obsidian and using "
+            f"'Decompress current Excalidraw file' command palette action."
         )
     else:
         try:

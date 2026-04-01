@@ -4,7 +4,7 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 from visual_validator_config import VisualValidatorConfig
 from visual_validator_models import (
@@ -14,6 +14,7 @@ from visual_validator_models import (
     load_markdown_note,
     parse_drawing,
 )
+from typing import cast
 
 HTML_TEMPLATE = """<!DOCTYPE html>
 <html>
@@ -27,7 +28,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <body>
   <div id="root"></div>
   <script type="module">
-    import { exportToSvg } from "https://esm.sh/@excalidraw/excalidraw@0.17.0";
+    import { exportToSvg } from "https://esm.sh/@excalidraw/excalidraw?bundle";
 
     window.renderDiagram = async (data) => {
       try {
@@ -52,6 +53,40 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 """
 
 
+def _extract_json_flexible(body: str, file_path: Path) -> dict[str, Any]:
+    """Extract JSON, handling both plain and compressed formats."""
+    from visual_validator_models import extract_excalidraw_json
+    try:
+        return cast(dict[str, Any], extract_excalidraw_json(body, file_path))
+    except ValueError as e:
+        if "compressed-json" not in str(e):
+            raise
+        # Decompress with LZString
+        import subprocess, os, json, re
+        match = re.search(r'```compressed-json\s+([\s\S]+?)\n```', body)
+        if not match:
+            raise ValueError("No compressed-json block found") from e
+        cleaned = match.group(1).strip().replace('\n\n', '').replace('\n', '')
+        lz_path = os.path.join(os.path.dirname(__file__), "..", "node_modules", "lz-string", "libs", "lz-string.js")
+        if not os.path.exists(lz_path):
+            lz_path = "/tmp/node_modules/lz-string/libs/lz-string.js"
+        # Node.js script — plain string (no f-string interpolation to avoid
+        # mypy falsely treating JS identifiers as Python names)
+        node_script = (
+            "const LZ=require('%s');"
+            "const d=LZ.decompressFromBase64('%s');"
+            "if(d){console.log(d)}else{process.exit(1)}"
+        ) % (lz_path, cleaned)
+        result = subprocess.run(
+            ["node", "-e", node_script],
+            capture_output=True, text=True, timeout=30
+        )
+        if result.returncode != 0:
+            raise ValueError(f"LZString decompression failed: {result.stderr[:200]}") from e
+        return cast(dict[str, Any], json.loads(result.stdout))
+
+
+
 def render_to_png(
     input_path: Path, output_path: Path, config: VisualValidatorConfig
 ) -> dict[str, Any]:
@@ -66,7 +101,7 @@ def render_to_png(
 
     # Load and parse the drawing
     note = load_markdown_note(input_path)
-    drawing_json = extract_excalidraw_json(note.body, input_path)
+    drawing_json = _extract_json_flexible(note.body, input_path)
     if drawing_json is None:
         return {"ok": False, "error": "Could not extract JSON from markdown"}
 

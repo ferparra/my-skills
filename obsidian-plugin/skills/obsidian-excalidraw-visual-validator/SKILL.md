@@ -38,6 +38,7 @@ All checks produce clear `{"ok": bool}` JSON output for autoresearcher compatibi
 Check that required commands are available:
 ```bash
 uvx --version
+npm list lz-string || npm install lz-string
 obsidian --version
 qmd status
 playwright --version || python -m playwright install chromium

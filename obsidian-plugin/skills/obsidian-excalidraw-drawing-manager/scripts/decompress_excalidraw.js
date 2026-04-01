@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Decompress Excalidraw compressed-json using pako.
+ * Decompress Excalidraw compressed-json using LZString.
  *
  * Usage:
  *   node decompress_excalidraw.js <path-to-excalidraw.md>
@@ -11,19 +11,22 @@
 const fs = require('fs');
 const path = require('path');
 
-// Try to require pako - if not installed, provide helpful error
-let pako;
-try {
-  pako = require('pako');
-} catch (e) {
-  console.error('Error: pako is not installed.');
-  console.error('Install it with: npm install -g pako');
-  console.error('Or run: uvx --from pako --with pako node decompress_excalidraw.js <file>');
+// Try multiple lz-string locations
+let LZString;
+const lzPaths = [
+  path.join(__dirname, '..', 'node_modules', 'lz-string', 'libs', 'lz-string.js'),
+  '/tmp/node_modules/lz-string/libs/lz-string.js',
+  path.join(process.env.HOME || '/root', '.hermes', 'skills', 'obsidian', 'obsidian-excalidraw-file-generation', 'node_modules', 'lz-string', 'libs', 'lz-string.js'),
+];
+for (const lp of lzPaths) {
+  try { LZString = require(lp); break; } catch(e) { /* try next */ }
+}
+if (!LZString) {
+  console.error('Error: lz-string not found. Tried:', lzPaths.join(', '));
   process.exit(1);
 }
 
 const filePath = process.argv[2];
-
 if (!filePath) {
   console.error('Usage: node decompress_excalidraw.js <path-to-excalidraw.md>');
   process.exit(1);
@@ -37,23 +40,12 @@ if (!match) {
   process.exit(1);
 }
 
-const compressed = match[1].trim();
+const compressed = match[1].trim().replace(/\n+/g, '');
+const jsonStr = LZString.decompressFromBase64(compressed);
 
-try {
-  // Decode base64
-  const binaryString = atob ? atob(compressed) : Buffer.from(compressed, 'base64').toString('binary');
-  const charData = binaryString.split('').map(x => x.charCodeAt(0));
-  const binData = new Uint8Array(charData);
-
-  // Decompress with pako (uses raw inflate)
-  const decompressed = pako.inflate(binData, { raw: true });
-
-  // Convert to string
-  const jsonStr = new TextDecoder().decode(decompressed);
-
-  // Output the JSON
-  console.log(jsonStr);
-} catch (e) {
-  console.error('Error decompressing:', e.message);
+if (!jsonStr) {
+  console.error('Error: LZString.decompressFromBase64 returned null — data may not be LZString format');
   process.exit(1);
 }
+
+console.log(jsonStr);
