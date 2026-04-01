@@ -1,0 +1,4 @@
+Completed At,Type,Ticker,Units,Unit Price,Total,Brokerage,Status,Currency,Tax
+2026-03-01,Buy,IVV,2,48.50,97.00,1.00,Completed,AUD,
+2026-03-05,Dividend,IVV,,,12.34,,Completed,AUD,0.00
+2026-03-06,Fee,,,,1.50,,Completed,AUD,

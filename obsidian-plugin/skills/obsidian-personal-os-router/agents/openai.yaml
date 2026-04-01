@@ -1,0 +1,4 @@
+interface:
+  display_name: "Obsidian Personal OS Router"
+  short_description: "Route Obsidian tasks with strict context budgets"
+  default_prompt: "Use $obsidian-personal-os-router to choose the minimum-context workflow for this vault task."

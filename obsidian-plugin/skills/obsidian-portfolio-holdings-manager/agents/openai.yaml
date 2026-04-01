@@ -1,0 +1,4 @@
+interface:
+  display_name: "Portfolio Holdings"
+  short_description: "Sync current and historical holdings"
+  default_prompt: "Use $obsidian-portfolio-holdings-manager to rebuild my current and historical portfolio holdings from brokerage activity notes."

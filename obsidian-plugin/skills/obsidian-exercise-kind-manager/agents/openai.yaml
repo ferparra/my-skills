@@ -1,0 +1,4 @@
+interface:
+  display_name: "Obsidian Exercise Kind Manager"
+  short_description: "Validate exercise notes and sync Strong CSV workout history"
+  default_prompt: "Use $obsidian-exercise-kind-manager to validate exercise_kind, sync Strong CSV exports into 20 Resources/Exercises without duplicate log sections, enforce the typed exercise schema, and maintain the Exercise Library.base for selection heuristics, weekly volume tracking, and progressive overload analysis."
