@@ -7,18 +7,9 @@
 
     <key>ProgramArguments</key>
     <array>
-        <string>/usr/bin/python3</string>
-        <string>/Users/fernando/my-skills/webhook-receiver/webhook_receiver.py</string>
+        <string>/bin/bash</string>
+        <string>$HOME/my-skills/webhook-receiver/start-receiver.sh</string>
     </array>
-
-    <key>WorkingDirectory</key>
-    <string>/Users/fernando/my-skills/webhook-receiver</string>
-
-    <key>StandardOutPath</key>
-    <string>/Users/fernando/.hermes/webhook-receiver.stdout.log</string>
-
-    <key>StandardErrorPath</key>
-    <string>/Users/fernando/.hermes/webhook-receiver.stderr.log</string>
 
     <key>RunAtLoad</key>
     <true/>
