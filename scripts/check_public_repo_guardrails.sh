@@ -10,10 +10,12 @@ if ! git rev-parse --verify "${BASE_REF}" >/dev/null 2>&1; then
 fi
 
 # Exclude the scanner itself so the denylist can evolve without self-matching.
-diff_lines="$(git diff --no-color --unified=0 "${BASE_REF}...HEAD" -- . ':(exclude)scripts/check_public_repo_guardrails.sh')"
-added_lines="$(printf '%s\n' "${diff_lines}" | grep '^+' | grep -v '^+++' || true)"
+# Also exclude node_modules/ which contains third-party MIT-licensed code with
+# copyright headers that match the email-pattern false positives (e.g. lz-string).
+diff_lines="$(git diff --no-color --unified=0 "${BASE_REF}...HEAD" -- . ':(exclude)scripts/check_public_repo_guardrails.sh' ':(exclude)node_modules/')"
+addedLines="$(printf '%s\n' "${diff_lines}" | grep '^+' | grep -v '^+++' || true)"
 
-if [ -z "${added_lines}" ]; then
+if [ -z "${addedLines}" ]; then
   echo "No added lines to scan against ${BASE_REF}."
   exit 0
 fi
@@ -33,9 +35,9 @@ patterns=(
 failed=0
 
 for pattern in "${patterns[@]}"; do
-  if printf '%s\n' "${added_lines}" | grep -En "${pattern}" >/dev/null; then
+  if printf '%s\n' "${addedLines}" | grep -En "${pattern}" >/dev/null; then
     echo "Potential public-repo safety violation for pattern: ${pattern}" >&2
-    printf '%s\n' "${added_lines}" | grep -En "${pattern}" >&2 || true
+    printf '%s\n' "${addedLines}" | grep -En "${pattern}" >&2 || true
     failed=1
   fi
 done
