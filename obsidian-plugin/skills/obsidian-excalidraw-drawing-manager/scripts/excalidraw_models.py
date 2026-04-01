@@ -618,6 +618,7 @@ def check_arrow_points_structure(elements: Sequence[ExcalidrawElement]) -> tuple
     return errors, []
 
 
+
 def check_text_elements_sync(body: str, elements: Sequence[ExcalidrawElement]) -> tuple[list[str], list[str]]:
     """Check that ## Text Elements section is in sync with actual text elements."""
     warnings = []
