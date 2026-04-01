@@ -1,5 +1,6 @@
 ---
 name: build-excalidraw-from-code
+version: "1.0.0"
 description: Create validated .excalidraw.md files programmatically from Python — no browser or live canvas required. Generates the correct Obsidian Excalidraw plugin format (frontmatter, text elements, JSON block with code fence) and validates against the obsidian-excalidraw-drawing-manager schema.
 triggers:
   - generate an excalidraw diagram from python
@@ -17,6 +18,15 @@ tags:
 # Build Excalidraw Diagrams Programmatically
 
 Create validated `.excalidraw.md` files directly from Python code, without needing the Obsidian Excalidraw plugin UI or the live canvas.
+
+## Workflow
+
+1. **Design** your diagram in Python using the template below (rectangles, ellipses, arrows, text).
+2. **Assemble** the `.excalidraw.md` file — follow the format in `## Required Format`.
+3. **Validate structurally** after every 2-3 elements using `obsidian-excalidraw-drawing-manager`.
+4. **Validate geometrically** (no PNG needed) using `obsidian-excalidraw-visual-validator`.
+5. **Render to PNG** to confirm visual output.
+6. **Copy to vault** and open in Obsidian to verify live.
 
 ## When to Use
 

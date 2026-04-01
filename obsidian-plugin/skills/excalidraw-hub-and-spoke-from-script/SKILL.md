@@ -5,10 +5,9 @@ dependencies: []
 pipeline: {}
 description: >
   Programmatically generate a hub-and-spoke Excalidraw diagram as a valid
-  .excalidraw.md file, then validate it structurally and geometrically.
+  .excalidraw.md file with structural and geometric validation.
   Produces a clean hub (central ellipse) connected by arrows to N peripheral
   spokes. No frames — frames cause false-positive overlap/spacing warnings.
-  v1.1.0 fixes rendering pipeline: Python+esm.sh instead of broken bun pipeline.
 triggers:
   - "hub and spoke diagram"
   - "generate excalidraw diagram"

@@ -12,6 +12,15 @@ triggers:
 
 # Obsidian Excalidraw File Generation
 
+## Workflow
+
+1. **Design** your diagram elements (rectangles, ellipses, arrows, text) in Python.
+2. **Assemble** the `.excalidraw.md` file using the format in `## Format Specification` below.
+3. **Validate structurally** with the checklist in `## Format Specification`.
+4. **Validate geometrically** using `obsidian-excalidraw-visual-validator`.
+5. **Render to PNG** with the render script to confirm visual output.
+6. **Copy to vault** and open in Obsidian to verify live.
+
 ## Format Specification (studied from plugin source code)
 
 ### File Structure (top to bottom)
