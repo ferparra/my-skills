@@ -1,0 +1,9 @@
+interface:
+  display_name: "Obsidian Excalidraw Drawing Manager"
+  short_description: "Validate and construct Excalidraw diagrams with phased protocol"
+  default_prompt: >
+    Use $obsidian-excalidraw-drawing-manager to validate .excalidraw.md files
+    against Pydantic v2 schema, construct diagrams using the phased protocol
+    (skeleton → connect → label → style → QA), and enforce git checkpoint
+    undo/redo. Supports concept maps, feedback loops, architecture diagrams,
+    and all diagram_kind types.

@@ -469,9 +469,11 @@ def check_composition(
 
     # Quadrant distribution
     quadrants = {"NW": 0, "NE": 0, "SW": 0, "SE": 0}
+    centers = []
     for el in active_elements:
         bbox = compute_bbox(el)
         cx, cy = bbox.center
+        centers.append((cx, cy))
         if cx < canvas_center[0]:
             quad_x = "W"
         else:
@@ -486,9 +488,16 @@ def check_composition(
     max_quadrant_count = max(quadrants.values())
     max_quadrant_fraction = max_quadrant_count / total_elements
 
-    if max_quadrant_fraction > config.max_quadrant_skew:
+    # Half-plane check (catches skew that quadrants miss when centroid is pulled)
+    left = sum(1 for cx, _ in centers if cx < canvas_center[0])
+    top = sum(1 for _, cy in centers if cy < canvas_center[1])
+    max_half_fraction = max(left, total_elements - left,
+                           top, total_elements - top) / total_elements
+
+    if max_quadrant_fraction > config.max_quadrant_skew or max_half_fraction >= 0.80:
+        frac = max(max_quadrant_fraction, max_half_fraction)
         warnings.append(
-            f"Composition skewed: {max_quadrant_fraction:.1%} of elements in one quadrant "
+            f"Composition skewed: {frac:.1%} of elements in one region "
             f"(threshold: {config.max_quadrant_skew:.1%})"
         )
 
@@ -503,8 +512,8 @@ def check_size_hierarchy(
     warnings: list[str] = []
 
     active_elements = [el for el in elements if not getattr(el, "isDeleted", False)]
-    if len(active_elements) < 3:
-        return errors, warnings
+    if len(active_elements) < 5:
+        return errors, warnings  # Uniform small diagrams are fine
 
     # Compute areas
     areas = [compute_bbox(el).area for el in active_elements]

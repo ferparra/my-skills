@@ -368,7 +368,8 @@ def extract_excalidraw_json(body: str, file_path: Path | None = None) -> dict[st
     if is_compressed:
         # Remove chunking (double newlines every 256 chars) and all newlines
         cleaned = content.replace("\n\n", "").replace("\n", "")
-        import subprocess, os, json
+        import os
+        import subprocess
         # Try skill-local lz-string first, then /tmp
         lz_path = os.path.join(os.path.dirname(__file__), "..", "node_modules", "lz-string", "libs", "lz-string.js")
         if not os.path.exists(lz_path):
