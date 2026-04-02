@@ -4,10 +4,8 @@ version: 2.0.0
 dependencies: []
 description: >
   Validate and construct Excalidraw diagrams (.excalidraw.md) with Pydantic v2
-  models. Detects broken bindings, duplicate IDs, zero-dimension shapes, invalid
-  colors. Supports phased construction for concept maps, feedback loops, IT
-  architecture, and all diagram_kind types. Git checkpoint protocol for
-  undo/redo. Outputs {"ok": bool} for autoresearcher.
+  models. Phased construction for concept maps, feedback loops, architecture
+  diagrams. Git checkpoint undo/redo. Outputs {"ok": bool} for autoresearcher.
 metadata:
   openclaw:
     os: [darwin]
