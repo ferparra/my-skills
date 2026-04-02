@@ -1,6 +1,7 @@
 ---
 name: qmd
 version: 1.0.0
+dependencies: []
 description: Search markdown knowledge bases, notes, and documentation using QMD. Use when users ask to search notes, find documents, or look up information.
 license: MIT
 compatibility: Requires qmd CLI or MCP server. Install via `npm install -g @tobilu/qmd`.
@@ -25,6 +26,10 @@ Local search engine for markdown content.
 ## Status
 
 !`qmd status 2>/dev/null || echo "Not installed: npm install -g @tobilu/qmd"`
+
+## Workflow
+
+Search markdown knowledge bases using QMD's lexical and semantic search. Route queries to appropriate collections, use MCP tools for structured searches, and follow with vault reads for detailed answers.
 
 ## Vault Search Workflow
 

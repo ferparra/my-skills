@@ -1,15 +1,24 @@
-name: Skill Artifact Check
+name: Skill Artifact & Compliance Check
 
 on:
   pull_request:
+  push:
+    branches:
+      - master
 
 jobs:
-  check:
+  artifact-check:
     name: Skill artifact alignment
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v4
-
+      - uses: actions/checkout@v5
       - name: Check skill artifacts
         run: python3 scripts/check_skill_artifacts.py
+
+  anthropic-compliance:
+    name: Anthropic Claude skill compliance
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Run Anthropic compliance checks
+        run: python3 scripts/check_anthropic_compliance.py

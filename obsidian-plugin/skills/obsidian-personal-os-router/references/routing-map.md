@@ -32,6 +32,21 @@
   - Goal: maintain `10 Notes/Key Dates.base` formulas and date-note links with path/existence checks
   - QMD collections: `periodic` (weekly/monthly/yearly notes), `inbox` (daily notes by date)
 
+- `obsidian-cv-entry-manager`
+  - Trigger: cv entry, cv_entry_kind, cv entry kind, CV Entries.base, career entry, role note, cv schema, curriculum vitae, resume, cv master, extract cv, export cv, career timeline, pillar alignment, quantification gap, achievement bullet, role history, work history, employment history
+  - Goal: standardize career entry frontmatter, validate cv_entry_kind, extract cv-master.md into typed notes, maintain CV Entries.base, and export tailored CVs
+  - QMD collections: `resources` (career entry notes), `projects` (cv-master.md and job search context)
+
+- `obsidian-excalidraw-visual-validator`
+  - Trigger: excalidraw render, excalidraw png, excalidraw visual, excalidraw layout, excalidraw overlap, excalidraw spacing, render excalidraw, visual validation, diagram render, excalidraw screenshot, excalidraw quality, excalidraw composition
+  - Goal: validate visual quality of Excalidraw drawings via PNG rendering and geometric checks (overlap, spacing, text overflow, arrow accuracy, composition balance)
+  - QMD collections: `notes` (diagram notes), `inbox` (new drawings)
+
+- `obsidian-excalidraw-drawing-manager`
+  - Trigger: excalidraw, excalidraw.md, excalidraw plugin, excalidraw schema, excalidraw data, excalidraw element, excalidraw drawing, drawing validation, drawing binding, canvas drawing
+  - Goal: validate structural correctness of Excalidraw drawings with Pydantic v2 schema models (broken bindings, duplicate IDs, zero-dimension shapes, invalid colors)
+  - QMD collections: `notes` (diagram notes), `inbox` (new drawings)
+
 - `obsidian-interweave-engine` (PIT priority)
   - Trigger: PIT, point-in-time, snapshot, pit_status
   - Goal: keep PIT notes highly retrievable via concept/context interweaving
@@ -67,14 +82,38 @@
 | Collection | Folders | Use |
 |---|---|---|
 | `inbox` | `00 Inbox/` | Unprocessed captures, daily notes |
-| `notes` | `10 Notes/`, `Resilience/`, `Personal/` | Durable zettels, core knowledge |
-| `projects` | `10 Projects/`, `Projects/` | Active + legacy project notes |
-| `resources` | `20 Resources/`, `Resources/` | External references |
-| `clippings` | `Clippings/` | Web clippings awaiting processing |
+| `notes` | `10 Notes/` | Durable zettels organized by domain/subdomain, hubs, and .base files |
+| `projects` | `Projects/` | Active project execution notes |
+| `resources` | `20 Resources/` | Typed entity libraries (exercises, ingredients, biomarkers, etc.) |
+| `clippings` | `10 Notes/Reading/Clippings/` | Web clippings awaiting processing |
 | `periodic` | `Periodic/` | Weekly/daily/monthly planning |
-| `entities` | `People/`, `Companies/`, `Products/` | Person and org lookups |
+| `entities` | `People/`, `Companies/` | Person and org lookups |
 | `archive` | `Archive/` | Historical notes |
 | `all` | All above (noise excluded) | Broad cross-vault discovery |
+
+## Domain Hub Reference
+
+The vault knowledge layer is organized into 15 domains under `10 Notes/`. Each domain and subdomain has a `_hub.md` navigation file.
+
+| Domain | Subdomains | Primary Skill |
+|---|---|---|
+| Agentic Systems | Architecture, Context, Platforms, Observability | zettel-manager, interweave |
+| Data Engineering | Platform, Pipelines, Analytics | zettel-manager |
+| Software Engineering | Python, DevOps, Foundations | zettel-manager |
+| Work and Career | Employer, Career Architecture, Sprint | planetary-tasks, zettel-manager |
+| Health and Performance | Training, Nutrition, Supplements, Biomarkers, Recovery | exercise-kind, zettel-manager |
+| Philosophy and Psychology | Stoicism, Depth Psychology, Rationalism, Literature, Core Concepts | zettel-manager, interweave |
+| Personal Development | Values and Identity, Expressive Writing, Learning Science, Thinking Models | zettel-manager |
+| Relationships | Partnership, Family, Social | people-kind, zettel-manager |
+| Financial Stewardship | Portfolio, Strategy, Subscriptions | brokerage-activity, portfolio-holdings |
+| Knowledge Management | Vault Infrastructure, Agent Memory, Processing | zettel-manager |
+| Productivity | Planning, Goals and Habits, Projects | planetary-tasks, weekly-feedback |
+| Home and Living | IoT, Kitchen, Server | zettel-manager |
+| Recreation | Chess, Music, Outdoors, Media | zettel-manager |
+| Security and Privacy | Personal, Agentic | zettel-manager |
+| Reading | Clippings | interweave |
+
+Hub navigation entry point: `10 Notes/Domain Hubs for Vault Retrieval.md`
 
 ## Shared Read Budget
 

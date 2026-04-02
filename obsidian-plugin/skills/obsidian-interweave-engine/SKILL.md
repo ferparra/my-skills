@@ -1,6 +1,8 @@
 ---
 name: obsidian-interweave-engine
 version: 1.0.0
+dependencies: []
+pipeline: {}
 description: Audit and enrich note interweaving for this personal Obsidian vault without diluting source information. Use when linking concept/context notes, enforcing zettel tracking fields, and checking unresolved-link risk with strict dependency and budget discipline.
 metadata:
   openclaw:
@@ -16,14 +18,14 @@ Use this skill for high-density, non-dilutive enrichment.
 ## Workflow
 
 1. Read target note and immediate hubs only.
-2. Run `uvx --from python python scripts/link_audit.py --path "<note-path>"`.
+2. Run `uvx --from python --with pydantic --with pyyaml python scripts/link_audit.py --path "<note-path>"`.
 3. Inspect `missing_fields`, `concept_links`, `context_links`, and unresolved findings.
 4. Apply minimal edits that preserve original information density.
 5. Re-run audit to confirm compliance.
 
 ## Output Contract
 
-`uvx --from python python scripts/link_audit.py ...` returns JSON with:
+`uvx --from python --with pydantic --with pyyaml python scripts/link_audit.py ...` returns JSON with:
 - `concept_links`
 - `context_links`
 - `missing_fields`
