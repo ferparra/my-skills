@@ -1,0 +1,195 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 850" style="background-color: #fafafa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <!-- DIAGRAM_TYPE: swimlane -->
+  <!-- TOPOLOGY: 4 lanes, 7 activity nodes, 9 edges (including 1 async notification), 1 parallel fork, 1 sync join -->
+  <desc>A swimlane diagram showing an e-commerce order fulfillment process across four parallel lanes: Customer, Order System, Payment Gateway, and Warehouse. The Customer places an order which flows to the Order System for validation. After validation, the process forks in parallel to the Payment Gateway (charge card) and Warehouse (reserve stock). Both parallel paths synchronize back at the Order System to confirm the order. The confirmed order triggers an async notification (receipt) back to the Customer and a fulfillment trigger to the Warehouse for packing and shipping.</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b" />
+    </marker>
+    <marker id="arrow-event" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8" />
+    </marker>
+  </defs>
+
+  <g id="diagram-title" role="heading" data-semantic-role="title">
+    <text x="900" y="60" text-anchor="middle" font-weight="700" font-size="24" fill="#1e293b" letter-spacing="1">SWIMLANE COMMUNICATION PATTERN</text>
+    <text x="900" y="90" text-anchor="middle" font-weight="600" font-size="16" fill="#475569" letter-spacing="0.5">PARALLEL PROCESSES &amp; CROSS-FUNCTIONAL HANDOFFS</text>
+  </g>
+
+  <!-- Lane backgrounds -->
+  <g id="lane-customer-bg" role="img" aria-label="Customer lane background" data-semantic-role="lane">
+    <rect x="225" y="150" width="1550" height="150" fill="#f0fdf4" />
+    <line x1="25" y1="150" x2="1775" y2="150" stroke="#cbd5e1" stroke-width="2" />
+  </g>
+
+  <g id="lane-order-system-bg" role="img" aria-label="Order System lane background" data-semantic-role="lane">
+    <rect x="225" y="300" width="1550" height="150" fill="#eef2ff" />
+    <line x1="25" y1="300" x2="1775" y2="300" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="8,4" />
+  </g>
+
+  <g id="lane-payment-gateway-bg" role="img" aria-label="Payment Gateway lane background" data-semantic-role="lane">
+    <rect x="225" y="450" width="1550" height="150" fill="#fff7ed" />
+    <line x1="25" y1="450" x2="1775" y2="450" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="8,4" />
+  </g>
+
+  <g id="lane-warehouse-bg" role="img" aria-label="Warehouse lane background" data-semantic-role="lane">
+    <rect x="225" y="600" width="1550" height="150" fill="#fdf2f8" />
+    <line x1="25" y1="600" x2="1775" y2="600" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="8,4" />
+    <line x1="25" y1="750" x2="1775" y2="750" stroke="#cbd5e1" stroke-width="2" />
+  </g>
+
+  <!-- Lane headers -->
+  <g id="lane-header-customer" role="img" aria-label="Lane header: Customer - External Actor" data-semantic-role="label">
+    <g transform="translate(25, 150)">
+      <rect width="200" height="150" fill="#a7f3d0" />
+      <text x="100" y="75" text-anchor="middle" font-weight="800" font-size="14" fill="#022c22">1. CUSTOMER</text>
+      <text x="100" y="95" text-anchor="middle" font-weight="500" font-size="11" fill="#047857">External Actor</text>
+    </g>
+  </g>
+
+  <g id="lane-header-order-system" role="img" aria-label="Lane header: Order System - Saga Orchestrator" data-semantic-role="label">
+    <g transform="translate(25, 300)">
+      <rect width="200" height="150" fill="#c7d2fe" />
+      <text x="100" y="75" text-anchor="middle" font-weight="800" font-size="14" fill="#312e81">2. ORDER SYSTEM</text>
+      <text x="100" y="95" text-anchor="middle" font-weight="500" font-size="11" fill="#4338ca">Saga Orchestrator</text>
+    </g>
+  </g>
+
+  <g id="lane-header-payment-gateway" role="img" aria-label="Lane header: Payment Gateway - 3rd Party Service" data-semantic-role="label">
+    <g transform="translate(25, 450)">
+      <rect width="200" height="150" fill="#fed7aa" />
+      <text x="100" y="75" text-anchor="middle" font-weight="800" font-size="14" fill="#431407">3. PAYMENT GATEWAY</text>
+      <text x="100" y="95" text-anchor="middle" font-weight="500" font-size="11" fill="#c2410c">3rd Party Service</text>
+    </g>
+  </g>
+
+  <g id="lane-header-warehouse" role="img" aria-label="Lane header: Warehouse - Physical Logistics" data-semantic-role="label">
+    <g transform="translate(25, 600)">
+      <rect width="200" height="150" fill="#fbcfe8" />
+      <text x="100" y="75" text-anchor="middle" font-weight="800" font-size="14" fill="#4c0b20">4. WAREHOUSE</text>
+      <text x="100" y="95" text-anchor="middle" font-weight="500" font-size="11" fill="#be185d">Physical Logistics</text>
+    </g>
+  </g>
+
+  <!-- Edges -->
+  <g id="edge-place-order-to-validate-order" role="img" aria-label="Cross-lane handoff from Place Order to Validate Order" data-semantic-role="edge" data-from="node-place-order" data-to="node-validate-order" data-label="Cross-Lane Handoff">
+    <path d="M 440 225 C 490 225, 490 375, 535 375" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+    <rect x="435" y="290" width="110" height="20" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+    <text x="490" y="304" text-anchor="middle" font-weight="600" font-size="10" fill="#475569">Cross-Lane Handoff</text>
+  </g>
+
+  <g id="edge-validate-order-to-fork" role="img" aria-label="Flow from Validate Order to parallel fork" data-semantic-role="edge" data-from="node-validate-order" data-to="fork-bar">
+    <path d="M 700 375 L 795 375" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+  </g>
+
+  <g id="edge-fork-to-charge-card" role="img" aria-label="Parallel fork to Charge Card" data-semantic-role="edge" data-from="fork-bar" data-to="node-charge-card" data-label="PARALLEL FORK">
+    <path d="M 810 375 C 855 375, 855 525, 895 525" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+  </g>
+
+  <g id="edge-fork-to-reserve-stock" role="img" aria-label="Parallel fork to Reserve Stock" data-semantic-role="edge" data-from="fork-bar" data-to="node-reserve-stock">
+    <path d="M 810 375 C 855 375, 855 675, 895 675" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+  </g>
+
+  <g id="edge-charge-card-to-join" role="img" aria-label="Charge Card result to sync join" data-semantic-role="edge" data-from="node-charge-card" data-to="join-bar">
+    <path d="M 1060 525 C 1105 525, 1105 375, 1145 375" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+  </g>
+
+  <g id="edge-reserve-stock-to-join" role="img" aria-label="Reserve Stock result to sync join" data-semantic-role="edge" data-from="node-reserve-stock" data-to="join-bar">
+    <path d="M 1060 675 C 1105 675, 1105 375, 1145 375" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+  </g>
+
+  <g id="edge-join-to-confirm-order" role="img" aria-label="Sync join to Confirm Order" data-semantic-role="edge" data-from="join-bar" data-to="node-confirm-order" data-label="SYNC JOIN">
+    <path d="M 1160 375 L 1245 375" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+  </g>
+
+  <g id="edge-confirm-order-to-receive-receipt" role="img" aria-label="Async notification from Confirm Order to Receive Receipt" data-semantic-role="edge" data-from="node-confirm-order" data-to="node-receive-receipt" data-label="Async Notification">
+    <path d="M 1330 345 L 1330 265" stroke="#94a3b8" stroke-width="3" stroke-dasharray="6,4" fill="none" marker-end="url(#arrow-event)" />
+    <rect x="1340" y="295" width="110" height="20" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+    <text x="1395" y="309" text-anchor="middle" font-weight="600" font-size="10" fill="#64748b">Async Notification</text>
+  </g>
+
+  <g id="edge-confirm-order-to-pack-ship" role="img" aria-label="Fulfillment trigger from Confirm Order to Pack and Ship" data-semantic-role="edge" data-from="node-confirm-order" data-to="node-pack-ship" data-label="Fulfillment Trigger">
+    <path d="M 1410 375 C 1460 375, 1460 675, 1505 675" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+    <rect x="1405" y="515" width="110" height="20" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+    <text x="1460" y="529" text-anchor="middle" font-weight="600" font-size="10" fill="#475569">Fulfillment Trigger</text>
+  </g>
+
+  <!-- Annotation labels for fork/join -->
+  <g id="annotation-parallel-fork" role="img" aria-label="Parallel fork annotation" data-semantic-role="annotation">
+    <rect x="700" y="305" width="100" height="20" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+    <text x="750" y="319" text-anchor="middle" font-weight="700" font-size="10" fill="#ea580c">PARALLEL FORK</text>
+  </g>
+
+  <g id="annotation-sync-join" role="img" aria-label="Sync join annotation" data-semantic-role="annotation">
+    <rect x="1055" y="305" width="100" height="20" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+    <text x="1105" y="319" text-anchor="middle" font-weight="700" font-size="10" fill="#ea580c">SYNC JOIN</text>
+  </g>
+
+  <!-- Fork and Join bars -->
+  <g id="fork-bar" role="img" aria-label="Parallel fork synchronization bar" data-semantic-role="node" data-downstream="node-charge-card,node-reserve-stock" data-upstream="node-validate-order">
+    <rect x="800" y="335" width="10" height="80" rx="3" fill="#334155" />
+  </g>
+
+  <g id="join-bar" role="img" aria-label="Sync join synchronization bar" data-semantic-role="node" data-downstream="node-confirm-order" data-upstream="node-charge-card,node-reserve-stock">
+    <rect x="1150" y="335" width="10" height="80" rx="3" fill="#334155" />
+  </g>
+
+  <!-- Activity nodes -->
+  <g id="node-place-order" role="img" aria-label="Place Order - Web Checkout (Customer lane)" data-semantic-role="node" data-lane="customer" data-downstream="node-validate-order" data-upstream="">
+    <g transform="translate(280, 195)">
+      <rect width="160" height="60" rx="12" fill="#ecfdf5" stroke="#34d399" stroke-width="2" />
+      <text x="80" y="27" text-anchor="middle" font-weight="700" font-size="13" fill="#022c22">PLACE ORDER</text>
+      <text x="80" y="45" text-anchor="middle" font-weight="500" font-size="11" fill="#047857">Web Checkout</text>
+    </g>
+  </g>
+
+  <g id="node-validate-order" role="img" aria-label="Validate Order - Check Constraints (Order System lane)" data-semantic-role="node" data-lane="order-system" data-downstream="node-charge-card,node-reserve-stock" data-upstream="node-place-order">
+    <g transform="translate(540, 345)">
+      <rect width="160" height="60" rx="12" fill="#e0e7ff" stroke="#818cf8" stroke-width="2" />
+      <text x="80" y="27" text-anchor="middle" font-weight="700" font-size="13" fill="#312e81">VALIDATE ORDER</text>
+      <text x="80" y="45" text-anchor="middle" font-weight="500" font-size="11" fill="#4338ca">Check Constraints</text>
+    </g>
+  </g>
+
+  <g id="node-charge-card" role="img" aria-label="Charge Card - Payment Processor (Payment Gateway lane)" data-semantic-role="node" data-lane="payment-gateway" data-downstream="node-confirm-order" data-upstream="node-validate-order">
+    <g transform="translate(900, 495)">
+      <rect width="160" height="60" rx="12" fill="#fff7ed" stroke="#fb923c" stroke-width="2" />
+      <text x="80" y="27" text-anchor="middle" font-weight="700" font-size="13" fill="#431407">CHARGE CARD</text>
+      <text x="80" y="45" text-anchor="middle" font-weight="500" font-size="11" fill="#c2410c">Payment Processor</text>
+    </g>
+  </g>
+
+  <g id="node-reserve-stock" role="img" aria-label="Reserve Stock - Inventory DB (Warehouse lane)" data-semantic-role="node" data-lane="warehouse" data-downstream="node-confirm-order" data-upstream="node-validate-order">
+    <g transform="translate(900, 645)">
+      <rect width="160" height="60" rx="12" fill="#fdf2f8" stroke="#f472b6" stroke-width="2" />
+      <text x="80" y="27" text-anchor="middle" font-weight="700" font-size="13" fill="#831843">RESERVE STOCK</text>
+      <text x="80" y="45" text-anchor="middle" font-weight="500" font-size="11" fill="#be185d">Inventory DB</text>
+    </g>
+  </g>
+
+  <g id="node-confirm-order" role="img" aria-label="Confirm Order - Update Status (Order System lane)" data-semantic-role="node" data-lane="order-system" data-downstream="node-receive-receipt,node-pack-ship" data-upstream="node-charge-card,node-reserve-stock">
+    <g transform="translate(1250, 345)">
+      <rect width="160" height="60" rx="12" fill="#e0e7ff" stroke="#818cf8" stroke-width="2" />
+      <text x="80" y="27" text-anchor="middle" font-weight="700" font-size="13" fill="#312e81">CONFIRM ORDER</text>
+      <text x="80" y="45" text-anchor="middle" font-weight="500" font-size="11" fill="#4338ca">Update Status</text>
+    </g>
+  </g>
+
+  <g id="node-receive-receipt" role="img" aria-label="Receive Receipt - Email Alert (Customer lane)" data-semantic-role="node" data-lane="customer" data-downstream="" data-upstream="node-confirm-order">
+    <g transform="translate(1250, 195)">
+      <rect width="160" height="60" rx="12" fill="#ecfdf5" stroke="#34d399" stroke-width="2" />
+      <text x="80" y="27" text-anchor="middle" font-weight="700" font-size="13" fill="#022c22">RECEIVE RECEIPT</text>
+      <text x="80" y="45" text-anchor="middle" font-weight="500" font-size="11" fill="#047857">Email Alert</text>
+    </g>
+  </g>
+
+  <g id="node-pack-ship" role="img" aria-label="Pack and Ship - Fulfillment Center (Warehouse lane)" data-semantic-role="node" data-lane="warehouse" data-downstream="" data-upstream="node-confirm-order">
+    <g transform="translate(1510, 645)">
+      <rect width="160" height="60" rx="12" fill="#fdf2f8" stroke="#f472b6" stroke-width="2" />
+      <text x="80" y="27" text-anchor="middle" font-weight="700" font-size="13" fill="#831843">PACK &amp; SHIP</text>
+      <text x="80" y="45" text-anchor="middle" font-weight="500" font-size="11" fill="#be185d">Fulfillment Center</text>
+    </g>
+  </g>
+
+</svg>

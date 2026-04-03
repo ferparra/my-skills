@@ -1,0 +1,245 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1700 950" style="background-color: #fafafa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+<!-- DIAGRAM_TYPE: service_blueprint -->
+<!-- TOPOLOGY: 5 horizontal swim lanes (physical evidence, customer actions, frontstage, backstage, support processes), 3 phases (Order Initiation, Core Fulfillment, Service Delivery), 12 nodes arranged in a grid, 11 edges connecting vertically and horizontally across lanes. Separated by Line of Interaction, Line of Visibility, and Line of Internal Interaction. -->
+  <desc>A service blueprint for a coffee shop mobile ordering experience across three phases. Phase 1 (Order Initiation): Customer uses a mobile app to customize and pay, the app processes the order and shows an ETA, supported by a Payment Gateway API (Stripe). Phase 2 (Core Fulfillment): Customer walks in and waits, a barista greets them, brews coffee backstage, supported by a Kitchen Display System (KDS). Phase 3 (Service Delivery): Customer takes their cup and leaves, the barista hands off the order, supported by a Loyalty DB Sync that awards reward points. The blueprint uses three separation lines: Line of Interaction (between customer and frontstage), Line of Visibility (between frontstage and backstage), and Line of Internal Interaction (between backstage and support processes).</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b" />
+    </marker>
+  </defs>
+
+  <g id="diagram-title" role="heading" data-semantic-role="title">
+    <text x="850" y="50" text-anchor="middle" font-weight="700" font-size="24" fill="#1e293b" letter-spacing="1">SERVICE BLUEPRINT</text>
+    <text x="850" y="80" text-anchor="middle" font-weight="600" font-size="16" fill="#475569" letter-spacing="0.5">ALIGNING CUSTOMER JOURNEYS WITH INTERNAL OPERATIONS</text>
+  </g>
+
+
+  <g id="phase-labels" role="img" aria-label="Phase column headers" data-semantic-role="label">
+    <rect x="350" y="110" width="350" height="30" rx="4" fill="#f1f5f9" />
+    <text x="525" y="130" text-anchor="middle" font-weight="700" font-size="12" fill="#475569">PHASE 1: ORDER INITIATION</text>
+
+    <rect x="750" y="110" width="350" height="30" rx="4" fill="#f1f5f9" />
+    <text x="925" y="130" text-anchor="middle" font-weight="700" font-size="12" fill="#475569">PHASE 2: CORE FULFILLMENT</text>
+
+    <rect x="1150" y="110" width="350" height="30" rx="4" fill="#f1f5f9" />
+    <text x="1325" y="130" text-anchor="middle" font-weight="700" font-size="12" fill="#475569">PHASE 3: SERVICE DELIVERY</text>
+  </g>
+
+
+  <g id="layer-physical-evidence" role="img" aria-label="Physical Evidence swim lane background" data-semantic-role="layer">
+    <rect x="300" y="160" width="1350" height="100" fill="#f8fafc" />
+  </g>
+  <g id="layer-customer-actions" role="img" aria-label="Customer Actions swim lane background" data-semantic-role="layer">
+    <rect x="300" y="280" width="1350" height="120" fill="#ecfdf5" />
+  </g>
+  <g id="layer-frontstage" role="img" aria-label="Frontstage swim lane background" data-semantic-role="layer">
+    <rect x="300" y="440" width="1350" height="120" fill="#fff7ed" />
+  </g>
+  <g id="layer-backstage" role="img" aria-label="Backstage swim lane background" data-semantic-role="layer">
+    <rect x="300" y="600" width="1350" height="120" fill="#fdf2f8" />
+  </g>
+  <g id="layer-support-processes" role="img" aria-label="Support Processes swim lane background" data-semantic-role="layer">
+    <rect x="300" y="760" width="1350" height="120" fill="#eef2ff" />
+  </g>
+
+
+  <g id="line-of-interaction" role="img" aria-label="Line of Interaction separating customer actions from frontstage" data-semantic-role="annotation">
+    <line x1="30" y1="420" x2="1650" y2="420" stroke="#94a3b8" stroke-width="3" stroke-dasharray="8,6" />
+    <rect x="1450" y="408" width="180" height="24" rx="4" fill="#ffffff" stroke="#94a3b8" stroke-width="2" />
+    <text x="1540" y="424" text-anchor="middle" font-weight="700" font-size="11" fill="#475569">LINE OF INTERACTION</text>
+  </g>
+
+  <g id="line-of-visibility" role="img" aria-label="Line of Visibility separating frontstage from backstage" data-semantic-role="annotation">
+    <line x1="30" y1="580" x2="1650" y2="580" stroke="#f43f5e" stroke-width="3" stroke-dasharray="12,8" />
+    <rect x="1450" y="568" width="180" height="24" rx="4" fill="#ffffff" stroke="#f43f5e" stroke-width="2" />
+    <text x="1540" y="584" text-anchor="middle" font-weight="700" font-size="11" fill="#e11d48">LINE OF VISIBILITY</text>
+  </g>
+
+  <g id="line-of-internal-interaction" role="img" aria-label="Line of Internal Interaction separating backstage from support processes" data-semantic-role="annotation">
+    <line x1="30" y1="740" x2="1650" y2="740" stroke="#94a3b8" stroke-width="3" stroke-dasharray="4,4" />
+    <rect x="1450" y="728" width="180" height="24" rx="4" fill="#ffffff" stroke="#94a3b8" stroke-width="2" />
+    <text x="1540" y="744" text-anchor="middle" font-weight="700" font-size="11" fill="#475569">LINE OF INTERNAL INTERACTION</text>
+  </g>
+
+
+  <g id="lane-label-physical-evidence" role="img" aria-label="Lane label: Physical Evidence" data-semantic-role="label">
+    <g transform="translate(30, 160)">
+      <rect width="250" height="100" rx="8" fill="#e2e8f0" />
+      <text x="125" y="45" text-anchor="middle" font-weight="800" font-size="13" fill="#334155">PHYSICAL EVIDENCE</text>
+      <text x="125" y="65" text-anchor="middle" font-weight="500" font-size="11" fill="#475569">Props, Spaces, Interfaces</text>
+    </g>
+  </g>
+
+  <g id="lane-label-customer-actions" role="img" aria-label="Lane label: Customer Actions" data-semantic-role="label">
+    <g transform="translate(30, 280)">
+      <rect width="250" height="120" rx="8" fill="#a7f3d0" />
+      <text x="125" y="55" text-anchor="middle" font-weight="800" font-size="13" fill="#022c22">CUSTOMER ACTIONS</text>
+      <text x="125" y="75" text-anchor="middle" font-weight="500" font-size="11" fill="#047857">Steps taken by the user</text>
+    </g>
+  </g>
+
+  <g id="lane-label-frontstage" role="img" aria-label="Lane label: Frontstage (Visible)" data-semantic-role="label">
+    <g transform="translate(30, 440)">
+      <rect width="250" height="120" rx="8" fill="#fed7aa" />
+      <text x="125" y="55" text-anchor="middle" font-weight="800" font-size="13" fill="#431407">FRONTSTAGE (VISIBLE)</text>
+      <text x="125" y="75" text-anchor="middle" font-weight="500" font-size="11" fill="#c2410c">Employee / App interactions</text>
+    </g>
+  </g>
+
+  <g id="lane-label-backstage" role="img" aria-label="Lane label: Backstage (Invisible)" data-semantic-role="label">
+    <g transform="translate(30, 600)">
+      <rect width="250" height="120" rx="8" fill="#fbcfe8" />
+      <text x="125" y="55" text-anchor="middle" font-weight="800" font-size="13" fill="#4c0b20">BACKSTAGE (INVISIBLE)</text>
+      <text x="125" y="75" text-anchor="middle" font-weight="500" font-size="11" fill="#be185d">Behind the scenes tasks</text>
+    </g>
+  </g>
+
+  <g id="lane-label-support-processes" role="img" aria-label="Lane label: Support Processes" data-semantic-role="label">
+    <g transform="translate(30, 760)">
+      <rect width="250" height="120" rx="8" fill="#c7d2fe" />
+      <text x="125" y="55" text-anchor="middle" font-weight="800" font-size="13" fill="#312e81">SUPPORT PROCESSES</text>
+      <text x="125" y="75" text-anchor="middle" font-weight="500" font-size="11" fill="#4338ca">IT, Databases, Logistics</text>
+    </g>
+  </g>
+
+
+  <g id="edge-p1-customer-to-frontstage" role="img" aria-label="Phase 1: Customer action connects down to frontstage" data-semantic-role="edge" data-from="node-p1-customer-action" data-to="node-p1-frontstage">
+    <path d="M 525 360 L 525 450" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+  </g>
+  <g id="edge-p1-frontstage-to-support" role="img" aria-label="Phase 1: Frontstage connects down to support processes" data-semantic-role="edge" data-from="node-p1-frontstage" data-to="node-p1-support">
+    <path d="M 525 530 L 525 780" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+  </g>
+
+  <g id="edge-p1-support-to-p2-support" role="img" aria-label="Phase 1 support connects to Phase 2 support" data-semantic-role="edge" data-from="node-p1-support" data-to="node-p2-support">
+    <path d="M 645 820 L 805 820" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+  </g>
+  <g id="edge-p2-support-to-backstage" role="img" aria-label="Phase 2: Support connects up to backstage" data-semantic-role="edge" data-from="node-p2-support" data-to="node-p2-backstage">
+    <path d="M 925 780 L 925 690" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+  </g>
+
+  <g id="edge-p1-customer-to-p2-customer" role="img" aria-label="Phase 1 customer action connects to Phase 2 customer action" data-semantic-role="edge" data-from="node-p1-customer-action" data-to="node-p2-customer-action">
+    <path d="M 645 320 L 805 320" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+  </g>
+
+  <g id="edge-p2-backstage-to-frontstage" role="img" aria-label="Phase 2: Backstage connects up to frontstage" data-semantic-role="edge" data-from="node-p2-backstage" data-to="node-p2-frontstage">
+    <path d="M 925 610 L 925 530" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+  </g>
+
+  <g id="edge-p2-frontstage-to-customer" role="img" aria-label="Phase 2: Frontstage connects up to customer action" data-semantic-role="edge" data-from="node-p2-frontstage" data-to="node-p2-customer-action">
+    <path d="M 925 450 L 925 360" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+  </g>
+
+  <g id="edge-p2-customer-to-p3-customer" role="img" aria-label="Phase 2 customer action connects to Phase 3 customer action" data-semantic-role="edge" data-from="node-p2-customer-action" data-to="node-p3-customer-action">
+    <path d="M 1045 320 L 1205 320" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+  </g>
+
+  <g id="edge-p2-frontstage-to-p3-frontstage" role="img" aria-label="Phase 2 frontstage connects to Phase 3 frontstage" data-semantic-role="edge" data-from="node-p2-frontstage" data-to="node-p3-frontstage">
+    <path d="M 1045 490 L 1205 490" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+  </g>
+  <g id="edge-p3-frontstage-to-customer" role="img" aria-label="Phase 3: Frontstage connects up to customer action" data-semantic-role="edge" data-from="node-p3-frontstage" data-to="node-p3-customer-action">
+    <path d="M 1325 450 L 1325 360" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+  </g>
+
+  <g id="edge-p3-frontstage-to-support" role="img" aria-label="Phase 3: Frontstage connects down to support processes" data-semantic-role="edge" data-from="node-p3-frontstage" data-to="node-p3-support">
+    <path d="M 1325 530 L 1325 780" stroke="#64748b" stroke-width="3" stroke-dasharray="6,4" fill="none" marker-end="url(#arrow)" />
+  </g>
+
+
+  <g id="node-p1-physical-evidence" role="img" aria-label="Physical Evidence: Mobile Application UI with Digital Menu and Cart" data-semantic-role="node" data-visibility="frontstage">
+    <rect x="405" y="175" width="240" height="70" fill="none" />
+    <text x="525" y="205" text-anchor="middle" font-weight="600" font-size="12" fill="#475569">Mobile Application UI</text>
+    <text x="525" y="225" text-anchor="middle" font-weight="400" font-size="11" fill="#64748b">Digital Menu &amp; Cart</text>
+  </g>
+
+  <g id="node-p1-customer-action" role="img" aria-label="Customer Action: Customizes and Pays" data-semantic-role="node" data-visibility="frontstage" data-downstream="node-p1-frontstage,node-p2-customer-action">
+    <g transform="translate(405, 300)">
+      <rect width="240" height="60" rx="30" fill="#ffffff" stroke="#34d399" stroke-width="3" />
+      <text x="120" y="35" text-anchor="middle" font-weight="700" font-size="13" fill="#022c22">Customizes &amp; Pays</text>
+    </g>
+  </g>
+
+  <g id="node-p1-frontstage" role="img" aria-label="Frontstage: App processes order, shows ETA estimate" data-semantic-role="node" data-visibility="frontstage" data-upstream="node-p1-customer-action" data-downstream="node-p1-support">
+    <g transform="translate(405, 460)">
+      <rect width="240" height="60" rx="8" fill="#ffffff" stroke="#fb923c" stroke-width="3" />
+      <text x="120" y="28" text-anchor="middle" font-weight="700" font-size="13" fill="#431407">App Process Order</text>
+      <text x="120" y="46" text-anchor="middle" font-weight="500" font-size="11" fill="#c2410c">Shows ETA Estimate</text>
+    </g>
+  </g>
+
+  <g id="node-p1-support" role="img" aria-label="Support Process: Payment Gateway API (Stripe Checkout Auth)" data-semantic-role="node" data-visibility="backstage" data-upstream="node-p1-frontstage" data-downstream="node-p2-support">
+    <g transform="translate(405, 780)">
+      <rect width="240" height="60" rx="8" fill="#ffffff" stroke="#818cf8" stroke-width="3" />
+      <text x="120" y="28" text-anchor="middle" font-weight="700" font-size="13" fill="#312e81">Payment Gateway API</text>
+      <text x="120" y="46" text-anchor="middle" font-weight="500" font-size="11" fill="#4338ca">Stripe Checkout Auth</text>
+    </g>
+  </g>
+
+
+  <g id="node-p2-physical-evidence" role="img" aria-label="Physical Evidence: Store Exterior, Smells, Pickup Counter Signage" data-semantic-role="node" data-visibility="frontstage">
+    <rect x="805" y="175" width="240" height="70" fill="none" />
+    <text x="925" y="205" text-anchor="middle" font-weight="600" font-size="12" fill="#475569">Store Exterior, Smells</text>
+    <text x="925" y="225" text-anchor="middle" font-weight="400" font-size="11" fill="#64748b">Pickup Counter Signage</text>
+  </g>
+
+  <g id="node-p2-customer-action" role="img" aria-label="Customer Action: Walks in and Waits" data-semantic-role="node" data-visibility="frontstage" data-upstream="node-p1-customer-action" data-downstream="node-p3-customer-action">
+    <g transform="translate(805, 300)">
+      <rect width="240" height="60" rx="30" fill="#ffffff" stroke="#34d399" stroke-width="3" />
+      <text x="120" y="35" text-anchor="middle" font-weight="700" font-size="13" fill="#022c22">Walks in &amp; Waits</text>
+    </g>
+  </g>
+
+  <g id="node-p2-frontstage" role="img" aria-label="Frontstage: Greets Customer" data-semantic-role="node" data-visibility="frontstage" data-upstream="node-p2-backstage" data-downstream="node-p2-customer-action,node-p3-frontstage">
+    <g transform="translate(805, 460)">
+      <rect width="240" height="60" rx="8" fill="#ffffff" stroke="#fb923c" stroke-width="3" />
+      <text x="120" y="28" text-anchor="middle" font-weight="700" font-size="13" fill="#431407">Greets Customer</text>
+      <text x="120" y="46" text-anchor="middle" font-weight="500" font-size="11" fill="#c2410c">"I'll be right with you!"</text>
+    </g>
+  </g>
+
+  <g id="node-p2-backstage" role="img" aria-label="Backstage: Brews Coffee - pulls shot, steams milk" data-semantic-role="node" data-visibility="backstage" data-upstream="node-p2-support" data-downstream="node-p2-frontstage">
+    <g transform="translate(805, 620)">
+      <rect width="240" height="60" rx="8" fill="#ffffff" stroke="#f472b6" stroke-width="3" />
+      <text x="120" y="28" text-anchor="middle" font-weight="700" font-size="13" fill="#831843">Brews Coffee</text>
+      <text x="120" y="46" text-anchor="middle" font-weight="500" font-size="11" fill="#be185d">Pulls shot, steams milk</text>
+    </g>
+  </g>
+
+  <g id="node-p2-support" role="img" aria-label="Support Process: Kitchen Display System (KDS) routes ticket to queue" data-semantic-role="node" data-visibility="backstage" data-upstream="node-p1-support" data-downstream="node-p2-backstage">
+    <g transform="translate(805, 780)">
+      <rect width="240" height="60" rx="8" fill="#ffffff" stroke="#818cf8" stroke-width="3" />
+      <text x="120" y="28" text-anchor="middle" font-weight="700" font-size="13" fill="#312e81">Kitchen Display (KDS)</text>
+      <text x="120" y="46" text-anchor="middle" font-weight="500" font-size="11" fill="#4338ca">Routes ticket to queue</text>
+    </g>
+  </g>
+
+
+  <g id="node-p3-physical-evidence" role="img" aria-label="Physical Evidence: Branded Coffee Cup, Digital Push Notification" data-semantic-role="node" data-visibility="frontstage">
+    <rect x="1205" y="175" width="240" height="70" fill="none" />
+    <text x="1325" y="205" text-anchor="middle" font-weight="600" font-size="12" fill="#475569">Branded Coffee Cup</text>
+    <text x="1325" y="225" text-anchor="middle" font-weight="400" font-size="11" fill="#64748b">Digital Push Notification</text>
+  </g>
+
+  <g id="node-p3-customer-action" role="img" aria-label="Customer Action: Takes Cup and Leaves" data-semantic-role="node" data-visibility="frontstage" data-upstream="node-p2-customer-action">
+    <g transform="translate(1205, 300)">
+      <rect width="240" height="60" rx="30" fill="#ffffff" stroke="#34d399" stroke-width="3" />
+      <text x="120" y="35" text-anchor="middle" font-weight="700" font-size="13" fill="#022c22">Takes Cup &amp; Leaves</text>
+    </g>
+  </g>
+
+  <g id="node-p3-frontstage" role="img" aria-label="Frontstage: Handoff Order - calls name, completes task" data-semantic-role="node" data-visibility="frontstage" data-upstream="node-p2-frontstage" data-downstream="node-p3-customer-action,node-p3-support">
+    <g transform="translate(1205, 460)">
+      <rect width="240" height="60" rx="8" fill="#ffffff" stroke="#fb923c" stroke-width="3" />
+      <text x="120" y="28" text-anchor="middle" font-weight="700" font-size="13" fill="#431407">Handoff Order</text>
+      <text x="120" y="46" text-anchor="middle" font-weight="500" font-size="11" fill="#c2410c">Calls name, completes task</text>
+    </g>
+  </g>
+
+  <g id="node-p3-support" role="img" aria-label="Support Process: Loyalty DB Sync awards reward points" data-semantic-role="node" data-visibility="backstage" data-upstream="node-p3-frontstage">
+    <g transform="translate(1205, 780)">
+      <rect width="240" height="60" rx="8" fill="#ffffff" stroke="#818cf8" stroke-width="3" />
+      <text x="120" y="28" text-anchor="middle" font-weight="700" font-size="13" fill="#312e81">Loyalty DB Sync</text>
+      <text x="120" y="46" text-anchor="middle" font-weight="500" font-size="11" fill="#4338ca">Awards reward points</text>
+    </g>
+  </g>
+
+</svg>

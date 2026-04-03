@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 850" style="background-color: #fafafa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <!-- DIAGRAM_TYPE: hub_spoke -->
+  <!-- TOPOLOGY: Star topology with 1 central hub and 5 spoke nodes. 6 nodes, 5 bidirectional edges (10 directed). Spokes are isolated from each other. -->
+  <desc>A hub-and-spoke communication pattern showing a central coordinator / star topology. A Central Hub (API Gateway / ESB with mediator logic) connects bidirectionally to 5 spoke nodes: Web Client, Mobile App, and B2B Partner (consumers at top) and Billing Service and Inventory Service (providers at bottom). Each edge is annotated with its function: Token Translation, Request Routing, Protocol Adapter, Load Balancing, and Service Discovery. A constraint annotation shows that spokes are isolated with no spoke-to-spoke connections.</desc>
+  <defs>
+    <marker id="arrow-end" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b" />
+    </marker>
+    <marker id="arrow-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b" />
+    </marker>
+    <marker id="x-mark" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 2 2 L 8 8 M 8 2 L 2 8" stroke="#ef4444" stroke-width="2" fill="none" />
+    </marker>
+  </defs>
+
+  <g id="diagram-title" role="heading" data-semantic-role="title">
+    <text x="800" y="60" text-anchor="middle" font-weight="700" font-size="24" fill="#1e293b" letter-spacing="1">HUB-AND-SPOKE COMMUNICATION PATTERN</text>
+    <text x="800" y="90" text-anchor="middle" font-weight="600" font-size="16" fill="#475569" letter-spacing="0.5">CENTRAL COORDINATOR / STAR TOPOLOGY</text>
+  </g>
+
+  <g id="edge-web-client-to-hub" role="img" aria-label="Bidirectional edge from Web Client to Central Hub with Token Translation" data-semantic-role="edge" data-from="node-web-client" data-to="node-central-hub">
+    <path d="M 370 260 L 670 410" stroke="#64748b" stroke-width="3" fill="none" marker-start="url(#arrow-start)" marker-end="url(#arrow-end)" />
+    <g id="label-token-translation" role="img" aria-label="Edge label: Token Translation" data-semantic-role="label">
+      <rect x="450" y="323" width="140" height="24" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+      <text x="520" y="339" text-anchor="middle" font-weight="600" font-size="11" fill="#475569">Token Translation</text>
+    </g>
+  </g>
+
+  <g id="edge-mobile-app-to-hub" role="img" aria-label="Bidirectional edge from Mobile App to Central Hub with Request Routing" data-semantic-role="edge" data-from="node-mobile-app" data-to="node-central-hub">
+    <path d="M 800 230 L 800 380" stroke="#64748b" stroke-width="3" fill="none" marker-start="url(#arrow-start)" marker-end="url(#arrow-end)" />
+    <g id="label-request-routing" role="img" aria-label="Edge label: Request Routing" data-semantic-role="label">
+      <rect x="730" y="293" width="140" height="24" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+      <text x="800" y="309" text-anchor="middle" font-weight="600" font-size="11" fill="#475569">Request Routing</text>
+    </g>
+  </g>
+
+  <g id="edge-b2b-partner-to-hub" role="img" aria-label="Bidirectional edge from B2B Partner to Central Hub with Protocol Adapter" data-semantic-role="edge" data-from="node-b2b-partner" data-to="node-central-hub">
+    <path d="M 1230 260 L 930 410" stroke="#64748b" stroke-width="3" fill="none" marker-start="url(#arrow-start)" marker-end="url(#arrow-end)" />
+    <g id="label-protocol-adapter" role="img" aria-label="Edge label: Protocol Adapter" data-semantic-role="label">
+      <rect x="1010" y="323" width="140" height="24" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+      <text x="1080" y="339" text-anchor="middle" font-weight="600" font-size="11" fill="#475569">Protocol Adapter</text>
+    </g>
+  </g>
+
+  <g id="edge-billing-to-hub" role="img" aria-label="Bidirectional edge from Billing Service to Central Hub with Load Balancing" data-semantic-role="edge" data-from="node-billing-service" data-to="node-central-hub">
+    <path d="M 370 560 L 670 490" stroke="#64748b" stroke-width="3" fill="none" marker-start="url(#arrow-start)" marker-end="url(#arrow-end)" />
+    <g id="label-load-balancing" role="img" aria-label="Edge label: Load Balancing" data-semantic-role="label">
+      <rect x="450" y="513" width="140" height="24" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+      <text x="520" y="529" text-anchor="middle" font-weight="600" font-size="11" fill="#475569">Load Balancing</text>
+    </g>
+  </g>
+
+  <g id="edge-inventory-to-hub" role="img" aria-label="Bidirectional edge from Inventory Service to Central Hub with Service Discovery" data-semantic-role="edge" data-from="node-inventory-service" data-to="node-central-hub">
+    <path d="M 1230 560 L 930 490" stroke="#64748b" stroke-width="3" fill="none" marker-start="url(#arrow-start)" marker-end="url(#arrow-end)" />
+    <g id="label-service-discovery" role="img" aria-label="Edge label: Service Discovery" data-semantic-role="label">
+      <rect x="1010" y="513" width="140" height="24" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+      <text x="1080" y="529" text-anchor="middle" font-weight="600" font-size="11" fill="#475569">Service Discovery</text>
+    </g>
+  </g>
+
+  <g id="annotation-spoke-isolation" role="img" aria-label="Constraint: Spokes are isolated with no spoke-to-spoke connections" data-semantic-role="annotation">
+    <path d="M 380 640 L 1220 640" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="6,6" fill="none" marker-mid="url(#x-mark)" />
+    <rect x="610" y="628" width="380" height="24" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="800" y="644" text-anchor="middle" font-weight="600" font-size="11" fill="#475569">SPOKES ARE ISOLATED (No Spoke-to-Spoke Connections)</text>
+  </g>
+
+  <g id="node-web-client" role="img" aria-label="Spoke node: Web Client (Consumer)" data-semantic-role="node" data-downstream="node-central-hub" data-upstream="node-central-hub">
+    <g transform="translate(140, 180)">
+      <rect width="220" height="80" rx="12" fill="#ecfdf5" stroke="#34d399" stroke-width="2" />
+      <text x="110" y="35" text-anchor="middle" font-weight="700" font-size="14" fill="#022c22">WEB CLIENT</text>
+      <text x="110" y="55" text-anchor="middle" font-weight="500" font-size="11" fill="#047857">Spoke (Consumer)</text>
+    </g>
+  </g>
+
+  <g id="node-mobile-app" role="img" aria-label="Spoke node: Mobile App (Consumer)" data-semantic-role="node" data-downstream="node-central-hub" data-upstream="node-central-hub">
+    <g transform="translate(690, 140)">
+      <rect width="220" height="80" rx="12" fill="#fff7ed" stroke="#fb923c" stroke-width="2" />
+      <text x="110" y="35" text-anchor="middle" font-weight="700" font-size="14" fill="#431407">MOBILE APP</text>
+      <text x="110" y="55" text-anchor="middle" font-weight="500" font-size="11" fill="#c2410c">Spoke (Consumer)</text>
+    </g>
+  </g>
+
+  <g id="node-b2b-partner" role="img" aria-label="Spoke node: B2B Partner (Consumer)" data-semantic-role="node" data-downstream="node-central-hub" data-upstream="node-central-hub">
+    <g transform="translate(1240, 180)">
+      <rect width="220" height="80" rx="12" fill="#f7fee7" stroke="#a3e635" stroke-width="2" />
+      <text x="110" y="35" text-anchor="middle" font-weight="700" font-size="14" fill="#1a2e05">B2B PARTNER</text>
+      <text x="110" y="55" text-anchor="middle" font-weight="500" font-size="11" fill="#4d7c0f">Spoke (Consumer)</text>
+    </g>
+  </g>
+
+  <g id="node-billing-service" role="img" aria-label="Spoke node: Billing Service (Provider)" data-semantic-role="node" data-downstream="node-central-hub" data-upstream="node-central-hub">
+    <g transform="translate(140, 600)">
+      <rect width="220" height="80" rx="12" fill="#fdf2f8" stroke="#f472b6" stroke-width="2" />
+      <text x="110" y="35" text-anchor="middle" font-weight="700" font-size="14" fill="#831843">BILLING SERVICE</text>
+      <text x="110" y="55" text-anchor="middle" font-weight="500" font-size="11" fill="#be185d">Spoke (Provider)</text>
+    </g>
+  </g>
+
+  <g id="node-inventory-service" role="img" aria-label="Spoke node: Inventory Service (Provider)" data-semantic-role="node" data-downstream="node-central-hub" data-upstream="node-central-hub">
+    <g transform="translate(1240, 600)">
+      <rect width="220" height="80" rx="12" fill="#faf5ff" stroke="#c084fc" stroke-width="2" />
+      <text x="110" y="35" text-anchor="middle" font-weight="700" font-size="14" fill="#581c87">INVENTORY SERVICE</text>
+      <text x="110" y="55" text-anchor="middle" font-weight="500" font-size="11" fill="#7e22ce">Spoke (Provider)</text>
+    </g>
+  </g>
+
+  <g id="node-central-hub" role="img" aria-label="Central Hub: API Gateway / ESB with Mediator Logic" data-semantic-role="node" data-downstream="node-web-client,node-mobile-app,node-b2b-partner,node-billing-service,node-inventory-service" data-upstream="node-web-client,node-mobile-app,node-b2b-partner,node-billing-service,node-inventory-service">
+    <rect x="660" y="370" width="280" height="160" rx="50" fill="none" stroke="#e0e7ff" stroke-width="6" />
+
+    <g transform="translate(680, 390)">
+      <rect width="240" height="120" rx="40" fill="#e0e7ff" stroke="#818cf8" stroke-width="4" />
+      <text x="120" y="50" text-anchor="middle" font-weight="800" font-size="18" fill="#312e81">CENTRAL HUB</text>
+      <text x="120" y="72" text-anchor="middle" font-weight="600" font-size="13" fill="#4338ca">API Gateway / ESB</text>
+
+      <rect x="80" y="90" width="80" height="14" rx="4" fill="#c7d2fe" />
+      <text x="120" y="101" text-anchor="middle" font-weight="700" font-size="9" fill="#3730a3">MEDIATOR LOGIC</text>
+    </g>
+  </g>
+
+</svg>

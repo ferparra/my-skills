@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 800" style="background-color: #fafafa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <!-- DIAGRAM_TYPE: iterative_cycle -->
+  <!-- TOPOLOGY: Circular cycle of 4 phase nodes around a central hub. 5 nodes (4 phases + 1 central product increment), 4 directed edges forming a clockwise loop. 3 concentric guide circles. -->
+  <desc>An iterative cycle communication pattern representing a continuous delivery / spiral model. Four phases -- Plan and Design, Develop and Build, Test and Evaluate, Deploy and Monitor -- are arranged in a clockwise cycle around a central Product Increment hub. Each phase passes an artifact to the next: Sprint Backlog, Release Candidate, Deployment Package, and User Feedback and Logs. The central element tracks version progression (v1.0 to v2.0). Concentric dashed circles represent iteration rings.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b" />
+    </marker>
+  </defs>
+
+  <g id="diagram-title" role="heading" data-semantic-role="title">
+    <text x="700" y="60" text-anchor="middle" font-weight="700" font-size="24" fill="#1e293b" letter-spacing="1">ITERATIVE CYCLE COMMUNICATION PATTERN</text>
+    <text x="700" y="90" text-anchor="middle" font-weight="600" font-size="16" fill="#475569" letter-spacing="0.5">CONTINUOUS DELIVERY / SPIRAL MODEL</text>
+  </g>
+
+  <g id="annotation-concentric-rings" role="img" aria-label="Concentric dashed circles representing iteration rings" data-semantic-role="annotation">
+    <circle cx="700" cy="400" r="160" stroke="#e2e8f0" stroke-width="2" stroke-dasharray="8,8" fill="none" />
+    <circle cx="700" cy="400" r="230" stroke="#e2e8f0" stroke-width="2" stroke-dasharray="8,8" fill="none" />
+    <circle cx="700" cy="400" r="300" stroke="#e2e8f0" stroke-width="2" stroke-dasharray="8,8" fill="none" />
+  </g>
+
+  <g id="edge-plan-to-develop" role="img" aria-label="Edge from Plan and Design to Develop and Build" data-semantic-role="edge" data-from="node-plan-design" data-to="node-develop-build">
+    <path d="M 820 150 C 980 150, 1050 220, 1050 330" stroke="#94a3b8" stroke-width="4" fill="none" marker-end="url(#arrow)" />
+    <g id="label-sprint-backlog" role="img" aria-label="Edge label: Sprint Backlog" data-semantic-role="label">
+      <rect x="880" y="208" width="160" height="24" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+      <text x="960" y="224" text-anchor="middle" font-weight="600" font-size="12" fill="#475569">SPRINT BACKLOG</text>
+    </g>
+  </g>
+
+  <g id="edge-develop-to-test" role="img" aria-label="Edge from Develop and Build to Test and Evaluate" data-semantic-role="edge" data-from="node-develop-build" data-to="node-test-evaluate">
+    <path d="M 1050 460 C 1050 580, 980 650, 830 650" stroke="#94a3b8" stroke-width="4" fill="none" marker-end="url(#arrow)" />
+    <g id="label-release-candidate" role="img" aria-label="Edge label: Release Candidate" data-semantic-role="label">
+      <rect x="880" y="568" width="160" height="24" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+      <text x="960" y="584" text-anchor="middle" font-weight="600" font-size="12" fill="#475569">RELEASE CANDIDATE</text>
+    </g>
+  </g>
+
+  <g id="edge-test-to-deploy" role="img" aria-label="Edge from Test and Evaluate to Deploy and Monitor" data-semantic-role="edge" data-from="node-test-evaluate" data-to="node-deploy-monitor">
+    <path d="M 580 650 C 420 650, 350 580, 350 470" stroke="#94a3b8" stroke-width="4" fill="none" marker-end="url(#arrow)" />
+    <g id="label-deployment-package" role="img" aria-label="Edge label: Deployment Package" data-semantic-role="label">
+      <rect x="360" y="568" width="160" height="24" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+      <text x="440" y="584" text-anchor="middle" font-weight="600" font-size="12" fill="#475569">DEPLOYMENT PACKAGE</text>
+    </g>
+  </g>
+
+  <g id="edge-deploy-to-plan" role="img" aria-label="Edge from Deploy and Monitor to Plan and Design" data-semantic-role="edge" data-from="node-deploy-monitor" data-to="node-plan-design">
+    <path d="M 350 340 C 350 220, 420 150, 570 150" stroke="#94a3b8" stroke-width="4" fill="none" marker-end="url(#arrow)" />
+    <g id="label-user-feedback" role="img" aria-label="Edge label: User Feedback and Logs" data-semantic-role="label">
+      <rect x="360" y="208" width="160" height="24" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+      <text x="440" y="224" text-anchor="middle" font-weight="600" font-size="12" fill="#475569">USER FEEDBACK &amp; LOGS</text>
+    </g>
+  </g>
+
+  <g id="node-plan-design" role="img" aria-label="Phase 1: Plan and Design -- Scope Requirements and Architecture Sync" data-semantic-role="node" data-upstream="node-deploy-monitor" data-downstream="node-develop-build">
+    <g transform="translate(590, 100)">
+      <rect width="220" height="100" rx="12" fill="#faf5ff" stroke="#c084fc" stroke-width="3" />
+      <text x="110" y="30" text-anchor="middle" font-weight="800" font-size="15" fill="#581c87">1. PLAN &amp; DESIGN</text>
+      <line x1="40" y1="42" x2="180" y2="42" stroke="#e9d5ff" stroke-width="2" />
+      <text x="110" y="65" text-anchor="middle" font-weight="500" font-size="12" fill="#7e22ce">Scope Requirements</text>
+      <text x="110" y="85" text-anchor="middle" font-weight="500" font-size="12" fill="#7e22ce">Architecture Sync</text>
+    </g>
+  </g>
+
+  <g id="node-develop-build" role="img" aria-label="Phase 2: Develop and Build -- Write Feature Code and Continuous Integration" data-semantic-role="node" data-upstream="node-plan-design" data-downstream="node-test-evaluate">
+    <g transform="translate(940, 350)">
+      <rect width="220" height="100" rx="12" fill="#ecfdf5" stroke="#34d399" stroke-width="3" />
+      <text x="110" y="30" text-anchor="middle" font-weight="800" font-size="15" fill="#022c22">2. DEVELOP &amp; BUILD</text>
+      <line x1="40" y1="42" x2="180" y2="42" stroke="#a7f3d0" stroke-width="2" />
+      <text x="110" y="65" text-anchor="middle" font-weight="500" font-size="12" fill="#047857">Write Feature Code</text>
+      <text x="110" y="85" text-anchor="middle" font-weight="500" font-size="12" fill="#047857">Continuous Integration</text>
+    </g>
+  </g>
+
+  <g id="node-test-evaluate" role="img" aria-label="Phase 3: Test and Evaluate -- Automated QA Metrics and Security/Load Audits" data-semantic-role="node" data-upstream="node-develop-build" data-downstream="node-deploy-monitor">
+    <g transform="translate(590, 600)">
+      <rect width="220" height="100" rx="12" fill="#fff7ed" stroke="#fb923c" stroke-width="3" />
+      <text x="110" y="30" text-anchor="middle" font-weight="800" font-size="15" fill="#431407">3. TEST &amp; EVALUATE</text>
+      <line x1="40" y1="42" x2="180" y2="42" stroke="#fed7aa" stroke-width="2" />
+      <text x="110" y="65" text-anchor="middle" font-weight="500" font-size="12" fill="#c2410c">Automated QA Metrics</text>
+      <text x="110" y="85" text-anchor="middle" font-weight="500" font-size="12" fill="#c2410c">Security &amp; Load Audits</text>
+    </g>
+  </g>
+
+  <g id="node-deploy-monitor" role="img" aria-label="Phase 4: Deploy and Monitor -- Release to Production and System Telemetry" data-semantic-role="node" data-upstream="node-test-evaluate" data-downstream="node-plan-design">
+    <g transform="translate(240, 350)">
+      <rect width="220" height="100" rx="12" fill="#ecfeff" stroke="#22d3ee" stroke-width="3" />
+      <text x="110" y="30" text-anchor="middle" font-weight="800" font-size="15" fill="#083344">4. DEPLOY &amp; MONITOR</text>
+      <line x1="40" y1="42" x2="180" y2="42" stroke="#a5f3fc" stroke-width="2" />
+      <text x="110" y="65" text-anchor="middle" font-weight="500" font-size="12" fill="#0e7490">Release to Production</text>
+      <text x="110" y="85" text-anchor="middle" font-weight="500" font-size="12" fill="#0e7490">System Telemetry</text>
+    </g>
+  </g>
+
+  <g id="node-product-increment" role="img" aria-label="Central hub: Product Increment tracking version progression" data-semantic-role="node">
+    <circle cx="700" cy="400" r="110" fill="#e0e7ff" stroke="#818cf8" stroke-width="4" />
+
+    <text x="700" y="380" text-anchor="middle" font-weight="800" font-size="20" fill="#312e81">PRODUCT</text>
+    <text x="700" y="405" text-anchor="middle" font-weight="800" font-size="20" fill="#312e81">INCREMENT</text>
+
+    <rect x="630" y="425" width="140" height="24" rx="4" fill="#c7d2fe" />
+    <text x="700" y="442" text-anchor="middle" font-weight="700" font-size="13" fill="#3730a3">v1.0 → v1.1 → v2.0</text>
+  </g>
+
+</svg>

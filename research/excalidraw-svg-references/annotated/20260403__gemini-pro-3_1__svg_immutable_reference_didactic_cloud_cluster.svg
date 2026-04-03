@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 800" style="background-color: #fafafa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <!-- DIAGRAM_TYPE: cloud_cluster -->
+  <!-- TOPOLOGY: Service mesh with 5 service nodes inside a VPC boundary, 6 directed edges (4 synchronous, 1 async event, 1 egress), plus 4 internal mesh/health-check links and 2 external boundary crossings (ingress, egress) -->
+  <desc>A cloud cluster / service mesh diagram showing a decentralized microservice architecture for an e-commerce order flow. Five services (Auth, User, Order, Inventory, Payment) communicate inside a VPC namespace. The Order Service acts as a saga orchestrator at the center. External traffic enters via HTTPS Ingress to Auth Service, which validates tokens and routes to Order Service. Order Service fetches profiles from User Service, emits reserve events to Inventory Service, and triggers charge processing through Payment Service, which connects to an external Bank API via egress. Mesh peer sync and health check links illustrate the service mesh overlay.</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b" />
+    </marker>
+    <marker id="arrow-event" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8" />
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <g id="diagram-title" role="heading" data-semantic-role="title">
+    <text x="700" y="60" text-anchor="middle" font-weight="700" font-size="24" fill="#1e293b" letter-spacing="1">CLOUD / CLUSTER COMMUNICATION PATTERN</text>
+    <text x="700" y="90" text-anchor="middle" font-weight="600" font-size="16" fill="#475569" letter-spacing="0.5">SERVICE MESH &amp; DECENTRALIZED PEER-TO-PEER ROUTING</text>
+  </g>
+
+  <!-- VPC Container -->
+  <g id="container-vpc" role="img" aria-label="Virtual Private Cloud (VPC) / Namespace boundary enclosing all services" data-semantic-role="container">
+    <rect x="250" y="160" width="900" height="520" rx="40" fill="#f8fafc" stroke="#cbd5e1" stroke-width="3" stroke-dasharray="12,8" />
+    <rect x="280" y="145" width="340" height="30" rx="6" fill="#e2e8f0" />
+    <text x="450" y="165" text-anchor="middle" font-weight="700" font-size="13" fill="#334155">VIRTUAL PRIVATE CLOUD (VPC) / NAMESPACE</text>
+  </g>
+
+  <!-- Mesh / Health Check internal links -->
+  <g id="mesh-links" role="img" aria-label="Internal mesh peer sync and health check links between services" data-semantic-role="annotation">
+    <path d="M 540 285 L 860 285" stroke="#cbd5e1" stroke-width="2" fill="none" stroke-dasharray="4,4" />
+    <path d="M 540 585 L 860 585" stroke="#cbd5e1" stroke-width="2" fill="none" stroke-dasharray="4,4" />
+    <path d="M 430 320 L 430 550" stroke="#cbd5e1" stroke-width="2" fill="none" stroke-dasharray="4,4" />
+    <path d="M 970 320 L 970 550" stroke="#cbd5e1" stroke-width="2" fill="none" stroke-dasharray="4,4" />
+
+    <rect x="640" y="275" width="120" height="20" rx="4" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" />
+    <text x="700" y="289" text-anchor="middle" font-weight="500" font-size="11" fill="#64748b">Mesh Peer Sync</text>
+
+    <rect x="640" y="575" width="120" height="20" rx="4" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" />
+    <text x="700" y="589" text-anchor="middle" font-weight="500" font-size="11" fill="#64748b">Mesh Peer Sync</text>
+
+    <rect x="370" y="425" width="120" height="20" rx="4" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" />
+    <text x="430" y="439" text-anchor="middle" font-weight="500" font-size="11" fill="#64748b">Health Checks</text>
+
+    <rect x="910" y="425" width="120" height="20" rx="4" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" />
+    <text x="970" y="439" text-anchor="middle" font-weight="500" font-size="11" fill="#64748b">Health Checks</text>
+  </g>
+
+  <!-- Edges -->
+
+  <g id="edge-ingress-to-auth" role="img" aria-label="HTTPS Ingress entering VPC to Auth Service" data-semantic-role="edge" data-from="external-ingress" data-to="node-auth-service">
+    <path d="M 120 285 L 305 285" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+    <rect x="145" y="255" width="130" height="24" rx="4" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="210" y="271" text-anchor="middle" font-weight="600" font-size="12" fill="#475569">HTTPS Ingress</text>
+  </g>
+
+  <g id="edge-auth-to-order" role="img" aria-label="Auth Service validates token and routes to Order Service" data-semantic-role="edge" data-from="node-auth-service" data-to="node-order-service">
+    <path d="M 450 320 L 620 400" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+    <rect x="475" y="340" width="120" height="24" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="535" y="356" text-anchor="middle" font-weight="600" font-size="12" fill="#334155">Validate Token</text>
+  </g>
+
+  <g id="edge-user-to-order" role="img" aria-label="User Service provides profile data to Order Service" data-semantic-role="edge" data-from="node-user-service" data-to="node-order-service">
+    <path d="M 950 320 L 780 400" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+    <rect x="805" y="340" width="120" height="24" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="865" y="356" text-anchor="middle" font-weight="600" font-size="12" fill="#334155">Fetch Profile</text>
+  </g>
+
+  <g id="edge-order-to-inventory" role="img" aria-label="Order Service emits reserve event to Inventory Service (async)" data-semantic-role="edge" data-from="node-order-service" data-to="node-inventory-service">
+    <path d="M 620 470 L 450 550" stroke="#94a3b8" stroke-width="3" fill="none" marker-end="url(#arrow-event)" stroke-dasharray="6,4" />
+    <rect x="475" y="495" width="120" height="24" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="535" y="511" text-anchor="middle" font-weight="600" font-size="12" fill="#64748b">Reserve (Event)</text>
+  </g>
+
+  <g id="edge-order-to-payment" role="img" aria-label="Order Service triggers charge processing via Payment Service" data-semantic-role="edge" data-from="node-order-service" data-to="node-payment-service">
+    <path d="M 780 470 L 950 550" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+    <rect x="805" y="495" width="120" height="24" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="865" y="511" text-anchor="middle" font-weight="600" font-size="12" fill="#334155">Process Charge</text>
+  </g>
+
+  <g id="edge-payment-to-bank" role="img" aria-label="Payment Service connects to external Bank API via egress" data-semantic-role="edge" data-from="node-payment-service" data-to="external-egress">
+    <path d="M 1080 585 L 1265 585" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+    <rect x="1115" y="555" width="130" height="24" rx="4" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="1180" y="571" text-anchor="middle" font-weight="600" font-size="12" fill="#475569">Bank API (Egress)</text>
+  </g>
+
+  <!-- Service Nodes -->
+
+  <g id="node-auth-service" role="img" aria-label="Auth Service - Identity and Gateway" data-semantic-role="node" data-downstream="node-order-service" data-upstream="">
+    <g transform="translate(320, 250)">
+      <rect width="220" height="70" rx="12" fill="#ecfdf5" stroke="#34d399" stroke-width="2" />
+      <text x="110" y="30" text-anchor="middle" font-weight="700" font-size="15" fill="#022c22">AUTH SERVICE</text>
+      <text x="110" y="50" text-anchor="middle" font-weight="500" font-size="12" fill="#047857">Identity &amp; Gateway</text>
+    </g>
+  </g>
+
+  <g id="node-user-service" role="img" aria-label="User Service - Account Preferences" data-semantic-role="node" data-downstream="node-order-service" data-upstream="">
+    <g transform="translate(860, 250)">
+      <rect width="220" height="70" rx="12" fill="#faf5ff" stroke="#c084fc" stroke-width="2" />
+      <text x="110" y="30" text-anchor="middle" font-weight="700" font-size="15" fill="#581c87">USER SERVICE</text>
+      <text x="110" y="50" text-anchor="middle" font-weight="500" font-size="12" fill="#7e22ce">Account Preferences</text>
+    </g>
+  </g>
+
+  <g id="node-order-service" role="img" aria-label="Order Service - Saga Orchestrator (central hub)" data-semantic-role="node" data-downstream="node-inventory-service,node-payment-service" data-upstream="node-auth-service,node-user-service">
+    <g transform="translate(590, 400)">
+      <rect width="220" height="70" rx="16" fill="#e0e7ff" stroke="#818cf8" stroke-width="3" />
+      <text x="110" y="30" text-anchor="middle" font-weight="800" font-size="15" fill="#312e81">ORDER SERVICE</text>
+      <text x="110" y="50" text-anchor="middle" font-weight="500" font-size="12" fill="#4338ca">Saga Orchestrator</text>
+    </g>
+  </g>
+
+  <g id="node-inventory-service" role="img" aria-label="Inventory Service - Stock Reservation" data-semantic-role="node" data-downstream="" data-upstream="node-order-service">
+    <g transform="translate(320, 550)">
+      <rect width="220" height="70" rx="12" fill="#fff7ed" stroke="#fb923c" stroke-width="2" />
+      <text x="110" y="30" text-anchor="middle" font-weight="700" font-size="15" fill="#431407">INVENTORY SERVICE</text>
+      <text x="110" y="50" text-anchor="middle" font-weight="500" font-size="12" fill="#c2410c">Stock Reservation</text>
+    </g>
+  </g>
+
+  <g id="node-payment-service" role="img" aria-label="Payment Service - Billing Integration" data-semantic-role="node" data-downstream="" data-upstream="node-order-service">
+    <g transform="translate(860, 550)">
+      <rect width="220" height="70" rx="12" fill="#fdf2f8" stroke="#f472b6" stroke-width="2" />
+      <text x="110" y="30" text-anchor="middle" font-weight="700" font-size="15" fill="#831843">PAYMENT SERVICE</text>
+      <text x="110" y="50" text-anchor="middle" font-weight="500" font-size="12" fill="#be185d">Billing Integration</text>
+    </g>
+  </g>
+
+</svg>

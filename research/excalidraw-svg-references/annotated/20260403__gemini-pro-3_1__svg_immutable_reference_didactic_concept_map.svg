@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 600" style="background-color: #fafafa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <!-- DIAGRAM_TYPE: concept_map -->
+  <!-- TOPOLOGY: Hierarchical concept map with 10 nodes, 9 directed edges; root node "Concept Maps" fans out to 3 second-level nodes, each of which fans out to 2-3 leaf nodes -->
+  <desc>A didactic concept map explaining the structure of concept maps themselves. The root concept "Concept Maps" branches into three categories: Propositions (containing Concepts/Nodes and Linking Words), Organized Knowledge (leading to Enhanced Memory, Applied Understanding, and Creative Thinking), and Map Types (structured as Hierarchical, Spider, and Flowchart). Edges are labeled with relational phrases like "are made of", "represent", and "categorized as".</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b" />
+    </marker>
+  </defs>
+
+  <!-- Edges (drawn first so nodes overlay) -->
+
+  <g id="edge-concept-maps-to-propositions" role="img" aria-label="Edge from Concept Maps to Propositions labeled 'are made of'" data-semantic-role="edge" data-from="node-concept-maps" data-to="node-propositions">
+    <path d="M 660 110 L 250 200" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <rect x="415" y="145" width="80" height="20" rx="4" fill="#fafafa" />
+    <text x="455" y="159" text-anchor="middle" font-size="12" fill="#64748b">are made of</text>
+  </g>
+
+  <g id="edge-concept-maps-to-organized-knowledge" role="img" aria-label="Edge from Concept Maps to Organized Knowledge labeled 'represent'" data-semantic-role="edge" data-from="node-concept-maps" data-to="node-organized-knowledge">
+    <path d="M 700 110 L 700 200" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <rect x="660" y="145" width="80" height="20" rx="4" fill="#fafafa" />
+    <text x="700" y="159" text-anchor="middle" font-size="12" fill="#64748b">represent</text>
+  </g>
+
+  <g id="edge-concept-maps-to-map-types" role="img" aria-label="Edge from Concept Maps to Map Types labeled 'categorized as'" data-semantic-role="edge" data-from="node-concept-maps" data-to="node-map-types">
+    <path d="M 740 110 L 1200 200" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <rect x="925" y="145" width="90" height="20" rx="4" fill="#fafafa" />
+    <text x="970" y="159" text-anchor="middle" font-size="12" fill="#64748b">categorized as</text>
+  </g>
+
+  <g id="edge-propositions-to-concepts" role="img" aria-label="Edge from Propositions to Concepts (Nodes) labeled 'contain'" data-semantic-role="edge" data-from="node-propositions" data-to="node-concepts">
+    <path d="M 170 260 L 110 380" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <rect x="110" y="310" width="60" height="20" rx="4" fill="#fafafa" />
+    <text x="140" y="324" text-anchor="middle" font-size="12" fill="#64748b">contain</text>
+  </g>
+
+  <g id="edge-propositions-to-linking-words" role="img" aria-label="Edge from Propositions to Linking Words labeled 'connected by'" data-semantic-role="edge" data-from="node-propositions" data-to="node-linking-words">
+    <path d="M 230 260 L 290 380" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <rect x="220" y="310" width="80" height="20" rx="4" fill="#fafafa" />
+    <text x="260" y="324" text-anchor="middle" font-size="12" fill="#64748b">connected by</text>
+  </g>
+
+  <g id="edge-organized-knowledge-to-enhanced-memory" role="img" aria-label="Edge from Organized Knowledge to Enhanced Memory labeled 'leads to'" data-semantic-role="edge" data-from="node-organized-knowledge" data-to="node-enhanced-memory">
+    <path d="M 660 260 L 560 380" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <rect x="580" y="310" width="60" height="20" rx="4" fill="#fafafa" />
+    <text x="610" y="324" text-anchor="middle" font-size="12" fill="#64748b">leads to</text>
+  </g>
+
+  <g id="edge-organized-knowledge-to-applied-understanding" role="img" aria-label="Edge from Organized Knowledge to Applied Understanding labeled 'enables'" data-semantic-role="edge" data-from="node-organized-knowledge" data-to="node-applied-understanding">
+    <path d="M 700 260 L 700 380" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <rect x="670" y="310" width="60" height="20" rx="4" fill="#fafafa" />
+    <text x="700" y="324" text-anchor="middle" font-size="12" fill="#64748b">enables</text>
+  </g>
+
+  <g id="edge-organized-knowledge-to-creative-thinking" role="img" aria-label="Edge from Organized Knowledge to Creative Thinking labeled 'facilitates'" data-semantic-role="edge" data-from="node-organized-knowledge" data-to="node-creative-thinking">
+    <path d="M 740 260 L 840 380" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <rect x="750" y="310" width="80" height="20" rx="4" fill="#fafafa" />
+    <text x="790" y="324" text-anchor="middle" font-size="12" fill="#64748b">facilitates</text>
+  </g>
+
+  <g id="edge-map-types-to-hierarchical" role="img" aria-label="Edge from Map Types to Hierarchical labeled 'structured as'" data-semantic-role="edge" data-from="node-map-types" data-to="node-hierarchical">
+    <path d="M 1160 260 L 1080 380" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <rect x="1075" y="310" width="90" height="20" rx="4" fill="#fafafa" />
+    <text x="1120" y="324" text-anchor="middle" font-size="12" fill="#64748b">structured as</text>
+  </g>
+
+  <g id="edge-map-types-to-spider" role="img" aria-label="Edge from Map Types to Spider labeled 'radiates as'" data-semantic-role="edge" data-from="node-map-types" data-to="node-spider">
+    <path d="M 1200 260 L 1200 380" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <rect x="1165" y="310" width="70" height="20" rx="4" fill="#fafafa" />
+    <text x="1200" y="324" text-anchor="middle" font-size="12" fill="#64748b">radiates as</text>
+  </g>
+
+  <g id="edge-map-types-to-flowchart" role="img" aria-label="Edge from Map Types to Flowchart labeled 'sequenced as'" data-semantic-role="edge" data-from="node-map-types" data-to="node-flowchart">
+    <path d="M 1240 260 L 1320 380" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <rect x="1235" y="310" width="90" height="20" rx="4" fill="#fafafa" />
+    <text x="1280" y="324" text-anchor="middle" font-size="12" fill="#64748b">sequenced as</text>
+  </g>
+
+  <!-- Nodes -->
+
+  <g id="node-concept-maps" role="img" aria-label="Concept Maps - root concept of the diagram" data-semantic-role="node" data-downstream="node-propositions,node-organized-knowledge,node-map-types">
+    <rect x="620" y="50" width="160" height="60" rx="12" fill="#e0e7ff" stroke="#818cf8" stroke-width="2" />
+    <text x="700" y="85" text-anchor="middle" font-weight="600" font-size="16" fill="#312e81">Concept Maps</text>
+  </g>
+
+  <g id="node-propositions" role="img" aria-label="Propositions - structural building blocks of concept maps" data-semantic-role="node" data-upstream="node-concept-maps" data-downstream="node-concepts,node-linking-words">
+    <rect x="130" y="200" width="140" height="60" rx="12" fill="#d1fae5" stroke="#34d399" stroke-width="2" />
+    <text x="200" y="235" text-anchor="middle" font-weight="600" font-size="14" fill="#064e3b">Propositions</text>
+  </g>
+
+  <g id="node-organized-knowledge" role="img" aria-label="Organized Knowledge - what concept maps represent" data-semantic-role="node" data-upstream="node-concept-maps" data-downstream="node-enhanced-memory,node-applied-understanding,node-creative-thinking">
+    <rect x="630" y="200" width="140" height="60" rx="12" fill="#ffedd5" stroke="#fb923c" stroke-width="2" />
+    <text x="700" y="225" text-anchor="middle" font-weight="600" font-size="14" fill="#7c2d12">Organized</text>
+    <text x="700" y="245" text-anchor="middle" font-weight="600" font-size="14" fill="#7c2d12">Knowledge</text>
+  </g>
+
+  <g id="node-map-types" role="img" aria-label="Map Types - categorization of concept map formats" data-semantic-role="node" data-upstream="node-concept-maps" data-downstream="node-hierarchical,node-spider,node-flowchart">
+    <rect x="1130" y="200" width="140" height="60" rx="12" fill="#fce7f3" stroke="#f472b6" stroke-width="2" />
+    <text x="1200" y="235" text-anchor="middle" font-weight="600" font-size="14" fill="#831843">Map Types</text>
+  </g>
+
+  <g id="node-concepts" role="img" aria-label="Concepts (Nodes) - the conceptual elements within propositions" data-semantic-role="node" data-upstream="node-propositions">
+    <rect x="40" y="380" width="140" height="60" rx="12" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="2" />
+    <text x="110" y="415" text-anchor="middle" font-weight="600" font-size="14" fill="#064e3b">Concepts (Nodes)</text>
+  </g>
+
+  <g id="node-linking-words" role="img" aria-label="Linking Words - the relational labels connecting concepts" data-semantic-role="node" data-upstream="node-propositions">
+    <rect x="220" y="380" width="140" height="60" rx="12" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="2" />
+    <text x="290" y="415" text-anchor="middle" font-weight="600" font-size="14" fill="#064e3b">Linking Words</text>
+  </g>
+
+  <g id="node-enhanced-memory" role="img" aria-label="Enhanced Memory - a benefit of organized knowledge" data-semantic-role="node" data-upstream="node-organized-knowledge">
+    <rect x="500" y="380" width="120" height="60" rx="12" fill="#fff7ed" stroke="#fdba74" stroke-width="2" />
+    <text x="560" y="405" text-anchor="middle" font-weight="600" font-size="13" fill="#7c2d12">Enhanced</text>
+    <text x="560" y="425" text-anchor="middle" font-weight="600" font-size="13" fill="#7c2d12">Memory</text>
+  </g>
+
+  <g id="node-applied-understanding" role="img" aria-label="Applied Understanding - a benefit of organized knowledge" data-semantic-role="node" data-upstream="node-organized-knowledge">
+    <rect x="640" y="380" width="120" height="60" rx="12" fill="#fff7ed" stroke="#fdba74" stroke-width="2" />
+    <text x="700" y="405" text-anchor="middle" font-weight="600" font-size="13" fill="#7c2d12">Applied</text>
+    <text x="700" y="425" text-anchor="middle" font-weight="600" font-size="13" fill="#7c2d12">Understanding</text>
+  </g>
+
+  <g id="node-creative-thinking" role="img" aria-label="Creative Thinking - a benefit of organized knowledge" data-semantic-role="node" data-upstream="node-organized-knowledge">
+    <rect x="780" y="380" width="120" height="60" rx="12" fill="#fff7ed" stroke="#fdba74" stroke-width="2" />
+    <text x="840" y="405" text-anchor="middle" font-weight="600" font-size="13" fill="#7c2d12">Creative</text>
+    <text x="840" y="425" text-anchor="middle" font-weight="600" font-size="13" fill="#7c2d12">Thinking</text>
+  </g>
+
+  <g id="node-hierarchical" role="img" aria-label="Hierarchical - a type of concept map" data-semantic-role="node" data-upstream="node-map-types">
+    <rect x="1030" y="380" width="100" height="60" rx="12" fill="#fdf2f8" stroke="#f9a8d4" stroke-width="2" />
+    <text x="1080" y="415" text-anchor="middle" font-weight="600" font-size="14" fill="#831843">Hierarchical</text>
+  </g>
+
+  <g id="node-spider" role="img" aria-label="Spider - a type of concept map" data-semantic-role="node" data-upstream="node-map-types">
+    <rect x="1155" y="380" width="90" height="60" rx="12" fill="#fdf2f8" stroke="#f9a8d4" stroke-width="2" />
+    <text x="1200" y="415" text-anchor="middle" font-weight="600" font-size="14" fill="#831843">Spider</text>
+  </g>
+
+  <g id="node-flowchart" role="img" aria-label="Flowchart - a type of concept map" data-semantic-role="node" data-upstream="node-map-types">
+    <rect x="1270" y="380" width="100" height="60" rx="12" fill="#fdf2f8" stroke="#f9a8d4" stroke-width="2" />
+    <text x="1320" y="415" text-anchor="middle" font-weight="600" font-size="14" fill="#831843">Flowchart</text>
+  </g>
+
+</svg>

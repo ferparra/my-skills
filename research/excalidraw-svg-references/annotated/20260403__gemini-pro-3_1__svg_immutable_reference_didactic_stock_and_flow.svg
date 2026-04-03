@@ -1,0 +1,223 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 1000" style="background-color: #fafafa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <!-- DIAGRAM_TYPE: stock_and_flow -->
+  <!-- TOPOLOGY: 2 stocks (Prey Population, Predator Population), 4 flows (Prey Births, Prey Deaths, Predator Births, Predator Deaths), 4 auxiliary variables (rates), 4 clouds (sources/sinks), 10 information links, 3 feedback loop indicators (1 reinforcing, 2 balancing) -->
+  <desc>Stock and Flow diagram modeling a Lotka-Volterra predator-prey ecosystem. Two stocks (Prey Population and Predator Population) are connected by four flows: Prey Births (inflow to prey), Prey Deaths (outflow from prey / influenced by predation), Predator Births (inflow to predators, driven by predation success), and Predator Deaths (outflow from predators). Auxiliary variables (Prey Birth Rate, Predation Rate, Conversion Efficiency, Predator Death Rate) modulate the flows via information links. The system exhibits one reinforcing feedback loop (prey reproduction) and two balancing feedback loops (predation limiting prey, predator starvation limiting predators).</desc>
+
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#0f172a" flood-opacity="0.08"/>
+    </filter>
+
+    <marker id="arrow-flow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155" />
+    </marker>
+
+    <marker id="arrow-info" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 1 1 L 9 5 L 1 9" stroke="#ef4444" stroke-width="2" fill="none" />
+    </marker>
+  </defs>
+
+  <g id="diagram-title" role="heading">
+    <text x="900" y="60" text-anchor="middle" font-weight="700" font-size="28" fill="#1e293b" letter-spacing="1">STOCK AND FLOW DIAGRAM</text>
+    <text x="900" y="95" text-anchor="middle" font-weight="600" font-size="18" fill="#475569" letter-spacing="0.5">SYSTEM DYNAMICS: PREDATOR-PREY (LOTKA-VOLTERRA) MODEL</text>
+  </g>
+
+  <!-- Flow: Prey Births (inflow to Prey Population) -->
+  <g id="flow-prey-births" role="img" aria-label="Prey Births flow: inflow rate into the Prey Population stock, controlled by a valve" data-semantic-role="flow" data-from="cloud-prey-source" data-to="stock-prey-population">
+    <path d="M 150 350 L 390 350" stroke="#334155" stroke-width="6" fill="none" marker-end="url(#arrow-flow)" />
+    <g id="valve-prey-births" role="img" aria-label="Valve controlling the Prey Births flow rate" data-semantic-role="valve">
+      <polygon points="270,330 290,350 270,370 250,350" fill="#ffffff" stroke="#334155" stroke-width="3" />
+    </g>
+    <text x="270" y="390" text-anchor="middle" font-weight="700" font-size="14" fill="#1e293b">Prey Births</text>
+    <g id="cloud-prey-source" role="img" aria-label="Cloud: external source of prey individuals" data-semantic-role="cloud">
+      <path d="M 150 350 C 150 330, 110 330, 110 350 C 90 350, 90 390, 120 390 C 130 410, 170 410, 170 380 C 190 380, 180 340, 150 350 Z" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2" />
+    </g>
+  </g>
+
+  <!-- Stock: Prey Population -->
+  <g id="stock-prey-population" role="img" aria-label="PREY POPULATION stock: accumulation of prey individuals in the ecosystem" data-semantic-role="stock" data-upstream="flow-prey-births" data-downstream="flow-prey-deaths">
+    <g transform="translate(400, 310)" filter="url(#shadow)">
+      <rect width="180" height="80" fill="#f0fdf4" stroke="#059669" stroke-width="4" />
+      <text x="90" y="35" text-anchor="middle" font-weight="800" font-size="16" fill="#022c22">PREY</text>
+      <text x="90" y="55" text-anchor="middle" font-weight="800" font-size="16" fill="#022c22">POPULATION</text>
+    </g>
+  </g>
+
+  <!-- Flow: Prey Deaths (outflow from Prey Population) -->
+  <g id="flow-prey-deaths" role="img" aria-label="Prey Deaths flow: outflow rate from the Prey Population stock due to predation" data-semantic-role="flow" data-from="stock-prey-population" data-to="cloud-prey-sink">
+    <path d="M 580 350 L 820 350" stroke="#334155" stroke-width="6" fill="none" marker-end="url(#arrow-flow)" />
+    <g id="valve-prey-deaths" role="img" aria-label="Valve controlling the Prey Deaths flow rate" data-semantic-role="valve">
+      <polygon points="700,330 720,350 700,370 680,350" fill="#ffffff" stroke="#334155" stroke-width="3" />
+    </g>
+    <text x="700" y="390" text-anchor="middle" font-weight="700" font-size="14" fill="#1e293b">Prey Deaths</text>
+    <g id="cloud-prey-sink" role="img" aria-label="Cloud: external sink where deceased prey exit the system" data-semantic-role="cloud">
+      <path d="M 830 350 C 830 330, 870 330, 870 350 C 890 350, 890 390, 860 390 C 850 410, 810 410, 810 380 C 790 380, 800 340, 830 350 Z" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2" />
+    </g>
+  </g>
+
+  <!-- Flow: Predator Births (inflow to Predator Population) -->
+  <g id="flow-predator-births" role="img" aria-label="Predator Births flow: inflow rate into the Predator Population stock, driven by conversion of prey" data-semantic-role="flow" data-from="cloud-predator-source" data-to="stock-predator-population">
+    <path d="M 980 350 L 1220 350" stroke="#334155" stroke-width="6" fill="none" marker-end="url(#arrow-flow)" />
+    <g id="valve-predator-births" role="img" aria-label="Valve controlling the Predator Births flow rate" data-semantic-role="valve">
+      <polygon points="1100,330 1120,350 1100,370 1080,350" fill="#ffffff" stroke="#334155" stroke-width="3" />
+    </g>
+    <text x="1100" y="390" text-anchor="middle" font-weight="700" font-size="14" fill="#1e293b">Predator Births</text>
+    <g id="cloud-predator-source" role="img" aria-label="Cloud: external source of predator individuals" data-semantic-role="cloud">
+      <path d="M 980 350 C 980 330, 940 330, 940 350 C 920 350, 920 390, 950 390 C 960 410, 1000 410, 1000 380 C 1020 380, 1010 340, 980 350 Z" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2" />
+    </g>
+  </g>
+
+  <!-- Stock: Predator Population -->
+  <g id="stock-predator-population" role="img" aria-label="PREDATOR POPULATION stock: accumulation of predator individuals in the ecosystem" data-semantic-role="stock" data-upstream="flow-predator-births" data-downstream="flow-predator-deaths">
+    <g transform="translate(1230, 310)" filter="url(#shadow)">
+      <rect width="180" height="80" fill="#fef2f2" stroke="#dc2626" stroke-width="4" />
+      <text x="90" y="35" text-anchor="middle" font-weight="800" font-size="16" fill="#450a0a">PREDATOR</text>
+      <text x="90" y="55" text-anchor="middle" font-weight="800" font-size="16" fill="#450a0a">POPULATION</text>
+    </g>
+  </g>
+
+  <!-- Flow: Predator Deaths (outflow from Predator Population) -->
+  <g id="flow-predator-deaths" role="img" aria-label="Predator Deaths flow: outflow rate from the Predator Population stock due to natural mortality" data-semantic-role="flow" data-from="stock-predator-population" data-to="cloud-predator-sink">
+    <path d="M 1410 350 L 1650 350" stroke="#334155" stroke-width="6" fill="none" marker-end="url(#arrow-flow)" />
+    <g id="valve-predator-deaths" role="img" aria-label="Valve controlling the Predator Deaths flow rate" data-semantic-role="valve">
+      <polygon points="1530,330 1550,350 1530,370 1510,350" fill="#ffffff" stroke="#334155" stroke-width="3" />
+    </g>
+    <text x="1530" y="390" text-anchor="middle" font-weight="700" font-size="14" fill="#1e293b">Predator Deaths</text>
+    <g id="cloud-predator-sink" role="img" aria-label="Cloud: external sink where deceased predators exit the system" data-semantic-role="cloud">
+      <path d="M 1660 350 C 1660 330, 1700 330, 1700 350 C 1720 350, 1720 390, 1690 390 C 1680 410, 1640 410, 1640 380 C 1620 380, 1630 340, 1660 350 Z" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2" />
+    </g>
+  </g>
+
+  <!-- Auxiliary Variables -->
+  <g id="aux-prey-birth-rate" role="img" aria-label="Auxiliary variable: Prey Birth Rate parameter" data-semantic-role="auxiliary">
+    <text x="270" y="180" text-anchor="middle" font-weight="700" font-size="14" fill="#3b82f6">Prey Birth Rate</text>
+  </g>
+  <g id="aux-predation-rate" role="img" aria-label="Auxiliary variable: Predation Rate parameter governing prey-predator encounters" data-semantic-role="auxiliary">
+    <text x="700" y="180" text-anchor="middle" font-weight="700" font-size="14" fill="#3b82f6">Predation Rate</text>
+  </g>
+  <g id="aux-conversion-efficiency" role="img" aria-label="Auxiliary variable: Conversion Efficiency — fraction of prey consumed that becomes new predators" data-semantic-role="auxiliary">
+    <text x="1100" y="180" text-anchor="middle" font-weight="700" font-size="14" fill="#3b82f6">Conversion Efficiency</text>
+  </g>
+  <g id="aux-predator-death-rate" role="img" aria-label="Auxiliary variable: Predator Death Rate (natural mortality)" data-semantic-role="auxiliary">
+    <text x="1530" y="180" text-anchor="middle" font-weight="700" font-size="14" fill="#3b82f6">Predator Death Rate</text>
+  </g>
+
+  <!-- Information Links -->
+  <g id="info-links" role="img" aria-label="Information links showing causal influences between variables" data-semantic-role="annotation">
+    <!-- Prey Birth Rate -> Prey Births valve -->
+    <g id="info-prey-birth-rate-to-valve" role="img" aria-label="Information link: Prey Birth Rate influences Prey Births flow" data-from="aux-prey-birth-rate" data-to="valve-prey-births">
+      <path d="M 270 190 C 270 250, 270 300, 270 320" stroke="#ef4444" stroke-width="2" stroke-dasharray="6,4" fill="none" marker-end="url(#arrow-info)" />
+    </g>
+
+    <!-- Prey Population -> Prey Births valve (positive feedback) -->
+    <g id="info-prey-pop-to-prey-births" role="img" aria-label="Information link: Prey Population level influences Prey Births rate (reinforcing)" data-from="stock-prey-population" data-to="valve-prey-births">
+      <path d="M 450 310 C 450 220, 270 220, 270 320" stroke="#ef4444" stroke-width="2" stroke-dasharray="6,4" fill="none" marker-end="url(#arrow-info)" />
+    </g>
+
+    <!-- Predation Rate -> Prey Deaths valve -->
+    <g id="info-predation-rate-to-prey-deaths" role="img" aria-label="Information link: Predation Rate influences Prey Deaths flow" data-from="aux-predation-rate" data-to="valve-prey-deaths">
+      <path d="M 700 190 C 700 250, 700 300, 700 320" stroke="#ef4444" stroke-width="2" stroke-dasharray="6,4" fill="none" marker-end="url(#arrow-info)" />
+    </g>
+
+    <!-- Prey Population -> Prey Deaths valve -->
+    <g id="info-prey-pop-to-prey-deaths" role="img" aria-label="Information link: Prey Population level influences Prey Deaths rate" data-from="stock-prey-population" data-to="valve-prey-deaths">
+      <path d="M 530 310 C 530 220, 700 220, 700 320" stroke="#ef4444" stroke-width="2" stroke-dasharray="6,4" fill="none" marker-end="url(#arrow-info)" />
+    </g>
+
+    <!-- Predator Population -> Prey Deaths valve (cross-species predation influence) -->
+    <g id="info-predator-pop-to-prey-deaths" role="img" aria-label="Information link: Predator Population level influences Prey Deaths rate (more predators = more prey killed)" data-from="stock-predator-population" data-to="valve-prey-deaths">
+      <path d="M 1280 310 C 1280 200, 730 200, 715 320" stroke="#ef4444" stroke-width="2" stroke-dasharray="6,4" fill="none" marker-end="url(#arrow-info)" />
+    </g>
+
+    <!-- Conversion Efficiency -> Predator Births valve -->
+    <g id="info-conversion-to-predator-births" role="img" aria-label="Information link: Conversion Efficiency influences Predator Births flow" data-from="aux-conversion-efficiency" data-to="valve-predator-births">
+      <path d="M 1100 190 C 1100 250, 1100 300, 1100 320" stroke="#ef4444" stroke-width="2" stroke-dasharray="6,4" fill="none" marker-end="url(#arrow-info)" />
+    </g>
+
+    <!-- Prey Deaths -> Predator Births (prey consumed fuels predator reproduction) -->
+    <g id="info-prey-deaths-to-predator-births" role="img" aria-label="Information link: Prey Deaths rate influences Predator Births (successful predation enables reproduction)" data-from="valve-prey-deaths" data-to="valve-predator-births">
+      <path d="M 700 395 C 700 500, 1100 500, 1100 405" stroke="#ef4444" stroke-width="2" stroke-dasharray="6,4" fill="none" marker-end="url(#arrow-info)" />
+    </g>
+
+    <!-- Predator Population -> Predator Births valve -->
+    <g id="info-predator-pop-to-predator-births" role="img" aria-label="Information link: Predator Population level influences Predator Births rate" data-from="stock-predator-population" data-to="valve-predator-births">
+      <path d="M 1280 310 C 1280 250, 1100 250, 1100 320" stroke="#ef4444" stroke-width="2" stroke-dasharray="6,4" fill="none" marker-end="url(#arrow-info)" />
+    </g>
+
+    <!-- Predator Death Rate -> Predator Deaths valve -->
+    <g id="info-predator-death-rate-to-valve" role="img" aria-label="Information link: Predator Death Rate influences Predator Deaths flow" data-from="aux-predator-death-rate" data-to="valve-predator-deaths">
+      <path d="M 1530 190 C 1530 250, 1530 300, 1530 320" stroke="#ef4444" stroke-width="2" stroke-dasharray="6,4" fill="none" marker-end="url(#arrow-info)" />
+    </g>
+
+    <!-- Predator Population -> Predator Deaths valve -->
+    <g id="info-predator-pop-to-predator-deaths" role="img" aria-label="Information link: Predator Population level influences Predator Deaths rate" data-from="stock-predator-population" data-to="valve-predator-deaths">
+      <path d="M 1360 310 C 1360 220, 1530 220, 1530 320" stroke="#ef4444" stroke-width="2" stroke-dasharray="6,4" fill="none" marker-end="url(#arrow-info)" />
+    </g>
+  </g>
+
+  <!-- Feedback Loop Indicators -->
+  <g id="feedback-loop-reinforcing-prey" role="img" aria-label="Reinforcing feedback loop (R): more prey leads to more prey births, which increases prey population" data-semantic-role="annotation">
+    <g transform="translate(360, 240)">
+      <circle cx="0" cy="0" r="18" fill="#dcfce3" stroke="#22c55e" stroke-width="2" />
+      <text x="0" y="5" text-anchor="middle" font-weight="800" font-size="14" fill="#166534">R</text>
+      <path d="M -25 -10 A 28 28 0 0 1 25 -10" stroke="#22c55e" stroke-width="2" fill="none" marker-end="url(#arrow-info)" />
+      <rect x="-40" y="25" width="80" height="20" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+      <text x="0" y="39" text-anchor="middle" font-weight="700" font-size="10" fill="#475569">Reinforcing (+)</text>
+    </g>
+  </g>
+
+  <g id="feedback-loop-balancing-predation" role="img" aria-label="Balancing feedback loop (B): predation reduces prey, which limits predator food supply" data-semantic-role="annotation">
+    <g transform="translate(615, 240)">
+      <circle cx="0" cy="0" r="18" fill="#fee2e2" stroke="#ef4444" stroke-width="2" />
+      <text x="0" y="5" text-anchor="middle" font-weight="800" font-size="14" fill="#991b1b">B</text>
+      <path d="M -25 -10 A 28 28 0 0 1 25 -10" stroke="#ef4444" stroke-width="2" fill="none" marker-end="url(#arrow-info)" />
+      <rect x="-40" y="25" width="80" height="20" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+      <text x="0" y="39" text-anchor="middle" font-weight="700" font-size="10" fill="#475569">Balancing (-)</text>
+    </g>
+  </g>
+
+  <g id="feedback-loop-balancing-predator-mortality" role="img" aria-label="Balancing feedback loop (B): more predators leads to more predator deaths, limiting population growth" data-semantic-role="annotation">
+    <g transform="translate(1445, 240)">
+      <circle cx="0" cy="0" r="18" fill="#fee2e2" stroke="#ef4444" stroke-width="2" />
+      <text x="0" y="5" text-anchor="middle" font-weight="800" font-size="14" fill="#991b1b">B</text>
+      <path d="M -25 -10 A 28 28 0 0 1 25 -10" stroke="#ef4444" stroke-width="2" fill="none" marker-end="url(#arrow-info)" />
+      <rect x="-40" y="25" width="80" height="20" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+      <text x="0" y="39" text-anchor="middle" font-weight="700" font-size="10" fill="#475569">Balancing (-)</text>
+    </g>
+  </g>
+
+  <!-- Legend -->
+  <g id="legend" role="img" aria-label="Legend explaining system dynamics notation: stocks, flows, information links, and feedback loops" data-semantic-role="legend">
+    <g transform="translate(150, 750)">
+      <rect width="1500" height="200" rx="16" fill="#ffffff" stroke="#cbd5e1" stroke-width="3" />
+
+      <text x="750" y="35" text-anchor="middle" font-weight="800" font-size="16" fill="#334155">SYSTEM DYNAMICS LEGEND &amp; EXPLANATION</text>
+      <line x1="30" y1="50" x2="1470" y2="50" stroke="#e2e8f0" stroke-width="2" />
+
+      <rect x="50" y="80" width="40" height="30" fill="#f0fdf4" stroke="#059669" stroke-width="2" />
+      <text x="110" y="95" font-weight="800" font-size="15" fill="#1e293b">Stock (Accumulation)</text>
+      <text x="110" y="115" font-weight="500" font-size="13" fill="#64748b">A quantity that accumulates over time (e.g., population, money in bank).</text>
+      <text x="110" y="135" font-weight="500" font-size="13" fill="#64748b">It represents the "state" of the system at any given moment.</text>
+
+      <path d="M 460 95 L 510 95" stroke="#334155" stroke-width="4" fill="none" marker-end="url(#arrow-flow)" />
+      <polygon points="485,85 495,95 485,105 475,95" fill="#ffffff" stroke="#334155" stroke-width="2" />
+      <text x="535" y="95" font-weight="800" font-size="15" fill="#1e293b">Flow (Rate of Change)</text>
+      <text x="535" y="115" font-weight="500" font-size="13" fill="#64748b">The rate at which material enters or leaves a stock over time</text>
+      <text x="535" y="135" font-weight="500" font-size="13" fill="#64748b">(e.g., births/year, deposits/month). Controlled by the valve.</text>
+
+      <path d="M 900 95 L 940 95" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,4" fill="none" marker-end="url(#arrow-info)" />
+      <text x="965" y="95" font-weight="800" font-size="15" fill="#1e293b">Information Link</text>
+      <text x="965" y="115" font-weight="500" font-size="13" fill="#64748b">Shows causality. The state of one variable influences another.</text>
+      <text x="965" y="135" font-weight="500" font-size="13" fill="#64748b">No physical material moves across this line, only information.</text>
+
+      <circle cx="1340" cy="95" r="14" fill="#dcfce3" stroke="#22c55e" stroke-width="2" />
+      <text x="1340" y="100" text-anchor="middle" font-weight="800" font-size="12" fill="#166534">R</text>
+      <circle cx="1375" cy="95" r="14" fill="#fee2e2" stroke="#ef4444" stroke-width="2" />
+      <text x="1375" y="100" text-anchor="middle" font-weight="800" font-size="12" fill="#991b1b">B</text>
+      <text x="1405" y="95" font-weight="800" font-size="15" fill="#1e293b">Feedback Loops</text>
+      <text x="1405" y="115" font-weight="500" font-size="13" fill="#64748b">Reinforcing (R) loops compound change.</text>
+      <text x="1405" y="135" font-weight="500" font-size="13" fill="#64748b">Balancing (B) loops seek equilibrium.</text>
+    </g>
+  </g>
+
+</svg>

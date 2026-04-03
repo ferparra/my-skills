@@ -1,0 +1,160 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" style="background-color: #fafafa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <!-- DIAGRAM_TYPE: bounded_context_map -->
+  <!-- TOPOLOGY: 5 bounded context nodes, 4 integration edges, 2 container boundaries (internal enterprise, external 3rd party); integration patterns: OHS, ACL, CF, SK, PL -->
+  <desc>A Domain-Driven Design Bounded Context Map showing strategic integration patterns across an e-commerce system. Five bounded contexts are shown: Catalog Context (supporting subdomain, upstream via OHS), Ordering Context (core domain, downstream with ACL from Catalog, upstream with OHS+PL to Fulfillment), Billing Context (generic subdomain, upstream with OHS+PL, downstream as Conformist from Ordering), Fulfillment Context (core domain, shares a Shared Kernel with Ordering, downstream with ACL from 3rd Party Logistics), and 3rd Party Logistics (external system, upstream via OHS). The internal enterprise boundary contains Catalog, Ordering, Billing, and Fulfillment. The external boundary contains 3rd Party Logistics. Lines lack arrowheads; dependency direction is indicated by U (upstream) and D (downstream) labels.</desc>
+
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="#0f172a" flood-opacity="0.06"/>
+    </filter>
+  </defs>
+
+  <g id="diagram-title" role="heading" data-semantic-role="title">
+    <text x="960" y="60" text-anchor="middle" font-weight="700" font-size="26" fill="#1e293b" letter-spacing="1">BOUNDED CONTEXT MAP</text>
+    <text x="960" y="95" text-anchor="middle" font-weight="600" font-size="18" fill="#475569" letter-spacing="0.5">DOMAIN-DRIVEN DESIGN (DDD) STRATEGIC INTEGRATION PATTERNS</text>
+    <text x="960" y="125" text-anchor="middle" font-weight="500" font-size="14" fill="#64748b" font-style="italic">Note: Lines in Context Maps lack arrowheads; dependency flow is defined entirely by Downstream (D) relying on Upstream (U).</text>
+  </g>
+
+  <!-- Container boundaries -->
+  <g id="container-internal-enterprise" role="img" aria-label="Internal E-Commerce Enterprise boundary containing Catalog, Ordering, Billing, and Fulfillment contexts" data-semantic-role="container">
+    <rect x="100" y="180" width="1250" height="800" rx="30" fill="#f8fafc" stroke="#cbd5e1" stroke-width="3" stroke-dasharray="12,8" />
+    <rect x="140" y="155" width="280" height="30" rx="6" fill="#e2e8f0" />
+    <text x="280" y="175" text-anchor="middle" font-weight="700" font-size="13" fill="#334155">INTERNAL E-COMMERCE ENTERPRISE</text>
+  </g>
+
+  <g id="container-external-3rd-party" role="img" aria-label="External 3rd Party boundary containing 3rd Party Logistics" data-semantic-role="container">
+    <rect x="1400" y="600" width="450" height="380" rx="30" fill="#f1f5f9" stroke="#94a3b8" stroke-width="3" stroke-dasharray="12,8" />
+    <rect x="1440" y="575" width="220" height="30" rx="6" fill="#cbd5e1" />
+    <text x="1550" y="595" text-anchor="middle" font-weight="700" font-size="13" fill="#1e293b">EXTERNAL 3RD PARTY</text>
+  </g>
+
+  <!-- Integration edges -->
+  <g id="edge-catalog-to-ordering" role="img" aria-label="Integration: Catalog (upstream, OHS) to Ordering (downstream, ACL)" data-semantic-role="edge" data-from="context-catalog" data-to="context-ordering" data-label="OHS upstream, ACL downstream">
+    <path d="M 450 340 C 600 340, 600 460, 750 460" stroke="#64748b" stroke-width="4" fill="none" />
+    <text x="490" y="325" font-weight="800" font-size="20" fill="#334155">U</text>
+    <rect x="475" y="350" width="50" height="24" rx="4" fill="#f0fdf4" stroke="#059669" stroke-width="2" />
+    <text x="500" y="367" text-anchor="middle" font-weight="800" font-size="12" fill="#059669">OHS</text>
+    <text x="700" y="445" font-weight="800" font-size="20" fill="#334155">D</text>
+    <rect x="645" y="410" width="50" height="24" rx="4" fill="#fdf2f8" stroke="#db2777" stroke-width="2" />
+    <text x="670" y="427" text-anchor="middle" font-weight="800" font-size="12" fill="#db2777">ACL</text>
+  </g>
+
+  <g id="edge-ordering-to-billing" role="img" aria-label="Integration: Ordering (upstream, OHS+PL) to Billing (downstream, Conformist)" data-semantic-role="edge" data-from="context-ordering" data-to="context-billing" data-label="OHS+PL upstream, CF downstream">
+    <path d="M 900 750 L 900 540" stroke="#64748b" stroke-width="4" fill="none" />
+    <text x="925" y="700" font-weight="800" font-size="20" fill="#334155">U</text>
+    <rect x="915" y="720" width="50" height="24" rx="4" fill="#f0fdf4" stroke="#059669" stroke-width="2" />
+    <text x="940" y="737" text-anchor="middle" font-weight="800" font-size="12" fill="#059669">OHS</text>
+    <rect x="975" y="720" width="40" height="24" rx="4" fill="#f0fdf4" stroke="#059669" stroke-width="2" />
+    <text x="995" y="737" text-anchor="middle" font-weight="800" font-size="12" fill="#059669">PL</text>
+    <text x="925" y="585" font-weight="800" font-size="20" fill="#334155">D</text>
+    <rect x="915" y="545" width="46" height="24" rx="4" fill="#fffbeb" stroke="#d97706" stroke-width="2" />
+    <text x="938" y="562" text-anchor="middle" font-weight="800" font-size="12" fill="#d97706">CF</text>
+  </g>
+
+  <g id="edge-ordering-to-fulfillment" role="img" aria-label="Integration: Ordering and Fulfillment share a Shared Kernel (shared DB table)" data-semantic-role="edge" data-from="context-ordering" data-to="context-fulfillment" data-label="Shared Kernel">
+    <path d="M 1090 460 L 1400 460" stroke="#64748b" stroke-width="4" fill="none" />
+    <rect x="1195" y="445" width="100" height="30" fill="#f8fafc" />
+    <rect x="1220" y="448" width="50" height="24" rx="4" fill="#faf5ff" stroke="#7e22ce" stroke-width="2" />
+    <text x="1245" y="465" text-anchor="middle" font-weight="800" font-size="12" fill="#7e22ce">SK</text>
+    <text x="1245" y="495" text-anchor="middle" font-weight="600" font-size="13" fill="#64748b">Shared DB Table</text>
+  </g>
+
+  <g id="edge-3pl-to-fulfillment" role="img" aria-label="Integration: 3rd Party Logistics (upstream, OHS) to Fulfillment (downstream, ACL)" data-semantic-role="edge" data-from="context-3pl" data-to="context-fulfillment" data-label="OHS upstream, ACL downstream">
+    <path d="M 1570 750 L 1570 540" stroke="#64748b" stroke-width="4" stroke-dasharray="8,4" fill="none" />
+    <text x="1595" y="700" font-weight="800" font-size="20" fill="#334155">U</text>
+    <rect x="1585" y="720" width="50" height="24" rx="4" fill="#f0fdf4" stroke="#059669" stroke-width="2" />
+    <text x="1610" y="737" text-anchor="middle" font-weight="800" font-size="12" fill="#059669">OHS</text>
+    <text x="1595" y="585" font-weight="800" font-size="20" fill="#334155">D</text>
+    <rect x="1585" y="545" width="50" height="24" rx="4" fill="#fdf2f8" stroke="#db2777" stroke-width="2" />
+    <text x="1610" y="562" text-anchor="middle" font-weight="800" font-size="12" fill="#db2777">ACL</text>
+  </g>
+
+  <!-- Bounded context nodes -->
+  <g id="context-catalog" role="img" aria-label="Catalog Context - Supporting Subdomain with aggregates Product and Price" data-semantic-role="node" data-downstream="context-ordering" data-upstream="">
+    <g transform="translate(150, 270)" filter="url(#shadow)">
+      <rect width="300" height="140" rx="70" fill="#ecfdf5" stroke="#34d399" stroke-width="4" />
+      <text x="150" y="40" text-anchor="middle" font-weight="600" font-size="13" fill="#047857">&lt;&lt;Supporting Subdomain&gt;&gt;</text>
+      <text x="150" y="70" text-anchor="middle" font-weight="800" font-size="18" fill="#022c22">CATALOG CONTEXT</text>
+      <line x1="60" y1="90" x2="240" y2="90" stroke="#a7f3d0" stroke-width="2" />
+      <text x="150" y="115" text-anchor="middle" font-weight="600" font-size="14" fill="#065f46">Aggregates: Product, Price</text>
+    </g>
+  </g>
+
+  <g id="context-billing" role="img" aria-label="Billing Context - Generic Subdomain with aggregates Invoice and Payment" data-semantic-role="node" data-downstream="" data-upstream="context-ordering">
+    <g transform="translate(750, 750)" filter="url(#shadow)">
+      <rect width="300" height="140" rx="70" fill="#fff7ed" stroke="#fb923c" stroke-width="4" />
+      <text x="150" y="40" text-anchor="middle" font-weight="600" font-size="13" fill="#c2410c">&lt;&lt;Generic Subdomain&gt;&gt;</text>
+      <text x="150" y="70" text-anchor="middle" font-weight="800" font-size="18" fill="#431407">BILLING CONTEXT</text>
+      <line x1="60" y1="90" x2="240" y2="90" stroke="#fed7aa" stroke-width="2" />
+      <text x="150" y="115" text-anchor="middle" font-weight="600" font-size="14" fill="#9a3412">Aggregates: Invoice, Payment</text>
+    </g>
+  </g>
+
+  <g id="context-ordering" role="img" aria-label="Ordering Context - Core Domain with aggregates Order and Cart" data-semantic-role="node" data-downstream="context-billing,context-fulfillment" data-upstream="context-catalog">
+    <g transform="translate(750, 390)" filter="url(#shadow)">
+      <rect width="340" height="150" rx="75" fill="#e0e7ff" stroke="#818cf8" stroke-width="5" />
+      <text x="170" y="45" text-anchor="middle" font-weight="600" font-size="14" fill="#4338ca">&lt;&lt;Core Domain&gt;&gt;</text>
+      <text x="170" y="75" text-anchor="middle" font-weight="800" font-size="20" fill="#312e81">ORDERING CONTEXT</text>
+      <line x1="70" y1="95" x2="270" y2="95" stroke="#c7d2fe" stroke-width="2" />
+      <text x="170" y="120" text-anchor="middle" font-weight="600" font-size="14" fill="#3730a3">Aggregates: Order, Cart</text>
+    </g>
+  </g>
+
+  <g id="context-fulfillment" role="img" aria-label="Fulfillment Context - Core Domain with aggregates Shipment and Route" data-semantic-role="node" data-downstream="" data-upstream="context-ordering,context-3pl">
+    <g transform="translate(1400, 390)" filter="url(#shadow)">
+      <rect width="340" height="150" rx="75" fill="#e0e7ff" stroke="#818cf8" stroke-width="5" />
+      <text x="170" y="45" text-anchor="middle" font-weight="600" font-size="14" fill="#4338ca">&lt;&lt;Core Domain&gt;&gt;</text>
+      <text x="170" y="75" text-anchor="middle" font-weight="800" font-size="20" fill="#312e81">FULFILLMENT CONTEXT</text>
+      <line x1="70" y1="95" x2="270" y2="95" stroke="#c7d2fe" stroke-width="2" />
+      <text x="170" y="120" text-anchor="middle" font-weight="600" font-size="14" fill="#3730a3">Aggregates: Shipment, Route</text>
+    </g>
+  </g>
+
+  <g id="context-3pl" role="img" aria-label="3rd Party Logistics - External System with Legacy XML Tracking API" data-semantic-role="node" data-downstream="context-fulfillment" data-upstream="">
+    <g transform="translate(1420, 750)" filter="url(#shadow)">
+      <rect width="300" height="140" rx="70" fill="#ffffff" stroke="#94a3b8" stroke-width="4" stroke-dasharray="8,4" />
+      <text x="150" y="40" text-anchor="middle" font-weight="600" font-size="13" fill="#475569">&lt;&lt;External System&gt;&gt;</text>
+      <text x="150" y="70" text-anchor="middle" font-weight="800" font-size="18" fill="#1e293b">3RD PARTY LOGISTICS</text>
+      <line x1="60" y1="90" x2="240" y2="90" stroke="#cbd5e1" stroke-width="2" />
+      <text x="150" y="115" text-anchor="middle" font-weight="600" font-size="14" fill="#334155">Legacy XML Tracking API</text>
+    </g>
+  </g>
+
+  <!-- Legend -->
+  <g id="legend" role="img" aria-label="Legend: DDD integration patterns - Upstream/Downstream, OHS, ACL, CF, SK" data-semantic-role="legend">
+    <g transform="translate(150, 520)">
+      <rect width="550" height="420" rx="16" fill="#ffffff" stroke="#cbd5e1" stroke-width="3" />
+
+      <text x="275" y="40" text-anchor="middle" font-weight="800" font-size="16" fill="#334155">INTEGRATION PATTERNS LEGEND</text>
+      <line x1="30" y1="60" x2="520" y2="60" stroke="#e2e8f0" stroke-width="2" />
+
+      <text x="40" y="100" font-weight="800" font-size="18" fill="#334155">U / D</text>
+      <text x="110" y="98" font-weight="800" font-size="15" fill="#1e293b">Upstream / Downstream Dependency</text>
+      <text x="110" y="118" font-weight="500" font-size="13" fill="#64748b">Upstream influences Downstream. Downstream depends on Upstream.</text>
+
+      <rect x="40" y="150" width="50" height="24" rx="4" fill="#f0fdf4" stroke="#059669" stroke-width="2" />
+      <text x="65" y="167" text-anchor="middle" font-weight="800" font-size="12" fill="#059669">OHS</text>
+      <text x="110" y="156" font-weight="800" font-size="15" fill="#1e293b">Open Host Service &amp; Published Language</text>
+      <text x="110" y="176" font-weight="500" font-size="13" fill="#64748b">Provides a standard, versioned API (OHS) using a well-documented</text>
+      <text x="110" y="196" font-weight="500" font-size="13" fill="#64748b">exchange format (PL) to protect downstream consumers from changes.</text>
+
+      <rect x="40" y="225" width="50" height="24" rx="4" fill="#fdf2f8" stroke="#db2777" stroke-width="2" />
+      <text x="65" y="242" text-anchor="middle" font-weight="800" font-size="12" fill="#db2777">ACL</text>
+      <text x="110" y="231" font-weight="800" font-size="15" fill="#1e293b">Anti-Corruption Layer</text>
+      <text x="110" y="251" font-weight="500" font-size="13" fill="#64748b">A translation layer. The Downstream builds this to protect its internal</text>
+      <text x="110" y="271" font-weight="500" font-size="13" fill="#64748b">domain model from being polluted by a foreign Upstream model.</text>
+
+      <rect x="40" y="300" width="50" height="24" rx="4" fill="#fffbeb" stroke="#d97706" stroke-width="2" />
+      <text x="65" y="317" text-anchor="middle" font-weight="800" font-size="12" fill="#d97706">CF</text>
+      <text x="110" y="306" font-weight="800" font-size="15" fill="#1e293b">Conformist</text>
+      <text x="110" y="326" font-weight="500" font-size="13" fill="#64748b">The Downstream blindly accepts and conforms to the Upstream's</text>
+      <text x="110" y="346" font-weight="500" font-size="13" fill="#64748b">model. Used when translating is too expensive or not worth the effort.</text>
+
+      <rect x="40" y="375" width="50" height="24" rx="4" fill="#faf5ff" stroke="#7e22ce" stroke-width="2" />
+      <text x="65" y="392" text-anchor="middle" font-weight="800" font-size="12" fill="#7e22ce">SK</text>
+      <text x="110" y="381" font-weight="800" font-size="15" fill="#1e293b">Shared Kernel</text>
+      <text x="110" y="401" font-weight="500" font-size="13" fill="#64748b">Two Contexts share a tightly coupled subset of the domain model or DB.</text>
+    </g>
+  </g>
+
+</svg>

@@ -1,0 +1,225 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" style="background-color: #fafafa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+<!-- DIAGRAM_TYPE: layered_architecture -->
+<!-- TOPOLOGY: 4 horizontal layers stacked vertically (Presentation, Business Logic, Data Access, Database), 9 component nodes across 3 layers, 1 cross-cutting concerns sidebar with 3 nodes, 3 inter-layer edges with data translation labels, 1 anti-pattern violation edge, 3 cross-cutting connector edges, 1 legend panel. -->
+  <desc>A layered (N-tier) architecture diagram showing four layers from top to bottom: 1) Presentation/UI Layer containing REST API Controllers, GraphQL Resolvers, and View Templates; 2) Business Logic/Domain Layer containing Domain Services, Business Rules, and Core Workflows; 3) Data Access/Infrastructure Layer containing SQL Repositories, ORM Frameworks, and External API Clients; 4) Database/Persistence Store (PostgreSQL, MongoDB, Event Store). A vertical dependency rule arrow enforces downward-only dependencies. Data translates between layers via DTOs (Presentation to Business), Domain Models (Business to Data Access), and Database Schema/ORM Models (Data Access to Database). A red anti-pattern arrow shows the violation of bypassing the Business Logic Layer. A cross-cutting concerns sidebar spans all layers with Authentication/JWT, Global Logging, and Error Handling. A legend states the two rules: strict isolation (closed layers) and object mapping (data hiding).</desc>
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#0f172a" flood-opacity="0.06"/>
+    </filter>
+
+    <marker id="arrow-down" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#475569" />
+    </marker>
+
+    <marker id="arrow-left" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8" />
+    </marker>
+
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef4444" />
+    </marker>
+
+    <marker id="x-mark" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 2 2 L 8 8 M 8 2 L 2 8" stroke="#ef4444" stroke-width="2" fill="none" />
+    </marker>
+  </defs>
+
+  <g id="diagram-title" role="heading" data-semantic-role="title">
+    <text x="960" y="60" text-anchor="middle" font-weight="700" font-size="28" fill="#1e293b" letter-spacing="1">LAYERED ARCHITECTURE (N-TIER) PATTERN</text>
+    <text x="960" y="95" text-anchor="middle" font-weight="600" font-size="18" fill="#475569" letter-spacing="0.5">SEPARATION OF CONCERNS, STRICT DEPENDENCIES &amp; DATA TRANSLATION</text>
+  </g>
+
+
+  <g id="dependency-rule" role="img" aria-label="Dependency rule indicator showing downward-only dependency direction from high-level policy to low-level details" data-semantic-role="annotation">
+    <rect x="120" y="150" width="100" height="780" rx="50" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="3" />
+    <path d="M 170 190 L 170 890" stroke="#64748b" stroke-width="4" fill="none" marker-end="url(#arrow-down)" />
+
+    <text transform="translate(170, 540) rotate(-90)" text-anchor="middle" font-weight="800" font-size="18" fill="#334155" letter-spacing="4">DEPENDENCY RULE (DOWNWARD ONLY)</text>
+
+    <path d="M 220 210 L 260 210" stroke="#cbd5e1" stroke-width="3" stroke-dasharray="4,4" fill="none" />
+    <rect x="270" y="190" width="160" height="40" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="350" y="210" text-anchor="middle" font-weight="700" font-size="12" fill="#475569">High-Level Policy</text>
+    <text x="350" y="225" text-anchor="middle" font-weight="500" font-size="11" fill="#94a3b8">(Changes Rarely)</text>
+
+    <path d="M 220 870 L 260 870" stroke="#cbd5e1" stroke-width="3" stroke-dasharray="4,4" fill="none" />
+    <rect x="270" y="850" width="160" height="40" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="350" y="870" text-anchor="middle" font-weight="700" font-size="12" fill="#475569">Low-Level Details</text>
+    <text x="350" y="885" text-anchor="middle" font-weight="500" font-size="11" fill="#94a3b8">(Changes Often)</text>
+  </g>
+
+
+  <g id="layer-presentation" role="img" aria-label="Layer 1: Presentation / UI Layer with REST API Controllers, GraphQL Resolvers, and View Templates" data-semantic-role="layer" data-layer="presentation">
+    <g transform="translate(480, 150)" filter="url(#shadow)">
+      <rect width="800" height="120" rx="16" fill="#ecfeff" stroke="#06b6d4" stroke-width="4" />
+      <rect width="800" height="40" rx="16" fill="#cffafe" />
+      <rect y="20" width="800" height="20" fill="#cffafe" />
+      <text x="400" y="26" text-anchor="middle" font-weight="800" font-size="16" fill="#164e63">1. PRESENTATION / UI LAYER</text>
+      <line x1="0" y1="40" x2="800" y2="40" stroke="#06b6d4" stroke-width="3" />
+
+      <g id="node-rest-api-controllers" role="img" aria-label="REST API Controllers" data-semantic-role="node" data-layer="presentation" data-downstream="node-domain-services">
+        <rect x="50" y="55" width="210" height="45" rx="8" fill="#ffffff" stroke="#22d3ee" stroke-width="2" />
+        <text x="155" y="83" text-anchor="middle" font-weight="700" font-size="14" fill="#0891b2">REST API Controllers</text>
+      </g>
+
+      <g id="node-graphql-resolvers" role="img" aria-label="GraphQL Resolvers" data-semantic-role="node" data-layer="presentation" data-downstream="node-business-rules">
+        <rect x="295" y="55" width="210" height="45" rx="8" fill="#ffffff" stroke="#22d3ee" stroke-width="2" />
+        <text x="400" y="83" text-anchor="middle" font-weight="700" font-size="14" fill="#0891b2">GraphQL Resolvers</text>
+      </g>
+
+      <g id="node-view-templates" role="img" aria-label="View Templates" data-semantic-role="node" data-layer="presentation" data-downstream="node-core-workflows">
+        <rect x="540" y="55" width="210" height="45" rx="8" fill="#ffffff" stroke="#22d3ee" stroke-width="2" />
+        <text x="645" y="83" text-anchor="middle" font-weight="700" font-size="14" fill="#0891b2">View Templates</text>
+      </g>
+
+      <text x="400" y="112" text-anchor="middle" font-weight="600" font-size="12" fill="#0f766e">Responsibility: Handle HTTP requests, auth routing, format JSON responses.</text>
+    </g>
+  </g>
+
+  <g id="edge-presentation-to-business" role="img" aria-label="Data flows from Presentation to Business Logic layer via DTOs" data-semantic-role="edge" data-from="layer-presentation" data-to="layer-business-logic">
+    <path d="M 880 270 L 880 350" stroke="#475569" stroke-width="4" fill="none" marker-end="url(#arrow-down)" />
+    <rect x="730" y="295" width="300" height="30" rx="15" fill="#f8fafc" stroke="#64748b" stroke-width="2" />
+    <text x="880" y="315" text-anchor="middle" font-weight="800" font-size="12" fill="#334155">DATA TRANSFER OBJECTS (DTOs)</text>
+  </g>
+
+
+  <g id="layer-business-logic" role="img" aria-label="Layer 2: Business Logic / Domain Layer with Domain Services, Business Rules, and Core Workflows" data-semantic-role="layer" data-layer="business-logic">
+    <g transform="translate(480, 370)" filter="url(#shadow)">
+      <rect width="800" height="120" rx="16" fill="#e0e7ff" stroke="#6366f1" stroke-width="4" />
+      <rect width="800" height="40" rx="16" fill="#c7d2fe" />
+      <rect y="20" width="800" height="20" fill="#c7d2fe" />
+      <text x="400" y="26" text-anchor="middle" font-weight="800" font-size="16" fill="#312e81">2. BUSINESS LOGIC / DOMAIN LAYER</text>
+      <line x1="0" y1="40" x2="800" y2="40" stroke="#6366f1" stroke-width="3" />
+
+      <g id="node-domain-services" role="img" aria-label="Domain Services" data-semantic-role="node" data-layer="business-logic" data-upstream="node-rest-api-controllers" data-downstream="node-sql-repositories">
+        <rect x="50" y="55" width="210" height="45" rx="8" fill="#ffffff" stroke="#818cf8" stroke-width="2" />
+        <text x="155" y="83" text-anchor="middle" font-weight="700" font-size="14" fill="#4338ca">Domain Services</text>
+      </g>
+
+      <g id="node-business-rules" role="img" aria-label="Business Rules" data-semantic-role="node" data-layer="business-logic" data-upstream="node-graphql-resolvers" data-downstream="node-orm-frameworks">
+        <rect x="295" y="55" width="210" height="45" rx="8" fill="#ffffff" stroke="#818cf8" stroke-width="2" />
+        <text x="400" y="83" text-anchor="middle" font-weight="700" font-size="14" fill="#4338ca">Business Rules</text>
+      </g>
+
+      <g id="node-core-workflows" role="img" aria-label="Core Workflows" data-semantic-role="node" data-layer="business-logic" data-upstream="node-view-templates" data-downstream="node-external-api-clients">
+        <rect x="540" y="55" width="210" height="45" rx="8" fill="#ffffff" stroke="#818cf8" stroke-width="2" />
+        <text x="645" y="83" text-anchor="middle" font-weight="700" font-size="14" fill="#4338ca">Core Workflows</text>
+      </g>
+
+      <text x="400" y="112" text-anchor="middle" font-weight="600" font-size="12" fill="#3730a3">Responsibility: Enforce domain invariants, business calculations, and core rules.</text>
+    </g>
+  </g>
+
+  <g id="edge-business-to-data-access" role="img" aria-label="Data flows from Business Logic to Data Access layer via Domain Models" data-semantic-role="edge" data-from="layer-business-logic" data-to="layer-data-access">
+    <path d="M 880 490 L 880 570" stroke="#475569" stroke-width="4" fill="none" marker-end="url(#arrow-down)" />
+    <rect x="730" y="515" width="300" height="30" rx="15" fill="#f8fafc" stroke="#64748b" stroke-width="2" />
+    <text x="880" y="535" text-anchor="middle" font-weight="800" font-size="12" fill="#334155">DOMAIN MODELS / PURE ENTITIES</text>
+  </g>
+
+
+  <g id="layer-data-access" role="img" aria-label="Layer 3: Data Access / Infrastructure Layer with SQL Repositories, ORM Frameworks, and External API Clients" data-semantic-role="layer" data-layer="data-access">
+    <g transform="translate(480, 590)" filter="url(#shadow)">
+      <rect width="800" height="120" rx="16" fill="#fff7ed" stroke="#f97316" stroke-width="4" />
+      <rect width="800" height="40" rx="16" fill="#ffedd5" />
+      <rect y="20" width="800" height="20" fill="#ffedd5" />
+      <text x="400" y="26" text-anchor="middle" font-weight="800" font-size="16" fill="#7c2d12">3. DATA ACCESS / INFRASTRUCTURE LAYER</text>
+      <line x1="0" y1="40" x2="800" y2="40" stroke="#f97316" stroke-width="3" />
+
+      <g id="node-sql-repositories" role="img" aria-label="SQL Repositories" data-semantic-role="node" data-layer="data-access" data-upstream="node-domain-services" data-downstream="node-database">
+        <rect x="50" y="55" width="210" height="45" rx="8" fill="#ffffff" stroke="#fb923c" stroke-width="2" />
+        <text x="155" y="83" text-anchor="middle" font-weight="700" font-size="14" fill="#ea580c">SQL Repositories</text>
+      </g>
+
+      <g id="node-orm-frameworks" role="img" aria-label="ORM Frameworks" data-semantic-role="node" data-layer="data-access" data-upstream="node-business-rules" data-downstream="node-database">
+        <rect x="295" y="55" width="210" height="45" rx="8" fill="#ffffff" stroke="#fb923c" stroke-width="2" />
+        <text x="400" y="83" text-anchor="middle" font-weight="700" font-size="14" fill="#ea580c">ORM Frameworks</text>
+      </g>
+
+      <g id="node-external-api-clients" role="img" aria-label="External API Clients" data-semantic-role="node" data-layer="data-access" data-upstream="node-core-workflows" data-downstream="node-database">
+        <rect x="540" y="55" width="210" height="45" rx="8" fill="#ffffff" stroke="#fb923c" stroke-width="2" />
+        <text x="645" y="83" text-anchor="middle" font-weight="700" font-size="14" fill="#ea580c">External API Clients</text>
+      </g>
+
+      <text x="400" y="112" text-anchor="middle" font-weight="600" font-size="12" fill="#9a3412">Responsibility: Translate business models into DB schemas, manage external I/O.</text>
+    </g>
+  </g>
+
+  <g id="edge-data-access-to-database" role="img" aria-label="Data flows from Data Access to Database layer via Database Schema / ORM Models" data-semantic-role="edge" data-from="layer-data-access" data-to="layer-database">
+    <path d="M 880 710 L 880 790" stroke="#475569" stroke-width="4" fill="none" marker-end="url(#arrow-down)" />
+    <rect x="730" y="735" width="300" height="30" rx="15" fill="#f8fafc" stroke="#64748b" stroke-width="2" />
+    <text x="880" y="755" text-anchor="middle" font-weight="800" font-size="12" fill="#334155">DATABASE SCHEMA / ORM MODELS</text>
+  </g>
+
+
+  <g id="layer-database" role="img" aria-label="Layer 4: Database / Persistence Store (PostgreSQL, MongoDB, Event Store)" data-semantic-role="layer" data-layer="database">
+    <g id="node-database" role="img" aria-label="Database: PostgreSQL, MongoDB, Event Store" data-semantic-role="node" data-layer="database" data-upstream="node-sql-repositories,node-orm-frameworks,node-external-api-clients">
+      <g transform="translate(480, 810)" filter="url(#shadow)">
+        <path d="M 0 40 C 0 10, 800 10, 800 40 L 800 100 C 800 130, 0 130, 0 100 Z" fill="#fdf2f8" stroke="#ec4899" stroke-width="4" />
+        <path d="M 0 40 C 0 70, 800 70, 800 40" fill="none" stroke="#ec4899" stroke-width="2" stroke-dasharray="4,4" />
+        <text x="400" y="45" text-anchor="middle" font-weight="800" font-size="16" fill="#831843">4. DATABASE / PERSISTENCE STORE</text>
+        <text x="400" y="85" text-anchor="middle" font-weight="700" font-size="14" fill="#be185d">PostgreSQL, MongoDB, Event Store</text>
+      </g>
+    </g>
+  </g>
+
+
+  <g id="anti-pattern-bypass" role="img" aria-label="Anti-pattern: red dashed arrow showing presentation layer bypassing business logic to access data access layer directly, which leaks DB schema to UI" data-semantic-role="annotation">
+    <path d="M 480 210 L 400 210 L 400 650 L 460 650" stroke="#ef4444" stroke-width="4" stroke-dasharray="10,6" fill="none" marker-end="url(#arrow-red)" marker-mid="url(#x-mark)" />
+
+    <rect x="290" y="410" width="220" height="40" rx="6" fill="#fef2f2" stroke="#f87171" stroke-width="2" />
+    <text x="400" y="426" text-anchor="middle" font-weight="800" font-size="12" fill="#b91c1c">STRICT LAYERING ANTI-PATTERN:</text>
+    <text x="400" y="442" text-anchor="middle" font-weight="600" font-size="11" fill="#dc2626">Bypassing BLL leaks DB schema to UI</text>
+  </g>
+
+
+  <g id="cross-cutting-concerns" role="img" aria-label="Cross-cutting concerns sidebar spanning all layers: Authentication/JWT, Global Logging, Error Handling" data-semantic-role="container">
+    <g transform="translate(1330, 150)" filter="url(#shadow)">
+      <rect width="240" height="780" rx="20" fill="#f8fafc" stroke="#94a3b8" stroke-width="3" />
+
+      <rect width="240" height="50" rx="20" fill="#e2e8f0" />
+      <rect y="25" width="240" height="25" fill="#e2e8f0" />
+      <text x="120" y="30" text-anchor="middle" font-weight="800" font-size="14" fill="#334155">CROSS-CUTTING CONCERNS</text>
+      <line x1="0" y1="50" x2="240" y2="50" stroke="#94a3b8" stroke-width="3" />
+
+      <g id="node-authentication" role="img" aria-label="Authentication / JWT" data-semantic-role="node" data-layer="cross-cutting">
+        <rect x="30" y="120" width="180" height="50" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" />
+        <text x="120" y="150" text-anchor="middle" font-weight="700" font-size="14" fill="#475569">Authentication / JWT</text>
+      </g>
+
+      <g id="node-global-logging" role="img" aria-label="Global Logging" data-semantic-role="node" data-layer="cross-cutting">
+        <rect x="30" y="340" width="180" height="50" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" />
+        <text x="120" y="370" text-anchor="middle" font-weight="700" font-size="14" fill="#475569">Global Logging</text>
+      </g>
+
+      <g id="node-error-handling" role="img" aria-label="Error Handling" data-semantic-role="node" data-layer="cross-cutting">
+        <rect x="30" y="560" width="180" height="50" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" />
+        <text x="120" y="590" text-anchor="middle" font-weight="700" font-size="14" fill="#475569">Error Handling</text>
+      </g>
+    </g>
+  </g>
+
+  <g id="edge-crosscutting-to-presentation" role="img" aria-label="Cross-cutting concerns connect to Presentation layer" data-semantic-role="edge" data-from="cross-cutting-concerns" data-to="layer-presentation">
+    <path d="M 1330 210 L 1295 210" stroke="#94a3b8" stroke-width="3" stroke-dasharray="6,6" fill="none" marker-end="url(#arrow-left)" />
+  </g>
+  <g id="edge-crosscutting-to-business" role="img" aria-label="Cross-cutting concerns connect to Business Logic layer" data-semantic-role="edge" data-from="cross-cutting-concerns" data-to="layer-business-logic">
+    <path d="M 1330 430 L 1295 430" stroke="#94a3b8" stroke-width="3" stroke-dasharray="6,6" fill="none" marker-end="url(#arrow-left)" />
+  </g>
+  <g id="edge-crosscutting-to-data-access" role="img" aria-label="Cross-cutting concerns connect to Data Access layer" data-semantic-role="edge" data-from="cross-cutting-concerns" data-to="layer-data-access">
+    <path d="M 1330 650 L 1295 650" stroke="#94a3b8" stroke-width="3" stroke-dasharray="6,6" fill="none" marker-end="url(#arrow-left)" />
+  </g>
+
+
+  <g id="legend" role="img" aria-label="Legend: Rules of N-Tier Architecture - strict isolation and object mapping" data-semantic-role="legend">
+    <g transform="translate(480, 960)">
+      <rect width="1090" height="90" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" />
+      <text x="545" y="25" text-anchor="middle" font-weight="800" font-size="14" fill="#334155">THE RULES OF N-TIER ARCHITECTURE</text>
+      <line x1="20" y1="35" x2="1070" y2="35" stroke="#e2e8f0" stroke-width="2" />
+
+      <text x="30" y="55" font-weight="800" font-size="13" fill="#1e293b">1. Strict Isolation (Closed Layers):</text>
+      <text x="260" y="55" font-weight="500" font-size="13" fill="#475569">A request must move sequentially through every layer. You cannot skip layers. This ensures contracts are kept.</text>
+
+      <text x="30" y="75" font-weight="800" font-size="13" fill="#1e293b">2. Object Mapping (Data Hiding):</text>
+      <text x="260" y="75" font-weight="500" font-size="13" fill="#475569">Data must change form (DTO → Domain → Schema) at boundaries so DB changes don't shatter the UI.</text>
+    </g>
+  </g>
+
+</svg>

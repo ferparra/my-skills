@@ -1,0 +1,227 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1700 950" style="background-color: #fafafa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <!-- DIAGRAM_TYPE: uml_state_machine -->
+  <!-- TOPOLOGY: 7 states (1 initial pseudo-state, 5 named states including 1 composite with 2 sub-states, 1 final pseudo-state), 1 choice node, 8 transitions -->
+  <desc>UML State Machine diagram modeling an e-commerce order lifecycle. States: Initial -> PENDING_PAYMENT -> (choice node for payment approval) -> PROCESSING (composite state with Picking and Packing sub-states) -> SHIPPED -> DELIVERED -> Final. Alternative paths: PENDING_PAYMENT can be CANCELLED via cancel(). The choice node routes declined payments back to PENDING_PAYMENT and approved payments forward to PROCESSING. CANCELLED also connects to the Final state.</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#475569" />
+    </marker>
+    <marker id="arrow-callout" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <circle cx="5" cy="5" r="3" fill="#94a3b8" />
+    </marker>
+  </defs>
+
+  <g id="diagram-title" role="heading">
+    <text x="850" y="50" text-anchor="middle" font-weight="700" font-size="24" fill="#1e293b" letter-spacing="1">UML STATE MACHINE DIAGRAM (STATECHART)</text>
+    <text x="850" y="80" text-anchor="middle" font-weight="600" font-size="16" fill="#475569" letter-spacing="0.5">MODELING LIFECYCLES, COMPLEX BEHAVIORS, AND STRICT TRANSITIONS</text>
+  </g>
+
+  <!-- Transitions -->
+  <g id="transition-initial-to-pending-payment" role="img" aria-label="Transition from initial state to Pending Payment triggered by createOrder()" data-semantic-role="transition" data-from="state-initial" data-to="state-pending-payment" data-trigger="createOrder()">
+    <path d="M 120 380 L 220 380" stroke="#475569" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+    <rect x="125" y="352" width="90" height="20" rx="4" fill="#fafafa" />
+    <text x="170" y="366" text-anchor="middle" font-weight="600" font-size="12" fill="#1e293b">createOrder()</text>
+  </g>
+
+  <g id="transition-pending-to-choice" role="img" aria-label="Transition from Pending Payment to payment choice node triggered by pay(amount)" data-semantic-role="transition" data-from="state-pending-payment" data-to="choice-payment" data-trigger="pay(amount)">
+    <path d="M 400 380 L 490 380" stroke="#475569" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+    <rect x="405" y="352" width="80" height="20" rx="4" fill="#fafafa" />
+    <text x="445" y="366" text-anchor="middle" font-weight="600" font-size="12" fill="#1e293b">pay(amount)</text>
+  </g>
+
+  <g id="transition-choice-declined-to-pending" role="img" aria-label="Transition back to Pending Payment when payment is declined, with showRetry() action" data-semantic-role="transition" data-from="choice-payment" data-to="state-pending-payment" data-trigger="[declined] / showRetry()">
+    <path d="M 520 350 C 520 230, 310 230, 310 330" stroke="#475569" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+    <rect x="330" y="240" width="170" height="24" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+    <text x="415" y="256" text-anchor="middle" font-weight="600" font-size="12" fill="#1e293b">[declined] / showRetry()</text>
+  </g>
+
+  <g id="transition-choice-approved-to-processing" role="img" aria-label="Transition to Processing when payment is approved, with charge() action" data-semantic-role="transition" data-from="choice-payment" data-to="state-processing" data-trigger="[approved] / charge()">
+    <path d="M 550 380 L 680 380" stroke="#475569" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+    <rect x="555" y="352" width="120" height="20" rx="4" fill="#fafafa" />
+    <text x="615" y="366" text-anchor="middle" font-weight="600" font-size="12" fill="#1e293b">[approved] / charge()</text>
+  </g>
+
+  <g id="transition-pending-to-cancelled" role="img" aria-label="Transition from Pending Payment to Cancelled triggered by cancel(), with releaseStock() action" data-semantic-role="transition" data-from="state-pending-payment" data-to="state-cancelled" data-trigger="cancel() / releaseStock()">
+    <path d="M 310 420 L 310 570" stroke="#475569" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+    <rect x="320" y="480" width="165" height="24" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+    <text x="402" y="496" text-anchor="middle" font-weight="600" font-size="12" fill="#1e293b">cancel() / releaseStock()</text>
+  </g>
+
+  <g id="transition-processing-to-shipped" role="img" aria-label="Transition from Processing to Shipped triggered by dispatch(), with notify() action" data-semantic-role="transition" data-from="state-processing" data-to="state-shipped" data-trigger="dispatch() / notify()">
+    <path d="M 1120 380 L 1250 380" stroke="#475569" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+    <rect x="1130" y="352" width="110" height="20" rx="4" fill="#fafafa" />
+    <text x="1185" y="366" text-anchor="middle" font-weight="600" font-size="12" fill="#1e293b">dispatch() / notify()</text>
+  </g>
+
+  <g id="transition-shipped-to-delivered" role="img" aria-label="Transition from Shipped to Delivered triggered by signReceipt(), with closeOrder() action" data-semantic-role="transition" data-from="state-shipped" data-to="state-delivered" data-trigger="signReceipt() / closeOrder()">
+    <path d="M 1340 420 L 1340 570" stroke="#475569" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+    <rect x="1350" y="480" width="180" height="24" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+    <text x="1440" y="496" text-anchor="middle" font-weight="600" font-size="12" fill="#1e293b">signReceipt() / closeOrder()</text>
+  </g>
+
+  <g id="transition-delivered-to-final" role="img" aria-label="Transition from Delivered to Final state" data-semantic-role="transition" data-from="state-delivered" data-to="state-final">
+    <path d="M 1430 610 L 1530 610" stroke="#475569" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+  </g>
+
+  <g id="transition-cancelled-to-final" role="img" aria-label="Transition from Cancelled to Final state" data-semantic-role="transition" data-from="state-cancelled" data-to="state-final">
+    <path d="M 310 650 L 310 700 L 1560 700 L 1560 635" stroke="#475569" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+  </g>
+
+  <!-- States -->
+  <g id="state-initial" role="img" aria-label="Initial pseudo-state: the entry point of the state machine" data-semantic-role="initial-state" data-downstream="state-pending-payment">
+    <circle cx="100" cy="380" r="16" fill="#1e293b" />
+  </g>
+
+  <g id="state-pending-payment" role="img" aria-label="PENDING_PAYMENT state: order awaiting payment. Entry action: lockCart(). Do activity: holdStock()" data-semantic-role="state" data-upstream="state-initial,choice-payment" data-downstream="choice-payment,state-cancelled">
+    <g transform="translate(220, 340)">
+      <rect width="180" height="80" rx="16" fill="#e0e7ff" stroke="#818cf8" stroke-width="3" />
+      <line x1="0" y1="35" x2="180" y2="35" stroke="#818cf8" stroke-width="2" />
+      <text x="90" y="24" text-anchor="middle" font-weight="800" font-size="14" fill="#312e81">PENDING_PAYMENT</text>
+      <text x="90" y="52" text-anchor="middle" font-weight="500" font-size="11" fill="#4338ca">entry / lockCart()</text>
+      <text x="90" y="68" text-anchor="middle" font-weight="500" font-size="11" fill="#4338ca">do / holdStock()</text>
+    </g>
+  </g>
+
+  <g id="choice-payment" role="img" aria-label="Choice pseudo-state: dynamic branch based on payment approval status" data-semantic-role="guard-condition" data-upstream="state-pending-payment" data-downstream="state-pending-payment,state-processing">
+    <polygon points="520,350 550,380 520,410 490,380" fill="#fffbeb" stroke="#d97706" stroke-width="3" />
+  </g>
+
+  <g id="state-cancelled" role="img" aria-label="CANCELLED state: order has been cancelled. Entry action: logCancellation()" data-semantic-role="state" data-upstream="state-pending-payment" data-downstream="state-final">
+    <g transform="translate(220, 570)">
+      <rect width="180" height="80" rx="16" fill="#fdf2f8" stroke="#f472b6" stroke-width="3" />
+      <line x1="0" y1="35" x2="180" y2="35" stroke="#f472b6" stroke-width="2" />
+      <text x="90" y="24" text-anchor="middle" font-weight="800" font-size="14" fill="#831843">CANCELLED</text>
+      <text x="90" y="55" text-anchor="middle" font-weight="500" font-size="11" fill="#be185d">entry / logCancellation()</text>
+    </g>
+  </g>
+
+  <g id="state-processing" role="img" aria-label="PROCESSING composite state containing Picking and Packing sub-states with their own initial and final pseudo-states" data-semantic-role="state" data-upstream="choice-payment" data-downstream="state-shipped">
+    <g transform="translate(680, 260)">
+      <rect width="440" height="240" rx="20" fill="#f0fdf4" stroke="#34d399" stroke-width="4" />
+      <line x1="0" y1="40" x2="440" y2="40" stroke="#34d399" stroke-width="2" />
+      <text x="220" y="26" text-anchor="middle" font-weight="800" font-size="16" fill="#022c22">PROCESSING (COMPOSITE STATE)</text>
+
+      <g id="sub-state-initial" role="img" aria-label="Initial pseudo-state within the Processing composite state" data-semantic-role="initial-state" data-downstream="sub-state-picking">
+        <circle cx="50" cy="120" r="10" fill="#064e3b" />
+      </g>
+
+      <g id="sub-transition-initial-to-picking" role="img" aria-label="Transition from sub-state initial to Picking" data-semantic-role="transition" data-from="sub-state-initial" data-to="sub-state-picking">
+        <path d="M 60 120 L 110 120" stroke="#047857" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+      </g>
+
+      <g id="sub-state-picking" role="img" aria-label="Picking sub-state: items being selected from warehouse" data-semantic-role="state" data-upstream="sub-state-initial" data-downstream="sub-state-packing">
+        <rect x="110" y="90" width="100" height="60" rx="10" fill="#ffffff" stroke="#10b981" stroke-width="2" />
+        <text x="160" y="125" text-anchor="middle" font-weight="700" font-size="13" fill="#065f46">Picking</text>
+      </g>
+
+      <g id="sub-transition-picking-to-packing" role="img" aria-label="Transition from Picking to Packing triggered by itemsFound()" data-semantic-role="transition" data-from="sub-state-picking" data-to="sub-state-packing" data-trigger="itemsFound()">
+        <path d="M 210 120 L 280 120" stroke="#047857" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+        <text x="245" y="112" text-anchor="middle" font-weight="600" font-size="10" fill="#065f46">itemsFound()</text>
+      </g>
+
+      <g id="sub-state-packing" role="img" aria-label="Packing sub-state: items being packaged for shipment" data-semantic-role="state" data-upstream="sub-state-picking" data-downstream="sub-state-final">
+        <rect x="280" y="90" width="100" height="60" rx="10" fill="#ffffff" stroke="#10b981" stroke-width="2" />
+        <text x="330" y="125" text-anchor="middle" font-weight="700" font-size="13" fill="#065f46">Packing</text>
+      </g>
+
+      <g id="sub-transition-packing-to-final" role="img" aria-label="Transition from Packing to sub-state final" data-semantic-role="transition" data-from="sub-state-packing" data-to="sub-state-final">
+        <path d="M 380 120 L 405 120" stroke="#047857" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+      </g>
+
+      <g id="sub-state-final" role="img" aria-label="Final pseudo-state within the Processing composite state" data-semantic-role="final-state">
+        <circle cx="415" cy="120" r="10" fill="none" stroke="#064e3b" stroke-width="2" />
+        <circle cx="415" cy="120" r="5" fill="#064e3b" />
+      </g>
+    </g>
+  </g>
+
+  <g id="state-shipped" role="img" aria-label="SHIPPED state: order dispatched and in transit. Do activity: monitorTracking()" data-semantic-role="state" data-upstream="state-processing" data-downstream="state-delivered">
+    <g transform="translate(1250, 340)">
+      <rect width="180" height="80" rx="16" fill="#fff7ed" stroke="#fb923c" stroke-width="3" />
+      <line x1="0" y1="35" x2="180" y2="35" stroke="#fb923c" stroke-width="2" />
+      <text x="90" y="24" text-anchor="middle" font-weight="800" font-size="14" fill="#431407">SHIPPED</text>
+      <text x="90" y="55" text-anchor="middle" font-weight="500" font-size="11" fill="#c2410c">do / monitorTracking()</text>
+    </g>
+  </g>
+
+  <g id="state-delivered" role="img" aria-label="DELIVERED state: order successfully received. Entry action: fireWebhooks()" data-semantic-role="state" data-upstream="state-shipped" data-downstream="state-final">
+    <g transform="translate(1250, 570)">
+      <rect width="180" height="80" rx="16" fill="#f7fee7" stroke="#a3e635" stroke-width="3" />
+      <line x1="0" y1="35" x2="180" y2="35" stroke="#a3e635" stroke-width="2" />
+      <text x="90" y="24" text-anchor="middle" font-weight="800" font-size="14" fill="#1a2e05">DELIVERED</text>
+      <text x="90" y="55" text-anchor="middle" font-weight="500" font-size="11" fill="#4d7c0f">entry / fireWebhooks()</text>
+    </g>
+  </g>
+
+  <g id="state-final" role="img" aria-label="Final pseudo-state: the order lifecycle is complete" data-semantic-role="final-state" data-upstream="state-delivered,state-cancelled">
+    <circle cx="1560" cy="610" r="16" fill="none" stroke="#1e293b" stroke-width="3" />
+    <circle cx="1560" cy="610" r="8" fill="#1e293b" />
+  </g>
+
+  <!-- Annotations / Callouts -->
+  <g id="annotation-transition-syntax" role="img" aria-label="Legend explaining UML transition syntax: Event [Guard] / Action" data-semantic-role="annotation">
+    <g transform="translate(1200, 120)">
+      <rect width="420" height="130" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" />
+      <text x="210" y="25" text-anchor="middle" font-weight="800" font-size="13" fill="#334155">THE TRANSITION SYNTAX</text>
+      <line x1="20" y1="35" x2="400" y2="35" stroke="#e2e8f0" stroke-width="2" />
+
+      <text x="210" y="55" text-anchor="middle" font-weight="800" font-size="16" fill="#1e293b">Event [Guard] / Action</text>
+
+      <rect x="20" y="70" width="10" height="10" fill="#cbd5e1" />
+      <text x="40" y="80" font-weight="700" font-size="12" fill="#475569">Event:</text>
+      <text x="85" y="80" font-weight="500" font-size="12" fill="#64748b">The trigger that initiates the transition.</text>
+
+      <rect x="20" y="90" width="10" height="10" fill="#cbd5e1" />
+      <text x="40" y="100" font-weight="700" font-size="12" fill="#475569">Guard:</text>
+      <text x="85" y="100" font-weight="500" font-size="12" fill="#64748b">A boolean condition that MUST evaluate to True.</text>
+
+      <rect x="20" y="110" width="10" height="10" fill="#cbd5e1" />
+      <text x="40" y="120" font-weight="700" font-size="12" fill="#475569">Action:</text>
+      <text x="85" y="120" font-weight="500" font-size="12" fill="#64748b">Executable behavior that fires during the jump.</text>
+    </g>
+  </g>
+
+  <g id="callout-initial-pseudo-state" role="img" aria-label="Callout label identifying the initial pseudo-state" data-semantic-role="annotation">
+    <path d="M 100 290 L 100 350" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4,4" fill="none" marker-start="url(#arrow-callout)" />
+    <rect x="35" y="260" width="130" height="30" rx="4" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" />
+    <text x="100" y="279" text-anchor="middle" font-weight="700" font-size="11" fill="#475569">Initial Pseudo-State</text>
+  </g>
+
+  <g id="callout-choice-node" role="img" aria-label="Callout label identifying the choice node (dynamic branch)" data-semantic-role="annotation">
+    <path d="M 520 280 L 520 340" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4,4" fill="none" marker-start="url(#arrow-callout)" />
+    <rect x="430" y="250" width="180" height="30" rx="4" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" />
+    <text x="520" y="269" text-anchor="middle" font-weight="700" font-size="11" fill="#475569">Choice Node (Dynamic Branch)</text>
+  </g>
+
+  <g id="callout-composite-state" role="img" aria-label="Callout label identifying the composite (nested sub-machine) state" data-semantic-role="annotation">
+    <path d="M 900 200 L 900 260" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4,4" fill="none" marker-start="url(#arrow-callout)" />
+    <rect x="800" y="170" width="200" height="30" rx="4" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" />
+    <text x="900" y="189" text-anchor="middle" font-weight="700" font-size="11" fill="#475569">Composite (Nested Sub-machine)</text>
+  </g>
+
+  <g id="callout-final-state" role="img" aria-label="Callout label identifying the final state (terminated)" data-semantic-role="annotation">
+    <path d="M 1560 540 L 1560 580" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4,4" fill="none" marker-start="url(#arrow-callout)" />
+    <rect x="1485" y="510" width="150" height="30" rx="4" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" />
+    <text x="1560" y="529" text-anchor="middle" font-weight="700" font-size="11" fill="#475569">Final State (Terminated)</text>
+  </g>
+
+  <!-- Legend -->
+  <g id="legend" role="img" aria-label="Legend explaining internal state behaviors: entry, do, and exit actions" data-semantic-role="legend">
+    <g transform="translate(100, 780)">
+      <rect width="1500" height="120" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" />
+      <text x="750" y="30" text-anchor="middle" font-weight="800" font-size="14" fill="#334155">INTERNAL STATE BEHAVIORS (What happens while inside a state)</text>
+      <line x1="20" y1="45" x2="1480" y2="45" stroke="#e2e8f0" stroke-width="2" />
+
+      <text x="40" y="70" font-weight="800" font-size="14" fill="#1e293b">entry /</text>
+      <text x="100" y="70" font-weight="500" font-size="13" fill="#64748b">Fires immediately and instantaneously upon entering the state.</text>
+
+      <text x="40" y="95" font-weight="800" font-size="14" fill="#1e293b">do /</text>
+      <text x="100" y="95" font-weight="500" font-size="13" fill="#64748b">An ongoing process that executes as long as the object remains in the state. Can be interrupted by an exit.</text>
+
+      <text x="800" y="70" font-weight="800" font-size="14" fill="#1e293b">exit /</text>
+      <text x="850" y="70" font-weight="500" font-size="13" fill="#64748b">Fires instantaneously just before leaving the state.</text>
+    </g>
+  </g>
+
+</svg>

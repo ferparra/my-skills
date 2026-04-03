@@ -1,25 +1,28 @@
 ---
 name: obsidian-excalidraw-file-generation
-version: "1.1.0"
-description: "Generate valid .excalidraw.md files for the Obsidian Excalidraw plugin from scratch or fix broken ones. Based on analysis of plugin source code. v1.1.0 fixes compression format: plugin uses LZString, not msgpack5."
+version: "2.0.0"
+description: "Reference specification for the .excalidraw.md file format used by the Obsidian Excalidraw plugin. Covers format rules, validation checklist, read/write patterns, and PNG rendering. Used downstream by obsidian-excalidraw-svg-pipeline for the transform step."
 triggers:
-  - create excalidraw file
   - fix excalidraw file
-  - generate excalidraw diagram
   - excalidraw parsing failed
   - excalidraw not rendering
+  - excalidraw format spec
+  - excalidraw file structure
 ---
 
-# Obsidian Excalidraw File Generation
+# Obsidian Excalidraw File Format Reference
 
 ## Workflow
 
-1. **Design** your diagram elements (rectangles, ellipses, arrows, text) in Python.
-2. **Assemble** the `.excalidraw.md` file using the format in `## Format Specification` below.
-3. **Validate structurally** with the checklist in `## Format Specification`.
-4. **Validate geometrically** using `obsidian-excalidraw-visual-validator`.
-5. **Render to PNG** with the render script to confirm visual output.
-6. **Copy to vault** and open in Obsidian to verify live.
+To **generate new diagrams**, use `obsidian-excalidraw-svg-pipeline` — it produces annotated SVGs then transforms them to `.excalidraw.md` using this format spec.
+
+To **fix or debug existing** `.excalidraw.md` files:
+
+1. **Diagnose** using the validation checklist below.
+2. **Validate structurally** with `obsidian-excalidraw-drawing-manager`.
+3. **Validate geometrically** with `obsidian-excalidraw-visual-validator`.
+4. **Render to PNG** with the render script to confirm visual output.
+5. **Open in Obsidian** to verify live.
 
 ## Format Specification (studied from plugin source code)
 
