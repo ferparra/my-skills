@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Transform an annotated SVG into a valid .excalidraw.md file."""
+from __future__ import annotations
 
 import argparse
 import json
@@ -80,7 +81,7 @@ def _parse_path_endpoints(d: str) -> tuple[float, float, float, float]:
 
 
 def _make_rect_element(eid: str, x: float, y: float, w: float, h: float,
-                       fill: str, stroke: str) -> dict:
+                       fill: str, stroke: str) -> dict[str, object]:
     return {
         "type": "rectangle",
         "id": eid,
@@ -109,7 +110,7 @@ def _make_rect_element(eid: str, x: float, y: float, w: float, h: float,
 
 
 def _make_ellipse_element(eid: str, x: float, y: float, w: float, h: float,
-                          fill: str, stroke: str) -> dict:
+                          fill: str, stroke: str) -> dict[str, object]:
     return {
         "type": "ellipse",
         "id": eid,
@@ -138,7 +139,7 @@ def _make_ellipse_element(eid: str, x: float, y: float, w: float, h: float,
 
 
 def _make_text_element(eid: str, x: float, y: float, text: str,
-                       container_id: str | None = None, font_size: int = 16) -> dict:
+                       container_id: str | None = None, font_size: int = 16) -> dict[str, object]:
     return {
         "type": "text",
         "id": eid,
@@ -175,9 +176,9 @@ def _make_text_element(eid: str, x: float, y: float, text: str,
     }
 
 
-def _make_arrow_element(eid: str, x: float, y: float, points: list,
+def _make_arrow_element(eid: str, x: float, y: float, points: list[list[float]],
                         from_id: str | None, to_id: str | None,
-                        stroke: str = "#1e1e1e") -> dict:
+                        stroke: str = "#1e1e1e") -> dict[str, object]:
     start_binding = None
     end_binding = None
     if from_id:
@@ -221,14 +222,14 @@ def _make_arrow_element(eid: str, x: float, y: float, points: list,
 # ---------- main transform ----------
 
 
-def transform(input_path: str, output_path: str) -> dict:
+def transform(input_path: str, output_path: str) -> dict[str, object]:
     """Parse annotated SVG and write .excalidraw.md."""
     tree = ET.parse(input_path)
     root = tree.getroot()
 
-    elements: list[dict] = []
+    elements: list[dict[str, object]] = []
     text_sections: list[str] = []
-    bound_element_refs: dict[str, list[dict]] = {}  # container_id -> [{id, type}]
+    bound_element_refs: dict[str, list[dict[str, str]]] = {}  # container_id -> [{id, type}]
 
     # Collect all semantic groups
     groups: list[ET.Element] = []
@@ -357,10 +358,11 @@ def transform(input_path: str, output_path: str) -> dict:
 
     # Patch boundElements on containers
     for el in elements:
-        eid = el.get("id")
+        eid = str(el.get("id", ""))
         if eid and eid in bound_element_refs:
-            existing = el.get("boundElements") or []
-            el["boundElements"] = existing + bound_element_refs[eid]
+            raw_existing = el.get("boundElements")
+            existing_list: list[dict[str, str]] = raw_existing if isinstance(raw_existing, list) else []
+            el["boundElements"] = existing_list + bound_element_refs[eid]
 
     # Build scene JSON
     scene = {

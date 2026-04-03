@@ -55,7 +55,7 @@ def _parse_ref_list(value: str | None) -> list[str]:
     return [v.strip() for v in re.split(r"[,\s]+", value) if v.strip()]
 
 
-def validate(path: str) -> dict:
+def validate(path: str) -> dict[str, object]:
     """Run all validation checks and return a result dict."""
     errors: list[str] = []
     warnings: list[str] = []
@@ -161,9 +161,9 @@ def validate(path: str) -> dict:
                     warnings.append(f"Node id=\"{gid}\" references id=\"{ref}\" not found as a top-level id.")
         elif role in EDGE_ROLES:
             for attr in ("data-from", "data-to"):
-                ref = g.get(attr)
-                if ref and ref not in all_ids:
-                    warnings.append(f"Edge id=\"{gid}\" {attr} references id=\"{ref}\" not found as a top-level id.")
+                edge_ref = g.get(attr)
+                if edge_ref and edge_ref not in all_ids:
+                    warnings.append(f"Edge id=\"{gid}\" {attr} references id=\"{edge_ref}\" not found as a top-level id.")
 
     ok = len(errors) == 0
     result = {

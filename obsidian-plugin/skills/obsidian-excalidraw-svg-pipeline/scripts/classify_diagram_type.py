@@ -31,7 +31,7 @@ DIAGRAM_KEYWORDS = {
 }
 
 
-def classify(intent: str) -> dict:
+def classify(intent: str) -> dict[str, object]:
     """Classify intent text against the keyword map."""
     intent_lower = intent.lower()
     scores: dict[str, int] = {}
