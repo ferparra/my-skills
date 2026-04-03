@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 750" style="background-color: #fafafa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <!-- DIAGRAM_TYPE: causal_loop -->
+  <!-- TOPOLOGY: two independent causal loops side by side; left: reinforcing loop (R) with 2 nodes and 2 edges; right: balancing loop (B) with 2 nodes and 2 edges; total 4 nodes, 4 edges -->
+  <desc>A didactic comparison of two fundamental causal loop types in systems thinking. Left side: a Reinforcing Loop (R) showing a virtuous cycle between Trust and Team Performance, where each variable increases the other. Right side: a Balancing Loop (B) showing homeostasis between Hunger and Food Intake, where hunger motivates eating which in turn reduces hunger. The two loops are separated by a vertical divider.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b" />
+    </marker>
+  </defs>
+
+  <g id="diagram-title" role="heading" data-semantic-role="title">
+    <text x="700" y="80" text-anchor="middle" font-weight="700" font-size="24" fill="#1e293b" letter-spacing="1">CAUSAL LOOP DIAGRAM: TYPES AND EXAMPLES</text>
+  </g>
+
+  <!-- Reinforcing Loop Section -->
+  <g id="section-reinforcing-loop" role="img" aria-label="Reinforcing loop (R) example: virtuous cycle of trust and team performance" data-semantic-role="container">
+
+    <g id="label-reinforcing-header" role="img" aria-label="Section heading for reinforcing loop" data-semantic-role="label">
+      <text x="375" y="160" text-anchor="middle" font-weight="600" font-size="16" fill="#475569" letter-spacing="0.5">REINFORCING LOOP (R): VIRTUOUS CYCLE</text>
+    </g>
+
+    <g id="edge-trust-to-performance" role="img" aria-label="Trust increases Team Performance (positive causal link)" data-semantic-role="edge" data-from="node-trust" data-to="node-team-performance">
+      <path d="M 230 330 Q 375 200 520 330" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#arrow)" stroke-dasharray="6,6" />
+      <rect x="330" y="255" width="90" height="24" rx="4" fill="#fafafa" />
+      <text x="375" y="272" text-anchor="middle" font-weight="600" font-size="12" fill="#059669">INCREASES (+)</text>
+    </g>
+
+    <g id="edge-performance-to-trust" role="img" aria-label="Team Performance enhances Trust (positive causal link)" data-semantic-role="edge" data-from="node-team-performance" data-to="node-trust">
+      <path d="M 520 410 Q 375 540 230 410" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#arrow)" stroke-dasharray="6,6" />
+      <rect x="330" y="465" width="90" height="24" rx="4" fill="#fafafa" />
+      <text x="375" y="482" text-anchor="middle" font-weight="600" font-size="12" fill="#059669">ENHANCES (+)</text>
+    </g>
+
+    <g id="node-trust" role="img" aria-label="Trust variable in the reinforcing loop" data-semantic-role="node" data-downstream="node-team-performance" data-upstream="node-team-performance">
+      <rect x="130" y="340" width="140" height="60" rx="12" fill="#d1fae5" stroke="#34d399" stroke-width="2" />
+      <text x="200" y="375" text-anchor="middle" font-weight="600" font-size="14" fill="#064e3b">Trust</text>
+    </g>
+
+    <g id="node-team-performance" role="img" aria-label="Team Performance variable in the reinforcing loop" data-semantic-role="node" data-downstream="node-trust" data-upstream="node-trust">
+      <rect x="480" y="340" width="170" height="60" rx="12" fill="#e0e7ff" stroke="#818cf8" stroke-width="2" />
+      <text x="565" y="375" text-anchor="middle" font-weight="600" font-size="14" fill="#312e81">Team Performance</text>
+    </g>
+
+    <g id="label-reinforcing-indicator" role="img" aria-label="R indicator marking this as a reinforcing loop" data-semantic-role="annotation">
+      <circle cx="375" cy="370" r="28" fill="#ecfdf5" stroke="#10b981" stroke-width="2" />
+      <text x="375" y="376" text-anchor="middle" font-weight="700" font-size="18" fill="#047857">R</text>
+    </g>
+
+    <g id="label-reinforcing-description" role="img" aria-label="Description of the reinforcing loop behavior" data-semantic-role="annotation">
+      <text x="375" y="600" text-anchor="middle" font-size="14" fill="#64748b">Trust builds performance, which further strengthens trust.</text>
+    </g>
+  </g>
+
+  <!-- Balancing Loop Section -->
+  <g id="section-balancing-loop" role="img" aria-label="Balancing loop (B) example: homeostasis of hunger and food intake" data-semantic-role="container">
+
+    <g id="label-balancing-header" role="img" aria-label="Section heading for balancing loop" data-semantic-role="label">
+      <text x="1025" y="160" text-anchor="middle" font-weight="600" font-size="16" fill="#475569" letter-spacing="0.5">BALANCING LOOP (B): HOMEOSTASIS</text>
+    </g>
+
+    <g id="edge-hunger-to-food-intake" role="img" aria-label="Hunger motivates Food Intake (positive causal link)" data-semantic-role="edge" data-from="node-hunger" data-to="node-food-intake">
+      <path d="M 880 330 Q 1025 200 1170 330" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#arrow)" stroke-dasharray="6,6" />
+      <rect x="975" y="255" width="100" height="24" rx="4" fill="#fafafa" />
+      <text x="1025" y="272" text-anchor="middle" font-weight="600" font-size="12" fill="#059669">MOTIVATES (+)</text>
+    </g>
+
+    <g id="edge-food-intake-to-hunger" role="img" aria-label="Food Intake reduces Hunger (negative causal link)" data-semantic-role="edge" data-from="node-food-intake" data-to="node-hunger">
+      <path d="M 1170 410 Q 1025 540 880 410" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#arrow)" stroke-dasharray="6,6" />
+      <rect x="945" y="465" width="160" height="24" rx="4" fill="#fafafa" />
+      <text x="1025" y="482" text-anchor="middle" font-weight="600" font-size="12" fill="#e11d48">REDUCES / SATISFIES (-)</text>
+    </g>
+
+    <g id="node-hunger" role="img" aria-label="Hunger variable in the balancing loop" data-semantic-role="node" data-downstream="node-food-intake" data-upstream="node-food-intake">
+      <rect x="780" y="340" width="140" height="60" rx="12" fill="#ffedd5" stroke="#fb923c" stroke-width="2" />
+      <text x="850" y="375" text-anchor="middle" font-weight="600" font-size="14" fill="#7c2d12">Hunger</text>
+    </g>
+
+    <g id="node-food-intake" role="img" aria-label="Food Intake variable in the balancing loop" data-semantic-role="node" data-downstream="node-hunger" data-upstream="node-hunger">
+      <rect x="1130" y="340" width="140" height="60" rx="12" fill="#f1f5f9" stroke="#94a3b8" stroke-width="2" />
+      <text x="1200" y="375" text-anchor="middle" font-weight="600" font-size="14" fill="#334155">Food Intake</text>
+    </g>
+
+    <g id="label-balancing-indicator" role="img" aria-label="B indicator marking this as a balancing loop" data-semantic-role="annotation">
+      <circle cx="1025" cy="370" r="28" fill="#fff7ed" stroke="#f97316" stroke-width="2" />
+      <text x="1025" y="376" text-anchor="middle" font-weight="700" font-size="18" fill="#c2410c">B</text>
+    </g>
+
+    <g id="label-balancing-description" role="img" aria-label="Description of the balancing loop behavior" data-semantic-role="annotation">
+      <text x="1025" y="600" text-anchor="middle" font-size="14" fill="#64748b">Hunger prompts eating, which reduces hunger to maintain stability.</text>
+    </g>
+  </g>
+
+  <g id="divider" role="img" aria-label="Vertical divider separating reinforcing and balancing loop examples" data-semantic-role="annotation">
+    <line x1="700" y1="200" x2="700" y2="600" stroke="#e2e8f0" stroke-width="2" stroke-dasharray="4,4" />
+  </g>
+
+</svg>

@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 850" style="background-color: #fafafa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <!-- DIAGRAM_TYPE: sequence -->
+  <!-- TOPOLOGY: 4 participant lifelines (Client App, API Gateway, Order Service, Payment API) with 7 messages (4 sync calls, 1 self-call, 2 returns). 4 nodes, 7 edges. -->
+  <desc>A sequence communication pattern showing time-ordered object interactions for a checkout flow. A Client App sends a POST /checkout to an API Gateway, which routes to an Order Service. The Order Service validates the cart internally, then calls a Payment API to charge the card. Responses flow back as return messages: transaction ID, order confirmed event, and 201 Created. Activation bars show processing duration on each lifeline. A legend explains lifeline and activation notation.</desc>
+  <defs>
+    <marker id="arrow-sync" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#475569" />
+    </marker>
+    <marker id="arrow-return" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 1 1 L 9 5 L 1 9" stroke="#94a3b8" stroke-width="2" fill="none" />
+    </marker>
+  </defs>
+
+  <g id="diagram-title" role="heading" data-semantic-role="title">
+    <text x="800" y="50" text-anchor="middle" font-weight="700" font-size="24" fill="#1e293b" letter-spacing="1">SEQUENCE COMMUNICATION PATTERN</text>
+    <text x="800" y="80" text-anchor="middle" font-weight="600" font-size="16" fill="#475569" letter-spacing="0.5">TIME-ORDERED OBJECT INTERACTIONS</text>
+  </g>
+
+  <g id="annotation-time-axis" role="img" aria-label="Vertical time progression axis" data-semantic-role="annotation">
+    <path d="M 100 220 L 100 780" stroke="#cbd5e1" stroke-width="4" fill="none" marker-end="url(#arrow-sync)" />
+    <text x="-500" y="85" transform="rotate(-90)" text-anchor="middle" font-weight="700" font-size="14" fill="#94a3b8" letter-spacing="4">TIME PROGRESSION</text>
+  </g>
+
+  <g id="lane-client-app" role="img" aria-label="Client App lifeline" data-semantic-role="lane">
+    <line x1="250" y1="200" x2="250" y2="800" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="8,8" />
+  </g>
+
+  <g id="lane-api-gateway" role="img" aria-label="API Gateway lifeline with activation bar" data-semantic-role="lane">
+    <line x1="600" y1="200" x2="600" y2="800" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="8,8" />
+    <rect x="590" y="280" width="20" height="450" fill="#fff7ed" stroke="#fb923c" stroke-width="2" />
+  </g>
+
+  <g id="lane-order-service" role="img" aria-label="Order Service lifeline with activation bars" data-semantic-role="lane">
+    <line x1="950" y1="200" x2="950" y2="800" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="8,8" />
+    <rect x="940" y="340" width="20" height="310" fill="#e0e7ff" stroke="#818cf8" stroke-width="2" />
+    <rect x="950" y="390" width="10" height="35" fill="#e0e7ff" stroke="#818cf8" stroke-width="2" />
+  </g>
+
+  <g id="lane-payment-api" role="img" aria-label="Payment API lifeline with activation bar" data-semantic-role="lane">
+    <line x1="1300" y1="200" x2="1300" y2="800" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="8,8" />
+    <rect x="1290" y="490" width="20" height="80" fill="#fdf2f8" stroke="#f472b6" stroke-width="2" />
+  </g>
+
+  <g id="edge-msg1-post-checkout" role="img" aria-label="Message 1: Sync POST /checkout from Client App to API Gateway" data-semantic-role="edge" data-from="node-client-app" data-to="node-api-gateway">
+    <path d="M 250 280 L 585 280" stroke="#475569" stroke-width="3" fill="none" marker-end="url(#arrow-sync)" />
+    <text x="420" y="270" text-anchor="middle" font-weight="600" font-size="13" fill="#1e293b">1. [Sync] POST /checkout</text>
+  </g>
+
+  <g id="edge-msg2-route-order" role="img" aria-label="Message 2: Sync route to Order Service from API Gateway" data-semantic-role="edge" data-from="node-api-gateway" data-to="node-order-service">
+    <path d="M 610 340 L 935 340" stroke="#475569" stroke-width="3" fill="none" marker-end="url(#arrow-sync)" />
+    <text x="775" y="330" text-anchor="middle" font-weight="600" font-size="13" fill="#1e293b">2. [Sync] Route to Order Service</text>
+  </g>
+
+  <g id="edge-msg3-validate-cart" role="img" aria-label="Message 3: Internal self-call to validate cart on Order Service" data-semantic-role="edge" data-from="node-order-service" data-to="node-order-service">
+    <path d="M 960 380 L 1020 380 Q 1030 380 1030 390 L 1030 420 Q 1030 430 1020 430 L 965 430" stroke="#475569" stroke-width="3" fill="none" marker-end="url(#arrow-sync)" />
+    <text x="1040" y="410" font-weight="600" font-size="13" fill="#1e293b">3. [Internal] Validate Cart</text>
+  </g>
+
+  <g id="edge-msg4-charge-card" role="img" aria-label="Message 4: Sync ChargeCard call from Order Service to Payment API" data-semantic-role="edge" data-from="node-order-service" data-to="node-payment-api">
+    <path d="M 960 490 L 1285 490" stroke="#475569" stroke-width="3" fill="none" marker-end="url(#arrow-sync)" />
+    <text x="1125" y="480" text-anchor="middle" font-weight="600" font-size="13" fill="#1e293b">4. [Sync] ChargeCard(token, amount)</text>
+  </g>
+
+  <g id="edge-msg5-return-ok" role="img" aria-label="Message 5: Return 200 OK with Transaction ID from Payment API to Order Service" data-semantic-role="edge" data-from="node-payment-api" data-to="node-order-service">
+    <path d="M 1290 570 L 965 570" stroke="#94a3b8" stroke-width="3" stroke-dasharray="6,4" fill="none" marker-end="url(#arrow-return)" />
+    <text x="1125" y="560" text-anchor="middle" font-weight="600" font-size="13" fill="#64748b">5. [Return] 200 OK (Transaction ID)</text>
+  </g>
+
+  <g id="edge-msg6-order-confirmed" role="img" aria-label="Message 6: Return Order Confirmed Event from Order Service to API Gateway" data-semantic-role="edge" data-from="node-order-service" data-to="node-api-gateway">
+    <path d="M 940 650 L 615 650" stroke="#94a3b8" stroke-width="3" stroke-dasharray="6,4" fill="none" marker-end="url(#arrow-return)" />
+    <text x="775" y="640" text-anchor="middle" font-weight="600" font-size="13" fill="#64748b">6. [Return] Order Confirmed Event</text>
+  </g>
+
+  <g id="edge-msg7-return-created" role="img" aria-label="Message 7: Return 201 Created from API Gateway to Client App" data-semantic-role="edge" data-from="node-api-gateway" data-to="node-client-app">
+    <path d="M 590 730 L 255 730" stroke="#94a3b8" stroke-width="3" stroke-dasharray="6,4" fill="none" marker-end="url(#arrow-return)" />
+    <text x="420" y="720" text-anchor="middle" font-weight="600" font-size="13" fill="#64748b">7. [Return] 201 Created</text>
+  </g>
+
+  <g id="node-client-app" role="img" aria-label="Participant: Client App (Web/Mobile Browser)" data-semantic-role="node" data-downstream="node-api-gateway">
+    <g transform="translate(160, 120)">
+      <rect width="180" height="60" rx="12" fill="#ecfdf5" stroke="#34d399" stroke-width="2" />
+      <text x="90" y="35" text-anchor="middle" font-weight="700" font-size="14" fill="#022c22">CLIENT APP</text>
+      <text x="90" y="52" text-anchor="middle" font-weight="500" font-size="11" fill="#047857">Web/Mobile Browser</text>
+    </g>
+  </g>
+
+  <g id="node-api-gateway" role="img" aria-label="Participant: API Gateway (Routing and Auth)" data-semantic-role="node" data-upstream="node-client-app" data-downstream="node-order-service">
+    <g transform="translate(510, 120)">
+      <rect width="180" height="60" rx="12" fill="#fff7ed" stroke="#fb923c" stroke-width="2" />
+      <text x="90" y="35" text-anchor="middle" font-weight="700" font-size="14" fill="#431407">API GATEWAY</text>
+      <text x="90" y="52" text-anchor="middle" font-weight="500" font-size="11" fill="#c2410c">Routing &amp; Auth</text>
+    </g>
+  </g>
+
+  <g id="node-order-service" role="img" aria-label="Participant: Order Service (Core Microservice)" data-semantic-role="node" data-upstream="node-api-gateway" data-downstream="node-payment-api">
+    <g transform="translate(860, 120)">
+      <rect width="180" height="60" rx="12" fill="#e0e7ff" stroke="#818cf8" stroke-width="2" />
+      <text x="90" y="35" text-anchor="middle" font-weight="700" font-size="14" fill="#312e81">ORDER SERVICE</text>
+      <text x="90" y="52" text-anchor="middle" font-weight="500" font-size="11" fill="#4338ca">Core Microservice</text>
+    </g>
+  </g>
+
+  <g id="node-payment-api" role="img" aria-label="Participant: Payment API (3rd Party Gateway)" data-semantic-role="node" data-upstream="node-order-service">
+    <g transform="translate(1210, 120)">
+      <rect width="180" height="60" rx="12" fill="#fdf2f8" stroke="#f472b6" stroke-width="2" />
+      <text x="90" y="35" text-anchor="middle" font-weight="700" font-size="14" fill="#831843">PAYMENT API</text>
+      <text x="90" y="52" text-anchor="middle" font-weight="500" font-size="11" fill="#be185d">3rd Party Gateway</text>
+    </g>
+  </g>
+
+  <g id="legend" role="img" aria-label="Legend explaining lifeline and activation notation" data-semantic-role="legend">
+    <path d="M 330 220 L 370 220" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="2,2" />
+    <rect x="370" y="210" width="80" height="20" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1" />
+    <text x="410" y="224" text-anchor="middle" font-weight="600" font-size="10" fill="#64748b">Lifeline</text>
+
+    <path d="M 640 460 L 680 460" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="2,2" />
+    <rect x="680" y="450" width="130" height="20" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1" />
+    <text x="745" y="464" text-anchor="middle" font-weight="600" font-size="10" fill="#64748b">Activation / Processing</text>
+  </g>
+
+</svg>

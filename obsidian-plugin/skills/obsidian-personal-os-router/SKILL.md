@@ -1,7 +1,21 @@
 ---
 name: obsidian-personal-os-router
 version: 1.0.0
-description: Route Obsidian vault tasks to the minimum-context workflow before reading or editing files. Use when a request targets this personal Obsidian vault and you need progressive disclosure, strict read budgets, and fail-fast dependency checks for obsidian CLI, qmd, and downstream manager skills such as portfolio holdings, brokerage activity, planetary tasks, and zettel maintenance.
+dependencies:
+  - obsidian-planetary-tasks-manager
+  - obsidian-exercise-kind-manager
+  - obsidian-portfolio-holdings-manager
+  - obsidian-brokerage-activity-manager
+  - obsidian-notebooklm-bases-manager
+  - obsidian-key-dates-base-manager
+  - obsidian-weekly-feedback-loop
+  - obsidian-cv-entry-manager
+  - obsidian-hub-manager
+  - obsidian-interweave-engine
+  - obsidian-agent-memory-capture
+  - obsidian-token-budget-guard
+pipeline: {}
+description: Route vault requests to the appropriate kind manager skill based on intent classification.
 metadata:
   openclaw:
     os: [darwin]
@@ -59,6 +73,7 @@ Each route targets specific collections to minimise token cost. Never use `-c ob
 | `key-dates-base-manager` | `periodic` | `inbox` |
 | `weekly-feedback-loop` | `periodic` | `inbox` |
 | `hub-manager` | `notes` | — |
+| `cv-entry-manager` | `resources` | `projects` |
 | `interweave-engine` | `notes` | `clippings` |
 | `agent-memory-capture` | `notes` | `inbox` |
 | `token-budget-guard` | `all` | — |
@@ -70,7 +85,10 @@ Default when collection is unknown: `-c all` (scoped to knowledge folders, exclu
 
 - Use `references/routing-map.md` for route definitions and full collection reference table.
 - Use `references/task-intent-taxonomy.md` for intent classification keywords.
+- Route `key_dates_base` work first — the broad `"review"` keyword in `weekly_feedback` would otherwise steal date-related intents such as "annual performance review" or "date link broken".
 - Route planetary task work before weekly review work so `Periodic Planning and Tasks Hub` and `Planetary Tasks.base` requests do not get absorbed by the generic `periodic` route.
-- Route exercise schema, Strong CSV sync, and `Exercise Library.base` work before generic resource/interweave handling so typed exercise-note requests resolve to the exercise manager.
+- Route exercise schema, Strong CSV sync, and `Exercise Library.base` work before generic resource/interweave handling so typed exercise-note requests (including natural-language workout logs) resolve to the exercise manager.
 - Route portfolio holdings, holdings history, and actual-holdings/base requests before brokerage export or token-guard handling so derived holdings work lands on the holdings manager.
 - Route brokerage export, transaction ledger, and `brokerage_activity_kind` requests before generic interweave or token-guard handling so investment-import work lands on the typed ledger workflow.
+- Route zettel management before weekly feedback — "hub synthesis" and "fleeting capture" are zettel signals, not weekly-review signals.
+- Route CV entry management before weekly feedback and interweave — "career", "resume", and "role" are CV signals, not generic periodic or linking signals.

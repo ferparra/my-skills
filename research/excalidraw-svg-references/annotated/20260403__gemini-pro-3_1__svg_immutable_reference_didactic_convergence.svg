@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 750" style="background-color: #fafafa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <!-- DIAGRAM_TYPE: pipeline -->
+  <!-- TOPOLOGY: fan-in / convergence; 5 source nodes feeding into 1 aggregator node via 5 directed edges, plus 1 output edge; total 6 nodes, 6 edges -->
+  <desc>A convergence (fan-in) communication pattern showing N-to-1 aggregation. Five IoT sensor source nodes (A through E) each emit a data stream that converges on a central Data Aggregator (stream processor/reducer). The aggregator combines all five streams using a summation function and produces a single aggregated batch payload as output. Each source is color-coded to match its stream.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b" />
+    </marker>
+  </defs>
+
+  <g id="diagram-title" role="heading" data-semantic-role="title">
+    <text x="700" y="60" text-anchor="middle" font-weight="700" font-size="24" fill="#1e293b" letter-spacing="1">CONVERGENCE COMMUNICATION PATTERN</text>
+    <text x="700" y="90" text-anchor="middle" font-weight="600" font-size="16" fill="#475569" letter-spacing="0.5">N-to-1 AGGREGATION / FAN-IN</text>
+  </g>
+
+  <!-- Edges: source streams to aggregator -->
+  <g id="edge-source1-to-aggregator" role="img" aria-label="Data stream 1 from Source 1 to Data Aggregator" data-semantic-role="edge" data-from="node-source-1" data-to="node-aggregator">
+    <path d="M 320 170 C 600 170, 750 340, 935 340" stroke="#a855f7" stroke-width="4" fill="none" marker-end="url(#arrow)" />
+    <rect x="450" y="158" width="140" height="24" rx="4" fill="#faf5ff" stroke="#e9d5ff" stroke-width="1.5" />
+    <text x="520" y="174" text-anchor="middle" font-weight="600" font-size="12" fill="#7e22ce">STREAM (Data 1)</text>
+  </g>
+
+  <g id="edge-source2-to-aggregator" role="img" aria-label="Data stream 2 from Source 2 to Data Aggregator" data-semantic-role="edge" data-from="node-source-2" data-to="node-aggregator">
+    <path d="M 320 280 C 600 280, 750 365, 935 365" stroke="#10b981" stroke-width="4" fill="none" marker-end="url(#arrow)" />
+    <rect x="450" y="268" width="140" height="24" rx="4" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1.5" />
+    <text x="520" y="284" text-anchor="middle" font-weight="600" font-size="12" fill="#047857">STREAM (Data 2)</text>
+  </g>
+
+  <g id="edge-source3-to-aggregator" role="img" aria-label="Data stream 3 from Source 3 to Data Aggregator" data-semantic-role="edge" data-from="node-source-3" data-to="node-aggregator">
+    <path d="M 320 390 C 600 390, 750 390, 935 390" stroke="#ec4899" stroke-width="4" fill="none" marker-end="url(#arrow)" />
+    <rect x="450" y="378" width="140" height="24" rx="4" fill="#fdf2f8" stroke="#fbcfe8" stroke-width="1.5" />
+    <text x="520" y="394" text-anchor="middle" font-weight="600" font-size="12" fill="#be185d">STREAM (Data 3)</text>
+  </g>
+
+  <g id="edge-source4-to-aggregator" role="img" aria-label="Data stream 4 from Source 4 to Data Aggregator" data-semantic-role="edge" data-from="node-source-4" data-to="node-aggregator">
+    <path d="M 320 500 C 600 500, 750 415, 935 415" stroke="#f97316" stroke-width="4" fill="none" marker-end="url(#arrow)" />
+    <rect x="450" y="488" width="140" height="24" rx="4" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5" />
+    <text x="520" y="504" text-anchor="middle" font-weight="600" font-size="12" fill="#c2410c">STREAM (Data 4)</text>
+  </g>
+
+  <g id="edge-source5-to-aggregator" role="img" aria-label="Data stream 5 from Source 5 to Data Aggregator" data-semantic-role="edge" data-from="node-source-5" data-to="node-aggregator">
+    <path d="M 320 610 C 600 610, 750 440, 935 440" stroke="#06b6d4" stroke-width="4" fill="none" marker-end="url(#arrow)" />
+    <rect x="450" y="598" width="140" height="24" rx="4" fill="#ecfeff" stroke="#a5f3fc" stroke-width="1.5" />
+    <text x="520" y="614" text-anchor="middle" font-weight="600" font-size="12" fill="#0e7490">STREAM (Data 5)</text>
+  </g>
+
+  <!-- Edge: aggregator to output -->
+  <g id="edge-aggregator-to-output" role="img" aria-label="Aggregated batch payload output from Data Aggregator" data-semantic-role="edge" data-from="node-aggregator" data-to="external-output">
+    <path d="M 1210 390 L 1340 390" stroke="#94a3b8" stroke-width="4" fill="none" marker-end="url(#arrow)" stroke-dasharray="6,6" />
+    <rect x="1225" y="345" width="100" height="24" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="1275" y="361" text-anchor="middle" font-weight="600" font-size="11" fill="#475569">AGGREGATED</text>
+    <text x="1275" y="420" text-anchor="middle" font-weight="600" font-size="11" fill="#64748b">Batch Payload</text>
+  </g>
+
+  <!-- Source nodes -->
+  <g id="node-source-1" role="img" aria-label="Source 1: IoT Sensor Node A" data-semantic-role="node" data-downstream="node-aggregator" data-upstream="">
+    <g transform="translate(100, 140)">
+      <rect width="220" height="60" rx="12" fill="#faf5ff" stroke="#e9d5ff" stroke-width="2" />
+      <text x="110" y="30" text-anchor="middle" font-weight="600" font-size="14" fill="#581c87">SOURCE 1</text>
+      <text x="110" y="46" text-anchor="middle" font-weight="400" font-size="11" fill="#7e22ce">IoT Sensor Node A</text>
+    </g>
+  </g>
+
+  <g id="node-source-2" role="img" aria-label="Source 2: IoT Sensor Node B" data-semantic-role="node" data-downstream="node-aggregator" data-upstream="">
+    <g transform="translate(100, 250)">
+      <rect width="220" height="60" rx="12" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="2" />
+      <text x="110" y="30" text-anchor="middle" font-weight="600" font-size="14" fill="#022c22">SOURCE 2</text>
+      <text x="110" y="46" text-anchor="middle" font-weight="400" font-size="11" fill="#047857">IoT Sensor Node B</text>
+    </g>
+  </g>
+
+  <g id="node-source-3" role="img" aria-label="Source 3: IoT Sensor Node C" data-semantic-role="node" data-downstream="node-aggregator" data-upstream="">
+    <g transform="translate(100, 360)">
+      <rect width="220" height="60" rx="12" fill="#fdf2f8" stroke="#fbcfe8" stroke-width="2" />
+      <text x="110" y="30" text-anchor="middle" font-weight="600" font-size="14" fill="#4c0b20">SOURCE 3</text>
+      <text x="110" y="46" text-anchor="middle" font-weight="400" font-size="11" fill="#be185d">IoT Sensor Node C</text>
+    </g>
+  </g>
+
+  <g id="node-source-4" role="img" aria-label="Source 4: IoT Sensor Node D" data-semantic-role="node" data-downstream="node-aggregator" data-upstream="">
+    <g transform="translate(100, 470)">
+      <rect width="220" height="60" rx="12" fill="#fff7ed" stroke="#fed7aa" stroke-width="2" />
+      <text x="110" y="30" text-anchor="middle" font-weight="600" font-size="14" fill="#431407">SOURCE 4</text>
+      <text x="110" y="46" text-anchor="middle" font-weight="400" font-size="11" fill="#c2410c">IoT Sensor Node D</text>
+    </g>
+  </g>
+
+  <g id="node-source-5" role="img" aria-label="Source 5: IoT Sensor Node E" data-semantic-role="node" data-downstream="node-aggregator" data-upstream="">
+    <g transform="translate(100, 580)">
+      <rect width="220" height="60" rx="12" fill="#ecfeff" stroke="#a5f3fc" stroke-width="2" />
+      <text x="110" y="30" text-anchor="middle" font-weight="600" font-size="14" fill="#083344">SOURCE 5</text>
+      <text x="110" y="46" text-anchor="middle" font-weight="400" font-size="11" fill="#0e7490">IoT Sensor Node E</text>
+    </g>
+  </g>
+
+  <!-- Aggregator node -->
+  <g id="node-aggregator" role="img" aria-label="Data Aggregator: stream processor that reduces 5 inputs into a batch" data-semantic-role="node" data-downstream="" data-upstream="node-source-1,node-source-2,node-source-3,node-source-4,node-source-5">
+    <rect x="950" y="320" width="260" height="140" rx="20" fill="#e0e7ff" stroke="#818cf8" stroke-width="4" />
+    <text x="1080" y="375" text-anchor="middle" font-weight="800" font-size="20" fill="#312e81">DATA AGGREGATOR</text>
+    <text x="1080" y="395" text-anchor="middle" font-weight="600" font-size="12" fill="#4338ca">Stream Processor / Reducer</text>
+    <rect x="980" y="415" width="200" height="30" rx="6" fill="#c7d2fe" />
+    <text x="1080" y="435" text-anchor="middle" font-family="monospace" font-weight="600" font-size="13" fill="#3730a3">&#8721;(Data 1...5) &#8594; Batch</text>
+  </g>
+
+</svg>

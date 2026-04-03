@@ -1,0 +1,160 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 750" style="background-color: #fafafa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <!-- DIAGRAM_TYPE: tree -->
+  <!-- TOPOLOGY: 3-level tree with 1 root, 3 mid-level domain nodes, and 6 leaf nodes; 9 directed edges total; strict parent-to-child hierarchy -->
+  <desc>A hierarchical tree diagram showing 1-to-N decomposition of an E-Commerce System. The root node decomposes into three domains: Frontend Domain (User Interfaces), Backend Domain (Business Logic APIs), and Data Domain (Persistence Layer). Each domain further decomposes into two leaf components: Frontend has Web Portal (React SPA) and Mobile App (iOS and Android); Backend has Auth API (Identity and Access) and Order API (Checkout Processing); Data has Primary DB (PostgreSQL) and Session Cache (Redis Cluster). Edge labels indicate "DECOMPOSES TO" for level-0-to-1 edges and role labels (CLIENT, SERVICE, STORAGE, CACHE) for level-1-to-2 edges.</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b" />
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <g id="diagram-title" role="heading" data-semantic-role="title">
+    <text x="800" y="60" text-anchor="middle" font-weight="700" font-size="24" fill="#1e293b" letter-spacing="1">TREE COMMUNICATION PATTERN</text>
+    <text x="800" y="90" text-anchor="middle" font-weight="600" font-size="16" fill="#475569" letter-spacing="0.5">1-TO-N HIERARCHICAL DECOMPOSITION</text>
+  </g>
+
+  <!-- Level 0 to Level 1 edges -->
+
+  <g id="edge-root-to-frontend" role="img" aria-label="Edge from E-Commerce System to Frontend Domain labeled 'DECOMPOSES TO'" data-semantic-role="edge" data-from="node-ecommerce-system" data-to="node-frontend-domain">
+    <path d="M 800 210 C 800 275, 350 275, 350 340" stroke="#94a3b8" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+    <rect x="515" y="263" width="120" height="24" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="575" y="279" text-anchor="middle" font-weight="600" font-size="11" fill="#475569">DECOMPOSES TO</text>
+  </g>
+
+  <g id="edge-root-to-backend" role="img" aria-label="Edge from E-Commerce System to Backend Domain labeled 'DECOMPOSES TO'" data-semantic-role="edge" data-from="node-ecommerce-system" data-to="node-backend-domain">
+    <path d="M 800 210 L 800 340" stroke="#94a3b8" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+    <rect x="740" y="263" width="120" height="24" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="800" y="279" text-anchor="middle" font-weight="600" font-size="11" fill="#475569">DECOMPOSES TO</text>
+  </g>
+
+  <g id="edge-root-to-data" role="img" aria-label="Edge from E-Commerce System to Data Domain labeled 'DECOMPOSES TO'" data-semantic-role="edge" data-from="node-ecommerce-system" data-to="node-data-domain">
+    <path d="M 800 210 C 800 275, 1250 275, 1250 340" stroke="#94a3b8" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+    <rect x="965" y="263" width="120" height="24" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="1025" y="279" text-anchor="middle" font-weight="600" font-size="11" fill="#475569">DECOMPOSES TO</text>
+  </g>
+
+  <!-- Level 1 to Level 2 edges -->
+
+  <g id="edge-frontend-to-web-portal" role="img" aria-label="Edge from Frontend Domain to Web Portal (CLIENT)" data-semantic-role="edge" data-from="node-frontend-domain" data-to="node-web-portal">
+    <path d="M 350 410 C 350 485, 240 485, 240 560" stroke="#a7f3d0" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+    <rect x="255" y="473" width="80" height="24" rx="4" fill="#fafafa" />
+    <text x="295" y="489" text-anchor="middle" font-weight="600" font-size="11" fill="#059669">CLIENT</text>
+  </g>
+
+  <g id="edge-frontend-to-mobile-app" role="img" aria-label="Edge from Frontend Domain to Mobile App (CLIENT)" data-semantic-role="edge" data-from="node-frontend-domain" data-to="node-mobile-app">
+    <path d="M 350 410 C 350 485, 460 485, 460 560" stroke="#a7f3d0" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+    <rect x="365" y="473" width="80" height="24" rx="4" fill="#fafafa" />
+    <text x="405" y="489" text-anchor="middle" font-weight="600" font-size="11" fill="#059669">CLIENT</text>
+  </g>
+
+  <g id="edge-backend-to-auth-api" role="img" aria-label="Edge from Backend Domain to Auth API (SERVICE)" data-semantic-role="edge" data-from="node-backend-domain" data-to="node-auth-api">
+    <path d="M 800 410 C 800 485, 690 485, 690 560" stroke="#fed7aa" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+    <rect x="705" y="473" width="80" height="24" rx="4" fill="#fafafa" />
+    <text x="745" y="489" text-anchor="middle" font-weight="600" font-size="11" fill="#ea580c">SERVICE</text>
+  </g>
+
+  <g id="edge-backend-to-order-api" role="img" aria-label="Edge from Backend Domain to Order API (SERVICE)" data-semantic-role="edge" data-from="node-backend-domain" data-to="node-order-api">
+    <path d="M 800 410 C 800 485, 910 485, 910 560" stroke="#fed7aa" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+    <rect x="815" y="473" width="80" height="24" rx="4" fill="#fafafa" />
+    <text x="855" y="489" text-anchor="middle" font-weight="600" font-size="11" fill="#ea580c">SERVICE</text>
+  </g>
+
+  <g id="edge-data-to-primary-db" role="img" aria-label="Edge from Data Domain to Primary DB (STORAGE)" data-semantic-role="edge" data-from="node-data-domain" data-to="node-primary-db">
+    <path d="M 1250 410 C 1250 485, 1140 485, 1140 560" stroke="#e9d5ff" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+    <rect x="1155" y="473" width="80" height="24" rx="4" fill="#fafafa" />
+    <text x="1195" y="489" text-anchor="middle" font-weight="600" font-size="11" fill="#9333ea">STORAGE</text>
+  </g>
+
+  <g id="edge-data-to-session-cache" role="img" aria-label="Edge from Data Domain to Session Cache (CACHE)" data-semantic-role="edge" data-from="node-data-domain" data-to="node-session-cache">
+    <path d="M 1250 410 C 1250 485, 1360 485, 1360 560" stroke="#e9d5ff" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+    <rect x="1265" y="473" width="80" height="24" rx="4" fill="#fafafa" />
+    <text x="1305" y="489" text-anchor="middle" font-weight="600" font-size="11" fill="#9333ea">CACHE</text>
+  </g>
+
+  <!-- Root Node (Level 0) -->
+
+  <g id="node-ecommerce-system" role="img" aria-label="E-Commerce System - root level of the tree" data-semantic-role="node" data-downstream="node-frontend-domain,node-backend-domain,node-data-domain">
+    <rect x="690" y="140" width="220" height="70" rx="16" fill="#e0e7ff" stroke="#818cf8" stroke-width="3" />
+    <text x="800" y="175" text-anchor="middle" font-weight="800" font-size="16" fill="#312e81">E-COMMERCE SYSTEM</text>
+    <text x="800" y="193" text-anchor="middle" font-weight="500" font-size="12" fill="#4338ca">Root Level (0)</text>
+  </g>
+
+  <!-- Level 1 Domain Nodes -->
+
+  <g id="node-frontend-domain" role="img" aria-label="Frontend Domain - User Interfaces" data-semantic-role="node" data-upstream="node-ecommerce-system" data-downstream="node-web-portal,node-mobile-app">
+    <g transform="translate(240, 340)">
+      <rect width="220" height="70" rx="12" fill="#ecfdf5" stroke="#34d399" stroke-width="2" />
+      <text x="110" y="35" text-anchor="middle" font-weight="700" font-size="15" fill="#022c22">FRONTEND DOMAIN</text>
+      <text x="110" y="53" text-anchor="middle" font-weight="400" font-size="12" fill="#047857">User Interfaces</text>
+    </g>
+  </g>
+
+  <g id="node-backend-domain" role="img" aria-label="Backend Domain - Business Logic APIs" data-semantic-role="node" data-upstream="node-ecommerce-system" data-downstream="node-auth-api,node-order-api">
+    <g transform="translate(690, 340)">
+      <rect width="220" height="70" rx="12" fill="#fff7ed" stroke="#fb923c" stroke-width="2" />
+      <text x="110" y="35" text-anchor="middle" font-weight="700" font-size="15" fill="#431407">BACKEND DOMAIN</text>
+      <text x="110" y="53" text-anchor="middle" font-weight="400" font-size="12" fill="#c2410c">Business Logic APIs</text>
+    </g>
+  </g>
+
+  <g id="node-data-domain" role="img" aria-label="Data Domain - Persistence Layer" data-semantic-role="node" data-upstream="node-ecommerce-system" data-downstream="node-primary-db,node-session-cache">
+    <g transform="translate(1140, 340)">
+      <rect width="220" height="70" rx="12" fill="#faf5ff" stroke="#c084fc" stroke-width="2" />
+      <text x="110" y="35" text-anchor="middle" font-weight="700" font-size="15" fill="#581c87">DATA DOMAIN</text>
+      <text x="110" y="53" text-anchor="middle" font-weight="400" font-size="12" fill="#7e22ce">Persistence Layer</text>
+    </g>
+  </g>
+
+  <!-- Level 2 Leaf Nodes -->
+
+  <g id="node-web-portal" role="img" aria-label="Web Portal - React SPA" data-semantic-role="node" data-upstream="node-frontend-domain">
+    <g transform="translate(150, 560)">
+      <rect width="180" height="60" rx="10" fill="#f0fdf4" stroke="#6ee7b7" stroke-width="2" />
+      <text x="90" y="30" text-anchor="middle" font-weight="600" font-size="14" fill="#064e3b">Web Portal</text>
+      <text x="90" y="46" text-anchor="middle" font-weight="400" font-size="11" fill="#059669">React SPA</text>
+    </g>
+  </g>
+
+  <g id="node-mobile-app" role="img" aria-label="Mobile App - iOS and Android" data-semantic-role="node" data-upstream="node-frontend-domain">
+    <g transform="translate(370, 560)">
+      <rect width="180" height="60" rx="10" fill="#f0fdf4" stroke="#6ee7b7" stroke-width="2" />
+      <text x="90" y="30" text-anchor="middle" font-weight="600" font-size="14" fill="#064e3b">Mobile App</text>
+      <text x="90" y="46" text-anchor="middle" font-weight="400" font-size="11" fill="#059669">iOS &amp; Android</text>
+    </g>
+  </g>
+
+  <g id="node-auth-api" role="img" aria-label="Auth API - Identity and Access" data-semantic-role="node" data-upstream="node-backend-domain">
+    <g transform="translate(600, 560)">
+      <rect width="180" height="60" rx="10" fill="#fff7ed" stroke="#fdba74" stroke-width="2" />
+      <text x="90" y="30" text-anchor="middle" font-weight="600" font-size="14" fill="#7c2d12">Auth API</text>
+      <text x="90" y="46" text-anchor="middle" font-weight="400" font-size="11" fill="#ea580c">Identity &amp; Access</text>
+    </g>
+  </g>
+
+  <g id="node-order-api" role="img" aria-label="Order API - Checkout Processing" data-semantic-role="node" data-upstream="node-backend-domain">
+    <g transform="translate(820, 560)">
+      <rect width="180" height="60" rx="10" fill="#fff7ed" stroke="#fdba74" stroke-width="2" />
+      <text x="90" y="30" text-anchor="middle" font-weight="600" font-size="14" fill="#7c2d12">Order API</text>
+      <text x="90" y="46" text-anchor="middle" font-weight="400" font-size="11" fill="#ea580c">Checkout Processing</text>
+    </g>
+  </g>
+
+  <g id="node-primary-db" role="img" aria-label="Primary DB - PostgreSQL" data-semantic-role="node" data-upstream="node-data-domain">
+    <g transform="translate(1050, 560)">
+      <rect width="180" height="60" rx="10" fill="#faf5ff" stroke="#d8b4fe" stroke-width="2" />
+      <text x="90" y="30" text-anchor="middle" font-weight="600" font-size="14" fill="#4c1d95">Primary DB</text>
+      <text x="90" y="46" text-anchor="middle" font-weight="400" font-size="11" fill="#9333ea">PostgreSQL</text>
+    </g>
+  </g>
+
+  <g id="node-session-cache" role="img" aria-label="Session Cache - Redis Cluster" data-semantic-role="node" data-upstream="node-data-domain">
+    <g transform="translate(1270, 560)">
+      <rect width="180" height="60" rx="10" fill="#faf5ff" stroke="#d8b4fe" stroke-width="2" />
+      <text x="90" y="30" text-anchor="middle" font-weight="600" font-size="14" fill="#4c1d95">Session Cache</text>
+      <text x="90" y="46" text-anchor="middle" font-weight="400" font-size="11" fill="#9333ea">Redis Cluster</text>
+    </g>
+  </g>
+
+</svg>

@@ -1,14 +1,33 @@
 ---
 name: jira-sprint-sync
 version: 1.0.0
-description: >
-  Sync Jira issues assigned to the current user in active sprints into the Obsidian
-  vault. Writes one note per issue into `Periodic/YEAR/Planetary Tasks/` with full
-  frontmatter so they appear in Planetary Tasks.base views, and overwrites
-  `00 Inbox/Tasks.md` as a quick-reference summary. Jira is always the source of
-  truth. Use when the user asks to: sync Jira tasks, update sprint tasks, refresh
-  their task list from Jira, pull active sprint issues into the vault, organise work
-  tasks, or check what's on their Jira board.
+dependencies:
+  - obsidian-planetary-tasks-manager
+pipeline:
+  inputs:
+    - name: jql
+      type: string
+      required: false
+      description: Custom JQL filter (defaults to assignee=currentUser() AND sprint in openSprints())
+    - name: max_results
+      type: integer
+      required: false
+      default: 100
+      description: Maximum number of issues to fetch
+  outputs:
+    - name: synced_tasks
+      type: file
+      path: "Periodic/{year}/Planetary Tasks/{key} - {summary}.md"
+      description: Synced Jira task notes
+    - name: tasks_summary
+      type: file
+      path: "00 Inbox/Tasks.md"
+      description: Quick-reference summary note
+    - name: sync_report
+      type: json
+      path: ".skills/jira-sync-report.json"
+      description: Jira sync report
+description: Sync Jira issues from active sprints into Obsidian as typed planetary task notes. Writes per-issue notes to Periodic/YEAR/Planetary Tasks/ and overwrites 00 Inbox/Tasks.md as a quick-reference summary. Jira is the source of truth.
 metadata:
   openclaw:
     os: [darwin]
@@ -27,6 +46,10 @@ Two outputs per sync:
 
 Jira is authoritative. Vault edits to synced properties are overwritten on every sync.
 The synced issue notes still need to satisfy the canonical planetary task schema.
+
+## Workflow
+
+Sync Jira issues from active sprints into Obsidian: fetch issues via Jira API, map to planetary task schema, write per-issue notes, validate, and update the summary note.
 
 ## Sync Workflow
 

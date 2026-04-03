@@ -1,0 +1,3 @@
+experiment	metric	kept	notes
+baseline	0.774194	kept	initial validation logic ported from both skills
+all_fixes	0.387097	kept	added all 7 missing checks + filtering fixes

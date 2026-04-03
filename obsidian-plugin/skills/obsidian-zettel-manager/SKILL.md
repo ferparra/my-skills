@@ -1,12 +1,38 @@
 ---
 name: obsidian-zettel-manager
 version: 1.0.0
-description: >
-  Validate, migrate, and score zettel notes in this personal Obsidian vault.
-  Use when requests involve zettel_kind enforcement, zettel_id generation,
-  connection_strength scoring, promoting fleeting captures, or normalising
-  knowledge notes in 10 Notes/ and 00 Inbox/. Treats zettel_kind as the
-  Tana-supertag equivalent: it selects the note's schema contract.
+dependencies:
+  - obsidian-interweave-engine
+pipeline:
+  inputs:
+    - name: zettel_kind
+      type: string
+      required: false
+      description: Filter by zettel kind (atomic, literature, project, archive)
+    - name: glob
+      type: string
+      required: false
+      default: "10 Notes/**/*.md"
+      description: Glob pattern for zettel notes
+    - name: mode
+      type: string
+      required: false
+      default: check
+      description: Mode (check or fix)
+  outputs:
+    - name: validated_zettels
+      type: file
+      path: "10 Notes/{slug}.md"
+      description: Validated zettel notes
+    - name: zettel_report
+      type: json
+      path: ".skills/zettel-report.json"
+      description: Validation/migration report
+    - name: scored_zettels
+      type: json
+      path: ".skills/zettel-scores.json"
+      description: Connection strength scores
+description: Validate, migrate, and score zettel notes in Obsidian. Use for zettel_kind enforcement, zettel_id generation, connection_strength scoring, promoting fleeting captures, and normalising knowledge notes in 10 Notes/ and 00 Inbox/.
 metadata:
   openclaw:
     os: [darwin]

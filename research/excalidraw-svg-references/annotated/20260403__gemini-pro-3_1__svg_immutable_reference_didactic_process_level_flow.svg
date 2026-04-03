@@ -1,0 +1,177 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 900" style="background-color: #fafafa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+<!-- DIAGRAM_TYPE: process_flow -->
+<!-- TOPOLOGY: Linear flow with 8 nodes (1 read model, 1 actor, 2 commands, 1 external system, 2 domain events, 1 policy), 8 edges forming a left-to-right causal chain with one branching downward edge at the end. -->
+  <desc>An Event Storming process-level flow diagram depicting an e-commerce order fulfillment process. A Customer actor informs a Checkout UI (read model), which triggers a Submit Payment command. The Stripe Gateway (external system) handles the command and emits a Payment Authorized domain event. A Fulfillment Policy ("whenever paid...") reacts to trigger a Request Shipment command, which emits a Shipment Requested event that updates an Order Status Tracker read model. The flow demonstrates the causal grammar of DDD: Actor -> Read Model -> Command -> External System -> Domain Event -> Policy -> Command -> Domain Event -> Read Model.</desc>
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="120%" height="120%">
+      <feDropShadow dx="3" dy="5" stdDeviation="4" flood-color="#0f172a" flood-opacity="0.08"/>
+    </filter>
+
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b" />
+    </marker>
+  </defs>
+
+  <g id="diagram-title" role="heading" data-semantic-role="title">
+    <text x="960" y="60" text-anchor="middle" font-weight="700" font-size="24" fill="#1e293b" letter-spacing="1">EVENT STORMING: PROCESS-LEVEL FLOW</text>
+    <text x="960" y="90" text-anchor="middle" font-weight="600" font-size="16" fill="#475569" letter-spacing="0.5">THE CAUSAL GRAMMAR OF DOMAIN-DRIVEN DESIGN</text>
+  </g>
+
+
+  <g id="edge-checkout-to-customer" role="img" aria-label="Checkout UI informs Customer actor" data-semantic-role="edge" data-from="node-checkout-ui" data-to="node-customer">
+    <path d="M 180 340 C 230 340, 230 250, 270 250" stroke="#94a3b8" stroke-width="3" stroke-dasharray="6,4" fill="none" marker-end="url(#arrow)" />
+    <rect x="175" y="275" width="80" height="20" rx="4" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" />
+    <text x="215" y="289" text-anchor="middle" font-weight="600" font-size="10" fill="#64748b">Informs</text>
+  </g>
+
+  <g id="edge-customer-to-submit-payment" role="img" aria-label="Customer executes Submit Payment command" data-semantic-role="edge" data-from="node-customer" data-to="node-submit-payment">
+    <path d="M 370 250 C 410 250, 410 400, 440 400" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+    <rect x="375" y="315" width="80" height="20" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+    <text x="415" y="329" text-anchor="middle" font-weight="700" font-size="10" fill="#334155">Executes</text>
+  </g>
+
+  <g id="edge-submit-payment-to-stripe" role="img" aria-label="Submit Payment handled by Stripe Gateway" data-semantic-role="edge" data-from="node-submit-payment" data-to="node-stripe-gateway">
+    <path d="M 590 410 L 680 410" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+    <rect x="595" y="390" width="80" height="20" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+    <text x="635" y="404" text-anchor="middle" font-weight="700" font-size="10" fill="#334155">Handled By</text>
+  </g>
+
+  <g id="edge-stripe-to-payment-authorized" role="img" aria-label="Stripe Gateway emits Payment Authorized event" data-semantic-role="edge" data-from="node-stripe-gateway" data-to="node-payment-authorized">
+    <path d="M 830 410 L 920 410" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+    <rect x="835" y="390" width="80" height="20" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+    <text x="875" y="404" text-anchor="middle" font-weight="700" font-size="10" fill="#334155">Emits</text>
+  </g>
+
+  <g id="edge-payment-authorized-to-policy" role="img" aria-label="Payment Authorized triggers Fulfillment Policy" data-semantic-role="edge" data-from="node-payment-authorized" data-to="node-fulfillment-policy">
+    <path d="M 1070 410 L 1160 410" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+    <rect x="1075" y="390" width="80" height="20" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+    <text x="1115" y="404" text-anchor="middle" font-weight="700" font-size="10" fill="#334155">Triggers</text>
+  </g>
+
+  <g id="edge-policy-to-request-shipment" role="img" aria-label="Fulfillment Policy invokes Request Shipment command" data-semantic-role="edge" data-from="node-fulfillment-policy" data-to="node-request-shipment">
+    <path d="M 1310 410 L 1400 410" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+    <rect x="1315" y="390" width="80" height="20" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+    <text x="1355" y="404" text-anchor="middle" font-weight="700" font-size="10" fill="#334155">Invokes</text>
+  </g>
+
+  <g id="edge-request-shipment-to-shipment-requested" role="img" aria-label="Request Shipment emits Shipment Requested event" data-semantic-role="edge" data-from="node-request-shipment" data-to="node-shipment-requested">
+    <path d="M 1550 410 L 1640 410" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+    <rect x="1555" y="390" width="80" height="20" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+    <text x="1595" y="404" text-anchor="middle" font-weight="700" font-size="10" fill="#334155">Emits</text>
+  </g>
+
+  <g id="edge-shipment-requested-to-tracker" role="img" aria-label="Shipment Requested updates Order Status Tracker" data-semantic-role="edge" data-from="node-shipment-requested" data-to="node-order-status-tracker">
+    <path d="M 1710 490 L 1710 560" stroke="#94a3b8" stroke-width="3" stroke-dasharray="6,4" fill="none" marker-end="url(#arrow)" />
+    <rect x="1670" y="515" width="80" height="20" rx="4" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" />
+    <text x="1710" y="529" text-anchor="middle" font-weight="600" font-size="10" fill="#64748b">Updates</text>
+  </g>
+
+
+  <g id="node-checkout-ui" role="img" aria-label="Read Model: Checkout UI / Cart" data-semantic-role="node" data-downstream="node-customer">
+    <g transform="translate(110, 340)" filter="url(#shadow)">
+      <rect width="140" height="140" fill="#dcfce3" stroke="#4ade80" stroke-width="1" />
+      <text x="70" y="60" text-anchor="middle" font-weight="500" font-size="14" fill="#14532d">Checkout</text>
+      <text x="70" y="80" text-anchor="middle" font-weight="800" font-size="15" fill="#14532d">UI / CART</text>
+    </g>
+  </g>
+
+  <g id="node-customer" role="img" aria-label="Actor: Customer" data-semantic-role="node" data-upstream="node-checkout-ui" data-downstream="node-submit-payment">
+    <g transform="translate(280, 210)" filter="url(#shadow)">
+      <rect width="80" height="80" fill="#fef9c3" stroke="#facc15" stroke-width="1" />
+      <circle cx="40" cy="30" r="12" fill="#854d0e" />
+      <path d="M 20 65 C 20 50, 60 50, 60 65" fill="#854d0e" />
+      <text x="40" y="85" text-anchor="middle" font-weight="800" font-size="12" fill="#854d0e">CUSTOMER</text>
+    </g>
+  </g>
+
+  <g id="node-submit-payment" role="img" aria-label="Command: Submit Payment" data-semantic-role="node" data-upstream="node-customer" data-downstream="node-stripe-gateway">
+    <g transform="translate(440, 340)" filter="url(#shadow)">
+      <rect width="140" height="140" fill="#e0f2fe" stroke="#38bdf8" stroke-width="1" />
+      <text x="70" y="60" text-anchor="middle" font-weight="500" font-size="14" fill="#0c4a6e">Submit</text>
+      <text x="70" y="80" text-anchor="middle" font-weight="800" font-size="15" fill="#0c4a6e">PAYMENT</text>
+    </g>
+  </g>
+
+  <g id="node-stripe-gateway" role="img" aria-label="External System: Stripe Gateway" data-semantic-role="node" data-upstream="node-submit-payment" data-downstream="node-payment-authorized">
+    <g transform="translate(690, 340)" filter="url(#shadow)">
+      <rect width="140" height="140" fill="#fce7f3" stroke="#f472b6" stroke-width="1" />
+      <text x="70" y="60" text-anchor="middle" font-weight="500" font-size="14" fill="#831843">Stripe</text>
+      <text x="70" y="80" text-anchor="middle" font-weight="800" font-size="15" fill="#831843">GATEWAY</text>
+    </g>
+  </g>
+
+  <g id="node-payment-authorized" role="img" aria-label="Domain Event: Payment Authorized" data-semantic-role="node" data-upstream="node-stripe-gateway" data-downstream="node-fulfillment-policy">
+    <g transform="translate(930, 340)" filter="url(#shadow)">
+      <rect width="140" height="140" fill="#ffedd5" stroke="#fb923c" stroke-width="1" />
+      <text x="70" y="60" text-anchor="middle" font-weight="500" font-size="14" fill="#7c2d12">Payment</text>
+      <text x="70" y="80" text-anchor="middle" font-weight="800" font-size="15" fill="#7c2d12">AUTHORIZED</text>
+    </g>
+  </g>
+
+  <g id="node-fulfillment-policy" role="img" aria-label="Policy: Fulfillment Policy - whenever paid, trigger fulfillment" data-semantic-role="node" data-upstream="node-payment-authorized" data-downstream="node-request-shipment">
+    <g transform="translate(1170, 340)" filter="url(#shadow)">
+      <rect width="140" height="140" fill="#f3e8ff" stroke="#c084fc" stroke-width="1" />
+      <text x="70" y="45" text-anchor="middle" font-weight="800" font-size="12" fill="#581c87">"Whenever paid..."</text>
+      <text x="70" y="75" text-anchor="middle" font-weight="500" font-size="14" fill="#581c87">Fulfillment</text>
+      <text x="70" y="95" text-anchor="middle" font-weight="800" font-size="15" fill="#581c87">POLICY</text>
+    </g>
+  </g>
+
+  <g id="node-request-shipment" role="img" aria-label="Command: Request Shipment" data-semantic-role="node" data-upstream="node-fulfillment-policy" data-downstream="node-shipment-requested">
+    <g transform="translate(1410, 340)" filter="url(#shadow)">
+      <rect width="140" height="140" fill="#e0f2fe" stroke="#38bdf8" stroke-width="1" />
+      <text x="70" y="60" text-anchor="middle" font-weight="500" font-size="14" fill="#0c4a6e">Request</text>
+      <text x="70" y="80" text-anchor="middle" font-weight="800" font-size="15" fill="#0c4a6e">SHIPMENT</text>
+    </g>
+  </g>
+
+  <g id="node-shipment-requested" role="img" aria-label="Domain Event: Shipment Requested" data-semantic-role="node" data-upstream="node-request-shipment" data-downstream="node-order-status-tracker">
+    <g transform="translate(1640, 340)" filter="url(#shadow)">
+      <rect width="140" height="140" fill="#ffedd5" stroke="#fb923c" stroke-width="1" />
+      <text x="70" y="60" text-anchor="middle" font-weight="500" font-size="14" fill="#7c2d12">Shipment</text>
+      <text x="70" y="80" text-anchor="middle" font-weight="800" font-size="15" fill="#7c2d12">REQUESTED</text>
+    </g>
+  </g>
+
+  <g id="node-order-status-tracker" role="img" aria-label="Read Model: Order Status Tracker" data-semantic-role="node" data-upstream="node-shipment-requested">
+    <g transform="translate(1640, 570)" filter="url(#shadow)">
+      <rect width="140" height="140" fill="#dcfce3" stroke="#4ade80" stroke-width="1" />
+      <text x="70" y="60" text-anchor="middle" font-weight="500" font-size="14" fill="#14532d">Order Status</text>
+      <text x="70" y="80" text-anchor="middle" font-weight="800" font-size="15" fill="#14532d">TRACKER</text>
+    </g>
+  </g>
+
+
+  <g id="legend" role="img" aria-label="Legend explaining Actor, Command, External System/Aggregate, Domain Event, Policy, and Read Model/Information" data-semantic-role="legend">
+    <g transform="translate(110, 600)">
+      <rect width="1330" height="200" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" />
+      <text x="665" y="30" text-anchor="middle" font-weight="800" font-size="14" fill="#334155">PROCESS-LEVEL EVENT STORMING LEGEND &amp; GRAMMAR</text>
+      <line x1="20" y1="45" x2="1310" y2="45" stroke="#e2e8f0" stroke-width="2" />
+
+      <rect x="40" y="70" width="30" height="30" fill="#fef9c3" stroke="#facc15" stroke-width="1" />
+      <text x="85" y="84" font-weight="800" font-size="13" fill="#1e293b">ACTOR</text>
+      <text x="85" y="100" font-weight="500" font-size="11" fill="#64748b">A person executing a command.</text>
+
+      <rect x="450" y="70" width="30" height="30" fill="#e0f2fe" stroke="#38bdf8" stroke-width="1" />
+      <text x="495" y="84" font-weight="800" font-size="13" fill="#1e293b">COMMAND</text>
+      <text x="495" y="100" font-weight="500" font-size="11" fill="#64748b">An intent/action. Imperative tense.</text>
+
+      <rect x="900" y="70" width="30" height="30" fill="#fce7f3" stroke="#f472b6" stroke-width="1" />
+      <text x="945" y="84" font-weight="800" font-size="13" fill="#1e293b">EXTERNAL SYSTEM / AGGREGATE</text>
+      <text x="945" y="100" font-weight="500" font-size="11" fill="#64748b">The system processing the command.</text>
+
+      <rect x="40" y="130" width="30" height="30" fill="#ffedd5" stroke="#fb923c" stroke-width="1" />
+      <text x="85" y="144" font-weight="800" font-size="13" fill="#1e293b">DOMAIN EVENT</text>
+      <text x="85" y="160" font-weight="500" font-size="11" fill="#64748b">Result of a system. Past tense.</text>
+
+      <rect x="450" y="130" width="30" height="30" fill="#f3e8ff" stroke="#c084fc" stroke-width="1" />
+      <text x="495" y="144" font-weight="800" font-size="13" fill="#1e293b">POLICY</text>
+      <text x="495" y="160" font-weight="500" font-size="11" fill="#64748b">Reactive logic. "Whenever X, do Y."</text>
+
+      <rect x="900" y="130" width="30" height="30" fill="#dcfce3" stroke="#4ade80" stroke-width="1" />
+      <text x="945" y="144" font-weight="800" font-size="13" fill="#1e293b">READ MODEL / INFORMATION</text>
+      <text x="945" y="160" font-weight="500" font-size="11" fill="#64748b">Data required to make a decision.</text>
+    </g>
+  </g>
+
+</svg>

@@ -1,0 +1,210 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 900" style="background-color: #fafafa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <!-- DIAGRAM_TYPE: timeline -->
+  <!-- TOPOLOGY: 9 event nodes (7 domain events on main timeline + 1 branching alternate + 1 concurrent), 2 hotspot nodes, 8 flow edges, 2 pivotal event markers; linear left-to-right with one branch and one concurrent fork -->
+  <desc>An Event Storming Big Picture Timeline for an e-commerce domain. Domain events are arranged chronologically left to right: User Registered, Item Added to Cart, Checkout Initiated, Payment Captured, Order Confirmed, Receipt Emailed, Warehouse Picking Started, Order Shipped, Delivery Confirmed. Cart Abandoned branches as an alternate path. Order Confirmed and Receipt Emailed occur concurrently. Two pivotal events divide the timeline into phases: Cart Checked Out and Payment Settled. Two hotspots flag risks: Stripe API timeouts and lost tracking codes. A legend explains the Event Storming notation.</desc>
+
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="120%" height="120%">
+      <feDropShadow dx="3" dy="5" stdDeviation="4" flood-color="#000000" flood-opacity="0.08"/>
+    </filter>
+
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8" />
+    </marker>
+
+    <marker id="arrow-flow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#cbd5e1" />
+    </marker>
+  </defs>
+
+  <g id="diagram-title" role="heading" data-semantic-role="title">
+    <text x="900" y="60" text-anchor="middle" font-weight="700" font-size="24" fill="#1e293b" letter-spacing="1">EVENT STORMING: BIG PICTURE TIMELINE</text>
+    <text x="900" y="90" text-anchor="middle" font-weight="600" font-size="16" fill="#475569" letter-spacing="0.5">MAPPING THE DOMAIN VIA CHRONOLOGICAL EVENTS (SYSTEM AGNOSTIC)</text>
+  </g>
+
+  <!-- Time axis -->
+  <g id="time-axis" role="img" aria-label="Time progression axis from left to right" data-semantic-role="annotation">
+    <path d="M 100 820 L 1700 820" stroke="#cbd5e1" stroke-width="4" fill="none" marker-end="url(#arrow)" />
+    <text x="900" y="850" text-anchor="middle" font-weight="800" font-size="18" fill="#64748b" letter-spacing="4">TIME PROGRESSION (LEFT TO RIGHT)</text>
+  </g>
+
+  <!-- Pivotal event markers -->
+  <g id="pivotal-cart-checked-out" role="img" aria-label="Pivotal event marker: Cart Checked Out" data-semantic-role="annotation">
+    <line x1="560" y1="180" x2="560" y2="780" stroke="#94a3b8" stroke-width="3" stroke-dasharray="10,10" />
+    <rect x="460" y="150" width="200" height="30" rx="4" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="2" transform="rotate(-2 560 165)" />
+    <text x="560" y="170" text-anchor="middle" font-weight="800" font-size="12" fill="#334155" transform="rotate(-2 560 165)">PIVOTAL: CART CHECKED OUT</text>
+  </g>
+
+  <g id="pivotal-payment-settled" role="img" aria-label="Pivotal event marker: Payment Settled" data-semantic-role="annotation">
+    <line x1="1080" y1="180" x2="1080" y2="780" stroke="#94a3b8" stroke-width="3" stroke-dasharray="10,10" />
+    <rect x="980" y="150" width="200" height="30" rx="4" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="2" transform="rotate(1 1080 165)" />
+    <text x="1080" y="170" text-anchor="middle" font-weight="800" font-size="12" fill="#334155" transform="rotate(1 1080 165)">PIVOTAL: PAYMENT SETTLED</text>
+  </g>
+
+  <!-- Flow edges -->
+  <g id="edge-registered-to-cart" role="img" aria-label="Flow from User Registered to Item Added to Cart" data-semantic-role="edge" data-from="event-user-registered" data-to="event-item-added-to-cart">
+    <path d="M 230 300 L 290 300" stroke="#e2e8f0" stroke-width="3" fill="none" marker-end="url(#arrow-flow)" />
+  </g>
+
+  <g id="edge-cart-to-checkout" role="img" aria-label="Flow from Item Added to Cart to Checkout Initiated" data-semantic-role="edge" data-from="event-item-added-to-cart" data-to="event-checkout-initiated">
+    <path d="M 450 300 L 590 300" stroke="#e2e8f0" stroke-width="3" fill="none" marker-end="url(#arrow-flow)" />
+  </g>
+
+  <g id="edge-checkout-to-payment" role="img" aria-label="Flow from Checkout Initiated to Payment Captured" data-semantic-role="edge" data-from="event-checkout-initiated" data-to="event-payment-captured">
+    <path d="M 750 300 L 810 300" stroke="#e2e8f0" stroke-width="3" fill="none" marker-end="url(#arrow-flow)" />
+  </g>
+
+  <g id="edge-payment-to-order-confirmed" role="img" aria-label="Flow from Payment Captured to Order Confirmed" data-semantic-role="edge" data-from="event-payment-captured" data-to="event-order-confirmed">
+    <path d="M 880 380 L 880 430" stroke="#e2e8f0" stroke-width="3" fill="none" marker-end="url(#arrow-flow)" />
+  </g>
+
+  <g id="edge-order-confirmed-to-receipt" role="img" aria-label="Flow from Order Confirmed to Receipt Emailed" data-semantic-role="edge" data-from="event-order-confirmed" data-to="event-receipt-emailed">
+    <path d="M 880 570 L 880 620" stroke="#e2e8f0" stroke-width="3" fill="none" marker-end="url(#arrow-flow)" />
+  </g>
+
+  <g id="edge-order-confirmed-to-picking" role="img" aria-label="Flow from Order Confirmed to Warehouse Picking Started" data-semantic-role="edge" data-from="event-order-confirmed" data-to="event-picking-started">
+    <path d="M 950 500 L 1130 300" stroke="#e2e8f0" stroke-width="3" fill="none" marker-end="url(#arrow-flow)" />
+  </g>
+
+  <g id="edge-picking-to-shipped" role="img" aria-label="Flow from Warehouse Picking Started to Order Shipped" data-semantic-role="edge" data-from="event-picking-started" data-to="event-order-shipped">
+    <path d="M 1290 300 L 1350 300" stroke="#e2e8f0" stroke-width="3" fill="none" marker-end="url(#arrow-flow)" />
+  </g>
+
+  <g id="edge-shipped-to-delivered" role="img" aria-label="Flow from Order Shipped to Delivery Confirmed" data-semantic-role="edge" data-from="event-order-shipped" data-to="event-delivery-confirmed">
+    <path d="M 1510 300 L 1570 300" stroke="#e2e8f0" stroke-width="3" fill="none" marker-end="url(#arrow-flow)" />
+  </g>
+
+  <!-- Domain event nodes -->
+  <g id="event-user-registered" role="img" aria-label="Domain event: User Registered" data-semantic-role="node" data-downstream="event-item-added-to-cart" data-upstream="">
+    <g transform="translate(80, 230)" filter="url(#shadow)">
+      <rect width="140" height="140" fill="#ffedd5" stroke="#fb923c" stroke-width="1" />
+      <text x="70" y="60" text-anchor="middle" font-weight="500" font-size="14" fill="#7c2d12">User</text>
+      <text x="70" y="80" text-anchor="middle" font-weight="800" font-size="15" fill="#7c2d12">REGISTERED</text>
+    </g>
+  </g>
+
+  <g id="event-item-added-to-cart" role="img" aria-label="Domain event: Item Added to Cart" data-semantic-role="node" data-downstream="event-checkout-initiated,event-cart-abandoned" data-upstream="event-user-registered">
+    <g transform="translate(300, 230)" filter="url(#shadow)">
+      <rect width="140" height="140" fill="#ffedd5" stroke="#fb923c" stroke-width="1" />
+      <text x="70" y="60" text-anchor="middle" font-weight="500" font-size="14" fill="#7c2d12">Item Added To</text>
+      <text x="70" y="80" text-anchor="middle" font-weight="800" font-size="15" fill="#7c2d12">CART</text>
+    </g>
+  </g>
+
+  <g id="event-cart-abandoned" role="img" aria-label="Domain event: Cart Abandoned (alternate branch)" data-semantic-role="node" data-downstream="" data-upstream="event-item-added-to-cart">
+    <g transform="translate(300, 430)" filter="url(#shadow)">
+      <rect width="140" height="140" fill="#ffedd5" stroke="#fb923c" stroke-width="1" />
+      <text x="70" y="60" text-anchor="middle" font-weight="500" font-size="14" fill="#7c2d12">Cart</text>
+      <text x="70" y="80" text-anchor="middle" font-weight="800" font-size="15" fill="#7c2d12">ABANDONED</text>
+    </g>
+  </g>
+
+  <g id="event-checkout-initiated" role="img" aria-label="Domain event: Checkout Initiated" data-semantic-role="node" data-downstream="event-payment-captured" data-upstream="event-item-added-to-cart">
+    <g transform="translate(600, 230)" filter="url(#shadow)">
+      <rect width="140" height="140" fill="#ffedd5" stroke="#fb923c" stroke-width="1" />
+      <text x="70" y="60" text-anchor="middle" font-weight="500" font-size="14" fill="#7c2d12">Checkout</text>
+      <text x="70" y="80" text-anchor="middle" font-weight="800" font-size="15" fill="#7c2d12">INITIATED</text>
+    </g>
+  </g>
+
+  <g id="event-payment-captured" role="img" aria-label="Domain event: Payment Captured" data-semantic-role="node" data-downstream="event-order-confirmed" data-upstream="event-checkout-initiated">
+    <g transform="translate(810, 230)" filter="url(#shadow)">
+      <rect width="140" height="140" fill="#ffedd5" stroke="#fb923c" stroke-width="1" />
+      <text x="70" y="60" text-anchor="middle" font-weight="500" font-size="14" fill="#7c2d12">Payment</text>
+      <text x="70" y="80" text-anchor="middle" font-weight="800" font-size="15" fill="#7c2d12">CAPTURED</text>
+    </g>
+  </g>
+
+  <g id="event-order-confirmed" role="img" aria-label="Domain event: Order Confirmed" data-semantic-role="node" data-downstream="event-receipt-emailed,event-picking-started" data-upstream="event-payment-captured">
+    <g transform="translate(810, 440)" filter="url(#shadow)">
+      <rect width="140" height="140" fill="#ffedd5" stroke="#fb923c" stroke-width="1" />
+      <text x="70" y="60" text-anchor="middle" font-weight="500" font-size="14" fill="#7c2d12">Order</text>
+      <text x="70" y="80" text-anchor="middle" font-weight="800" font-size="15" fill="#7c2d12">CONFIRMED</text>
+    </g>
+  </g>
+
+  <g id="event-receipt-emailed" role="img" aria-label="Domain event: Receipt Emailed (concurrent with Order Confirmed)" data-semantic-role="node" data-downstream="" data-upstream="event-order-confirmed">
+    <g transform="translate(810, 630)" filter="url(#shadow)">
+      <rect width="140" height="140" fill="#ffedd5" stroke="#fb923c" stroke-width="1" />
+      <text x="70" y="60" text-anchor="middle" font-weight="500" font-size="14" fill="#7c2d12">Receipt</text>
+      <text x="70" y="80" text-anchor="middle" font-weight="800" font-size="15" fill="#7c2d12">EMAILED</text>
+    </g>
+  </g>
+
+  <g id="event-picking-started" role="img" aria-label="Domain event: Warehouse Picking Started" data-semantic-role="node" data-downstream="event-order-shipped" data-upstream="event-order-confirmed">
+    <g transform="translate(1140, 230)" filter="url(#shadow)">
+      <rect width="140" height="140" fill="#ffedd5" stroke="#fb923c" stroke-width="1" />
+      <text x="70" y="60" text-anchor="middle" font-weight="500" font-size="14" fill="#7c2d12">Warehouse Picking</text>
+      <text x="70" y="80" text-anchor="middle" font-weight="800" font-size="15" fill="#7c2d12">STARTED</text>
+    </g>
+  </g>
+
+  <g id="event-order-shipped" role="img" aria-label="Domain event: Order Shipped" data-semantic-role="node" data-downstream="event-delivery-confirmed" data-upstream="event-picking-started">
+    <g transform="translate(1360, 230)" filter="url(#shadow)">
+      <rect width="140" height="140" fill="#ffedd5" stroke="#fb923c" stroke-width="1" />
+      <text x="70" y="60" text-anchor="middle" font-weight="500" font-size="14" fill="#7c2d12">Order</text>
+      <text x="70" y="80" text-anchor="middle" font-weight="800" font-size="15" fill="#7c2d12">SHIPPED</text>
+    </g>
+  </g>
+
+  <g id="event-delivery-confirmed" role="img" aria-label="Domain event: Delivery Confirmed" data-semantic-role="node" data-downstream="" data-upstream="event-order-shipped">
+    <g transform="translate(1580, 230)" filter="url(#shadow)">
+      <rect width="140" height="140" fill="#ffedd5" stroke="#fb923c" stroke-width="1" />
+      <text x="70" y="60" text-anchor="middle" font-weight="500" font-size="14" fill="#7c2d12">Delivery</text>
+      <text x="70" y="80" text-anchor="middle" font-weight="800" font-size="15" fill="#7c2d12">CONFIRMED</text>
+    </g>
+  </g>
+
+  <!-- Hotspot nodes -->
+  <g id="hotspot-stripe-timeout" role="img" aria-label="Hotspot: What if the Stripe API times out?" data-semantic-role="node">
+    <g transform="translate(930, 280) rotate(4)" filter="url(#shadow)">
+      <rect width="140" height="140" fill="#fce7f3" stroke="#db2777" stroke-width="1" />
+      <text x="70" y="55" text-anchor="middle" font-weight="700" font-size="14" fill="#831843">What if</text>
+      <text x="70" y="75" text-anchor="middle" font-weight="700" font-size="14" fill="#831843">the Stripe API</text>
+      <text x="70" y="95" text-anchor="middle" font-weight="700" font-size="14" fill="#831843">times out?</text>
+    </g>
+  </g>
+
+  <g id="hotspot-lost-tracking" role="img" aria-label="Hotspot: How do we handle lost tracking codes?" data-semantic-role="node">
+    <g transform="translate(1420, 390) rotate(-3)" filter="url(#shadow)">
+      <rect width="140" height="140" fill="#fce7f3" stroke="#db2777" stroke-width="1" />
+      <text x="70" y="55" text-anchor="middle" font-weight="700" font-size="14" fill="#831843">How do we</text>
+      <text x="70" y="75" text-anchor="middle" font-weight="700" font-size="14" fill="#831843">handle lost</text>
+      <text x="70" y="95" text-anchor="middle" font-weight="700" font-size="14" fill="#831843">tracking codes?</text>
+    </g>
+  </g>
+
+  <!-- Callout annotations -->
+  <g id="annotation-alternate-branching" role="img" aria-label="Annotation: Alternate branching path for Cart Abandoned" data-semantic-role="annotation">
+    <rect x="290" y="590" width="160" height="40" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+    <text x="370" y="615" text-anchor="middle" font-weight="600" font-size="11" fill="#475569">Alternate Branching</text>
+    <path d="M 370 590 L 370 575" stroke="#94a3b8" stroke-width="2" stroke-dasharray="2,2" />
+  </g>
+
+  <g id="annotation-concurrent-events" role="img" aria-label="Annotation: Concurrent events (Order Confirmed and Receipt Emailed)" data-semantic-role="annotation">
+    <rect x="670" y="680" width="120" height="40" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+    <text x="730" y="705" text-anchor="middle" font-weight="600" font-size="11" fill="#475569">Concurrent Events</text>
+    <path d="M 790 700 L 810 700" stroke="#94a3b8" stroke-width="2" stroke-dasharray="2,2" />
+  </g>
+
+  <!-- Legend -->
+  <g id="legend" role="img" aria-label="Legend: Event Storming notation - domain events, hotspots, and pivotal events" data-semantic-role="legend">
+    <g transform="translate(50, 140)">
+      <rect width="330" height="180" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="2" />
+      <text x="165" y="30" text-anchor="middle" font-weight="800" font-size="14" fill="#334155">EVENT STORMING LEGEND</text>
+      <line x1="20" y1="45" x2="310" y2="45" stroke="#e2e8f0" stroke-width="2" />
+
+      <rect x="20" y="60" width="30" height="30" fill="#ffedd5" stroke="#fb923c" stroke-width="1" />
+      <text x="65" y="74" font-weight="700" font-size="12" fill="#1e293b">DOMAIN EVENT</text>
+      <text x="65" y="88" font-weight="500" font-size="10" fill="#64748b">Something that happened. ALWAYS past tense.</text>
+
+      <rect x="20" y="105" width="30" height="30" fill="#fce7f3" stroke="#db2777" stroke-width="1" />
+      <text x="65" y="119" font-weight="700" font-size="12" fill="#1e293b">HOTSPOT</text>
+      <text x="65" y="133" font-weight="500" font-size="10" fill="#64748b">Friction point, question, or external risk.</text>
+
+      <line x1="35" y1="150" x2="35" y2="170" stroke="#94a3b8" stroke-width="3" stroke-dasharray="4,4" />
+      <text x="65" y="164" font-weight="700" font-size="12" fill="#1e293b">PIVOTAL EVENT</text>
+    </g>
+  </g>
+
+</svg>

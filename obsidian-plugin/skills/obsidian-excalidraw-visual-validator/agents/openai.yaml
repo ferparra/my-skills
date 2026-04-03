@@ -1,0 +1,8 @@
+interface:
+  display_name: "Obsidian Excalidraw Visual Validator"
+  short_description: "Geometric QA and PNG rendering for Excalidraw diagrams"
+  default_prompt: >
+    Use $obsidian-excalidraw-visual-validator to check visual quality of
+    .excalidraw.md files: overlap detection, spacing consistency, text overflow,
+    arrow accuracy, composition balance, and size hierarchy. Chain after
+    structural validation from $obsidian-excalidraw-drawing-manager.

@@ -1,12 +1,14 @@
 ---
 name: obsidian-notebooklm-bases-manager
 version: 1.0.0
+dependencies: []
+pipeline: {}
 metadata:
   openclaw:
     os: [darwin]
     requires:
       bins: [obsidian, qmd, uvx]
-description: Maintain NotebookLM notebook metadata and Obsidian Bases in this vault. Use when asked to create, audit, or update a NotebookLM-related `.base` file, standardise frontmatter for NotebookLM notes, classify NotebookLM notes into skill-development lanes, or validate NotebookLM note metadata before those notes are surfaced in Bases views.
+description: Maintain NotebookLM notebook metadata and Obsidian Bases. Use to create, audit, or update NotebookLM-related .base files, standardise frontmatter, classify notes into skill-development lanes, and validate metadata before surfacing in Bases views.
 ---
 
 # Obsidian NotebookLM Bases Manager
