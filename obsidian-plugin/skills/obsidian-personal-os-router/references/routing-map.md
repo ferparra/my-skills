@@ -37,13 +37,18 @@
   - Goal: standardize career entry frontmatter, validate cv_entry_kind, extract cv-master.md into typed notes, maintain CV Entries.base, and export tailored CVs
   - QMD collections: `resources` (career entry notes), `projects` (cv-master.md and job search context)
 
+- `obsidian-excalidraw-svg-pipeline`
+  - Trigger: generate diagram, create excalidraw, create diagram, draw diagram, make diagram, svg pipeline, annotated svg, diagram from template, excalidraw diagram, hub and spoke diagram, pipeline diagram, concept map diagram, sequence diagram, architecture diagram
+  - Goal: generate Excalidraw diagrams via annotated SVG intermediate representation — classify diagram type from 22 references, load structural blueprint, guide model to generate annotated SVG, deterministically transform to .excalidraw.md, chain to structural + visual validation
+  - QMD collections: `notes` (diagram notes), `inbox` (new drawings)
+
 - `obsidian-excalidraw-visual-validator`
   - Trigger: excalidraw render, excalidraw png, excalidraw visual, excalidraw layout, excalidraw overlap, excalidraw spacing, render excalidraw, visual validation, diagram render, excalidraw screenshot, excalidraw quality, excalidraw composition
   - Goal: validate visual quality of Excalidraw drawings via PNG rendering and geometric checks (overlap, spacing, text overflow, arrow accuracy, composition balance)
   - QMD collections: `notes` (diagram notes), `inbox` (new drawings)
 
 - `obsidian-excalidraw-drawing-manager`
-  - Trigger: excalidraw, excalidraw.md, excalidraw plugin, excalidraw schema, excalidraw data, excalidraw element, excalidraw drawing, drawing validation, drawing binding, canvas drawing
+  - Trigger: excalidraw.md, excalidraw plugin, excalidraw schema, excalidraw data, excalidraw element, drawing validation, drawing binding, canvas drawing, fix excalidraw
   - Goal: validate structural correctness of Excalidraw drawings with Pydantic v2 schema models (broken bindings, duplicate IDs, zero-dimension shapes, invalid colors)
   - QMD collections: `notes` (diagram notes), `inbox` (new drawings)
 

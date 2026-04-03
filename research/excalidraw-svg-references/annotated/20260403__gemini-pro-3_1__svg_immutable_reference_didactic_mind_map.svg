@@ -1,0 +1,282 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 850" style="background-color: #fafafa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <!-- DIAGRAM_TYPE: mind_map -->
+  <!-- TOPOLOGY: Radial mind map with 1 central node, 4 branch nodes, and 20 leaf nodes (5 per branch); 24 edges total radiating outward in 2 levels -->
+  <desc>A mind map illustrating "The Anatomy of a Mind Map." The central node "Mind Mapping" radiates four primary branches: Core Concepts (upper-right, purple -- Central Idea, Radiant Structure, Keywords Only, Imagery and Color, Hierarchy), Benefits (lower-right, green -- Enhanced Memory, Boosts Creativity, Clear Structuring, Problem Solving, Fast Note Taking), Applications (lower-left, orange -- Project Mgmt, Brainstorming, Lesson Planning, Exam Prep, Knowledge Base), and Techniques (upper-left, pink -- Start in Center, Radiate Outward, Curve the Lines, Visual Coding, 1 Word per Branch). Each branch uses thick curved lines from center to branch node, then thinner curved lines from branch node to five leaf nodes.</desc>
+
+  <!-- Title -->
+  <g id="diagram-title" role="heading" data-semantic-role="title">
+    <text x="800" y="50" text-anchor="middle" font-weight="700" font-size="24" fill="#1e293b" letter-spacing="2">THE ANATOMY OF A MIND MAP</text>
+  </g>
+
+  <!-- Primary branch edges (thick, from center to branch nodes) -->
+
+  <g id="edge-center-to-core-concepts" role="img" aria-label="Branch edge from Mind Mapping to Core Concepts" data-semantic-role="edge" data-from="node-mind-mapping" data-to="node-core-concepts">
+    <path d="M 880 430 Q 950 225 1020 225" stroke="#a855f7" stroke-width="6" fill="none" />
+  </g>
+
+  <g id="edge-center-to-benefits" role="img" aria-label="Branch edge from Mind Mapping to Benefits" data-semantic-role="edge" data-from="node-mind-mapping" data-to="node-benefits">
+    <path d="M 880 470 Q 950 675 1020 675" stroke="#10b981" stroke-width="6" fill="none" />
+  </g>
+
+  <g id="edge-center-to-applications" role="img" aria-label="Branch edge from Mind Mapping to Applications" data-semantic-role="edge" data-from="node-mind-mapping" data-to="node-applications">
+    <path d="M 720 470 Q 650 675 580 675" stroke="#f97316" stroke-width="6" fill="none" />
+  </g>
+
+  <g id="edge-center-to-techniques" role="img" aria-label="Branch edge from Mind Mapping to Techniques" data-semantic-role="edge" data-from="node-mind-mapping" data-to="node-techniques">
+    <path d="M 720 430 Q 650 225 580 225" stroke="#ec4899" stroke-width="6" fill="none" />
+  </g>
+
+  <!-- Core Concepts leaf edges -->
+
+  <g id="edge-core-concepts-to-central-idea" role="img" aria-label="Leaf edge from Core Concepts to Central Idea" data-semantic-role="edge" data-from="node-core-concepts" data-to="leaf-central-idea">
+    <path d="M 1180 225 Q 1220 113 1260 113" stroke="#a855f7" stroke-width="2" fill="none" />
+  </g>
+  <g id="edge-core-concepts-to-radiant-structure" role="img" aria-label="Leaf edge from Core Concepts to Radiant Structure" data-semantic-role="edge" data-from="node-core-concepts" data-to="leaf-radiant-structure">
+    <path d="M 1180 225 Q 1220 173 1260 173" stroke="#a855f7" stroke-width="2" fill="none" />
+  </g>
+  <g id="edge-core-concepts-to-keywords-only" role="img" aria-label="Leaf edge from Core Concepts to Keywords Only" data-semantic-role="edge" data-from="node-core-concepts" data-to="leaf-keywords-only">
+    <path d="M 1180 225 L 1260 225" stroke="#a855f7" stroke-width="2" fill="none" />
+  </g>
+  <g id="edge-core-concepts-to-imagery-color" role="img" aria-label="Leaf edge from Core Concepts to Imagery and Color" data-semantic-role="edge" data-from="node-core-concepts" data-to="leaf-imagery-color">
+    <path d="M 1180 225 Q 1220 293 1260 293" stroke="#a855f7" stroke-width="2" fill="none" />
+  </g>
+  <g id="edge-core-concepts-to-hierarchy" role="img" aria-label="Leaf edge from Core Concepts to Hierarchy" data-semantic-role="edge" data-from="node-core-concepts" data-to="leaf-hierarchy">
+    <path d="M 1180 225 Q 1220 353 1260 353" stroke="#a855f7" stroke-width="2" fill="none" />
+  </g>
+
+  <!-- Benefits leaf edges -->
+
+  <g id="edge-benefits-to-enhanced-memory" role="img" aria-label="Leaf edge from Benefits to Enhanced Memory" data-semantic-role="edge" data-from="node-benefits" data-to="leaf-enhanced-memory">
+    <path d="M 1180 675 Q 1220 533 1260 533" stroke="#10b981" stroke-width="2" fill="none" />
+  </g>
+  <g id="edge-benefits-to-boosts-creativity" role="img" aria-label="Leaf edge from Benefits to Boosts Creativity" data-semantic-role="edge" data-from="node-benefits" data-to="leaf-boosts-creativity">
+    <path d="M 1180 675 Q 1220 593 1260 593" stroke="#10b981" stroke-width="2" fill="none" />
+  </g>
+  <g id="edge-benefits-to-clear-structuring" role="img" aria-label="Leaf edge from Benefits to Clear Structuring" data-semantic-role="edge" data-from="node-benefits" data-to="leaf-clear-structuring">
+    <path d="M 1180 675 L 1260 675" stroke="#10b981" stroke-width="2" fill="none" />
+  </g>
+  <g id="edge-benefits-to-problem-solving" role="img" aria-label="Leaf edge from Benefits to Problem Solving" data-semantic-role="edge" data-from="node-benefits" data-to="leaf-problem-solving">
+    <path d="M 1180 675 Q 1220 733 1260 733" stroke="#10b981" stroke-width="2" fill="none" />
+  </g>
+  <g id="edge-benefits-to-fast-note-taking" role="img" aria-label="Leaf edge from Benefits to Fast Note Taking" data-semantic-role="edge" data-from="node-benefits" data-to="leaf-fast-note-taking">
+    <path d="M 1180 675 Q 1220 793 1260 793" stroke="#10b981" stroke-width="2" fill="none" />
+  </g>
+
+  <!-- Applications leaf edges -->
+
+  <g id="edge-applications-to-project-mgmt" role="img" aria-label="Leaf edge from Applications to Project Mgmt" data-semantic-role="edge" data-from="node-applications" data-to="leaf-project-mgmt">
+    <path d="M 420 675 Q 380 533 340 533" stroke="#f97316" stroke-width="2" fill="none" />
+  </g>
+  <g id="edge-applications-to-brainstorming" role="img" aria-label="Leaf edge from Applications to Brainstorming" data-semantic-role="edge" data-from="node-applications" data-to="leaf-brainstorming">
+    <path d="M 420 675 Q 380 593 340 593" stroke="#f97316" stroke-width="2" fill="none" />
+  </g>
+  <g id="edge-applications-to-lesson-planning" role="img" aria-label="Leaf edge from Applications to Lesson Planning" data-semantic-role="edge" data-from="node-applications" data-to="leaf-lesson-planning">
+    <path d="M 420 675 L 340 675" stroke="#f97316" stroke-width="2" fill="none" />
+  </g>
+  <g id="edge-applications-to-exam-prep" role="img" aria-label="Leaf edge from Applications to Exam Prep" data-semantic-role="edge" data-from="node-applications" data-to="leaf-exam-prep">
+    <path d="M 420 675 Q 380 733 340 733" stroke="#f97316" stroke-width="2" fill="none" />
+  </g>
+  <g id="edge-applications-to-knowledge-base" role="img" aria-label="Leaf edge from Applications to Knowledge Base" data-semantic-role="edge" data-from="node-applications" data-to="leaf-knowledge-base">
+    <path d="M 420 675 Q 380 793 340 793" stroke="#f97316" stroke-width="2" fill="none" />
+  </g>
+
+  <!-- Techniques leaf edges -->
+
+  <g id="edge-techniques-to-start-in-center" role="img" aria-label="Leaf edge from Techniques to Start in Center" data-semantic-role="edge" data-from="node-techniques" data-to="leaf-start-in-center">
+    <path d="M 420 225 Q 380 113 340 113" stroke="#ec4899" stroke-width="2" fill="none" />
+  </g>
+  <g id="edge-techniques-to-radiate-outward" role="img" aria-label="Leaf edge from Techniques to Radiate Outward" data-semantic-role="edge" data-from="node-techniques" data-to="leaf-radiate-outward">
+    <path d="M 420 225 Q 380 173 340 173" stroke="#ec4899" stroke-width="2" fill="none" />
+  </g>
+  <g id="edge-techniques-to-curve-the-lines" role="img" aria-label="Leaf edge from Techniques to Curve the Lines" data-semantic-role="edge" data-from="node-techniques" data-to="leaf-curve-the-lines">
+    <path d="M 420 225 L 340 225" stroke="#ec4899" stroke-width="2" fill="none" />
+  </g>
+  <g id="edge-techniques-to-visual-coding" role="img" aria-label="Leaf edge from Techniques to Visual Coding" data-semantic-role="edge" data-from="node-techniques" data-to="leaf-visual-coding">
+    <path d="M 420 225 Q 380 293 340 293" stroke="#ec4899" stroke-width="2" fill="none" />
+  </g>
+  <g id="edge-techniques-to-1-word-per-branch" role="img" aria-label="Leaf edge from Techniques to 1 Word per Branch" data-semantic-role="edge" data-from="node-techniques" data-to="leaf-1-word-per-branch">
+    <path d="M 420 225 Q 380 353 340 353" stroke="#ec4899" stroke-width="2" fill="none" />
+  </g>
+
+  <!-- Leaf Nodes: Core Concepts (upper-right) -->
+
+  <g id="leaf-central-idea" role="img" aria-label="Central Idea - The root anchor concept" data-semantic-role="node" data-upstream="node-core-concepts">
+    <g transform="translate(1260, 90)">
+      <rect width="180" height="46" rx="8" fill="#faf5ff" stroke="#e9d5ff" stroke-width="2" />
+      <text x="90" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#581c87">Central Idea</text>
+      <text x="90" y="36" text-anchor="middle" font-weight="400" font-size="11" fill="#7e22ce">The root anchor concept</text>
+    </g>
+  </g>
+  <g id="leaf-radiant-structure" role="img" aria-label="Radiant Structure - Branches expanding outward" data-semantic-role="node" data-upstream="node-core-concepts">
+    <g transform="translate(1260, 150)">
+      <rect width="180" height="46" rx="8" fill="#faf5ff" stroke="#e9d5ff" stroke-width="2" />
+      <text x="90" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#581c87">Radiant Structure</text>
+      <text x="90" y="36" text-anchor="middle" font-weight="400" font-size="11" fill="#7e22ce">Branches expanding outward</text>
+    </g>
+  </g>
+  <g id="leaf-keywords-only" role="img" aria-label="Keywords Only - Triggers rapid association" data-semantic-role="node" data-upstream="node-core-concepts">
+    <g transform="translate(1260, 210)">
+      <rect width="180" height="46" rx="8" fill="#faf5ff" stroke="#e9d5ff" stroke-width="2" />
+      <text x="90" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#581c87">Keywords Only</text>
+      <text x="90" y="36" text-anchor="middle" font-weight="400" font-size="11" fill="#7e22ce">Triggers rapid association</text>
+    </g>
+  </g>
+  <g id="leaf-imagery-color" role="img" aria-label="Imagery and Color - Stimulates visual memory" data-semantic-role="node" data-upstream="node-core-concepts">
+    <g transform="translate(1260, 270)">
+      <rect width="180" height="46" rx="8" fill="#faf5ff" stroke="#e9d5ff" stroke-width="2" />
+      <text x="90" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#581c87">Imagery &amp; Color</text>
+      <text x="90" y="36" text-anchor="middle" font-weight="400" font-size="11" fill="#7e22ce">Stimulates visual memory</text>
+    </g>
+  </g>
+  <g id="leaf-hierarchy" role="img" aria-label="Hierarchy - General flowing to specific" data-semantic-role="node" data-upstream="node-core-concepts">
+    <g transform="translate(1260, 330)">
+      <rect width="180" height="46" rx="8" fill="#faf5ff" stroke="#e9d5ff" stroke-width="2" />
+      <text x="90" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#581c87">Hierarchy</text>
+      <text x="90" y="36" text-anchor="middle" font-weight="400" font-size="11" fill="#7e22ce">General flowing to specific</text>
+    </g>
+  </g>
+
+  <!-- Leaf Nodes: Benefits (lower-right) -->
+
+  <g id="leaf-enhanced-memory" role="img" aria-label="Enhanced Memory - Spatially mapped info" data-semantic-role="node" data-upstream="node-benefits">
+    <g transform="translate(1260, 510)">
+      <rect width="180" height="46" rx="8" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="2" />
+      <text x="90" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#022c22">Enhanced Memory</text>
+      <text x="90" y="36" text-anchor="middle" font-weight="400" font-size="11" fill="#047857">Spatially mapped info</text>
+    </g>
+  </g>
+  <g id="leaf-boosts-creativity" role="img" aria-label="Boosts Creativity - Supports non-linear thinking" data-semantic-role="node" data-upstream="node-benefits">
+    <g transform="translate(1260, 570)">
+      <rect width="180" height="46" rx="8" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="2" />
+      <text x="90" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#022c22">Boosts Creativity</text>
+      <text x="90" y="36" text-anchor="middle" font-weight="400" font-size="11" fill="#047857">Supports non-linear thinking</text>
+    </g>
+  </g>
+  <g id="leaf-clear-structuring" role="img" aria-label="Clear Structuring - Visualizing high complexity" data-semantic-role="node" data-upstream="node-benefits">
+    <g transform="translate(1260, 630)">
+      <rect width="180" height="46" rx="8" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="2" />
+      <text x="90" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#022c22">Clear Structuring</text>
+      <text x="90" y="36" text-anchor="middle" font-weight="400" font-size="11" fill="#047857">Visualizing high complexity</text>
+    </g>
+  </g>
+  <g id="leaf-problem-solving" role="img" aria-label="Problem Solving - Revealing big picture links" data-semantic-role="node" data-upstream="node-benefits">
+    <g transform="translate(1260, 690)">
+      <rect width="180" height="46" rx="8" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="2" />
+      <text x="90" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#022c22">Problem Solving</text>
+      <text x="90" y="36" text-anchor="middle" font-weight="400" font-size="11" fill="#047857">Revealing big picture links</text>
+    </g>
+  </g>
+  <g id="leaf-fast-note-taking" role="img" aria-label="Fast Note Taking - Capturing real-time points" data-semantic-role="node" data-upstream="node-benefits">
+    <g transform="translate(1260, 750)">
+      <rect width="180" height="46" rx="8" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="2" />
+      <text x="90" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#022c22">Fast Note Taking</text>
+      <text x="90" y="36" text-anchor="middle" font-weight="400" font-size="11" fill="#047857">Capturing real-time points</text>
+    </g>
+  </g>
+
+  <!-- Leaf Nodes: Applications (lower-left) -->
+
+  <g id="leaf-project-mgmt" role="img" aria-label="Project Mgmt - Task and scope breakdown" data-semantic-role="node" data-upstream="node-applications">
+    <g transform="translate(160, 510)">
+      <rect width="180" height="46" rx="8" fill="#fff7ed" stroke="#fed7aa" stroke-width="2" />
+      <text x="90" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#431407">Project Mgmt</text>
+      <text x="90" y="36" text-anchor="middle" font-weight="400" font-size="11" fill="#c2410c">Task &amp; scope breakdown</text>
+    </g>
+  </g>
+  <g id="leaf-brainstorming" role="img" aria-label="Brainstorming - Rapid idea generation" data-semantic-role="node" data-upstream="node-applications">
+    <g transform="translate(160, 570)">
+      <rect width="180" height="46" rx="8" fill="#fff7ed" stroke="#fed7aa" stroke-width="2" />
+      <text x="90" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#431407">Brainstorming</text>
+      <text x="90" y="36" text-anchor="middle" font-weight="400" font-size="11" fill="#c2410c">Rapid idea generation</text>
+    </g>
+  </g>
+  <g id="leaf-lesson-planning" role="img" aria-label="Lesson Planning - Curriculum and syllabus design" data-semantic-role="node" data-upstream="node-applications">
+    <g transform="translate(160, 630)">
+      <rect width="180" height="46" rx="8" fill="#fff7ed" stroke="#fed7aa" stroke-width="2" />
+      <text x="90" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#431407">Lesson Planning</text>
+      <text x="90" y="36" text-anchor="middle" font-weight="400" font-size="11" fill="#c2410c">Curriculum and syllabus design</text>
+    </g>
+  </g>
+  <g id="leaf-exam-prep" role="img" aria-label="Exam Prep - Topic summaries and review" data-semantic-role="node" data-upstream="node-applications">
+    <g transform="translate(160, 690)">
+      <rect width="180" height="46" rx="8" fill="#fff7ed" stroke="#fed7aa" stroke-width="2" />
+      <text x="90" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#431407">Exam Prep</text>
+      <text x="90" y="36" text-anchor="middle" font-weight="400" font-size="11" fill="#c2410c">Topic summaries &amp; review</text>
+    </g>
+  </g>
+  <g id="leaf-knowledge-base" role="img" aria-label="Knowledge Base - Organizing vast resources" data-semantic-role="node" data-upstream="node-applications">
+    <g transform="translate(160, 750)">
+      <rect width="180" height="46" rx="8" fill="#fff7ed" stroke="#fed7aa" stroke-width="2" />
+      <text x="90" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#431407">Knowledge Base</text>
+      <text x="90" y="36" text-anchor="middle" font-weight="400" font-size="11" fill="#c2410c">Organizing vast resources</text>
+    </g>
+  </g>
+
+  <!-- Leaf Nodes: Techniques (upper-left) -->
+
+  <g id="leaf-start-in-center" role="img" aria-label="Start in Center - Provides blank page freedom" data-semantic-role="node" data-upstream="node-techniques">
+    <g transform="translate(160, 90)">
+      <rect width="180" height="46" rx="8" fill="#fdf2f8" stroke="#fbcfe8" stroke-width="2" />
+      <text x="90" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#4c0b20">Start in Center</text>
+      <text x="90" y="36" text-anchor="middle" font-weight="400" font-size="11" fill="#be185d">Provides blank page freedom</text>
+    </g>
+  </g>
+  <g id="leaf-radiate-outward" role="img" aria-label="Radiate Outward - Logical branching flow" data-semantic-role="node" data-upstream="node-techniques">
+    <g transform="translate(160, 150)">
+      <rect width="180" height="46" rx="8" fill="#fdf2f8" stroke="#fbcfe8" stroke-width="2" />
+      <text x="90" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#4c0b20">Radiate Outward</text>
+      <text x="90" y="36" text-anchor="middle" font-weight="400" font-size="11" fill="#be185d">Logical branching flow</text>
+    </g>
+  </g>
+  <g id="leaf-curve-the-lines" role="img" aria-label="Curve the Lines - Organic, brain-friendly visual" data-semantic-role="node" data-upstream="node-techniques">
+    <g transform="translate(160, 210)">
+      <rect width="180" height="46" rx="8" fill="#fdf2f8" stroke="#fbcfe8" stroke-width="2" />
+      <text x="90" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#4c0b20">Curve the Lines</text>
+      <text x="90" y="36" text-anchor="middle" font-weight="400" font-size="11" fill="#be185d">Organic, brain-friendly visual</text>
+    </g>
+  </g>
+  <g id="leaf-visual-coding" role="img" aria-label="Visual Coding - Color-matching sub-topics" data-semantic-role="node" data-upstream="node-techniques">
+    <g transform="translate(160, 270)">
+      <rect width="180" height="46" rx="8" fill="#fdf2f8" stroke="#fbcfe8" stroke-width="2" />
+      <text x="90" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#4c0b20">Visual Coding</text>
+      <text x="90" y="36" text-anchor="middle" font-weight="400" font-size="11" fill="#be185d">Color-matching sub-topics</text>
+    </g>
+  </g>
+  <g id="leaf-1-word-per-branch" role="img" aria-label="1 Word per Branch - Maximizes cognitive flexibility" data-semantic-role="node" data-upstream="node-techniques">
+    <g transform="translate(160, 330)">
+      <rect width="180" height="46" rx="8" fill="#fdf2f8" stroke="#fbcfe8" stroke-width="2" />
+      <text x="90" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#4c0b20">1 Word per Branch</text>
+      <text x="90" y="36" text-anchor="middle" font-weight="400" font-size="11" fill="#be185d">Maximizes cognitive flexibility</text>
+    </g>
+  </g>
+
+  <!-- Branch Nodes -->
+
+  <g id="node-core-concepts" role="img" aria-label="Core Concepts - primary branch (upper-right)" data-semantic-role="node" data-upstream="node-mind-mapping" data-downstream="leaf-central-idea,leaf-radiant-structure,leaf-keywords-only,leaf-imagery-color,leaf-hierarchy">
+    <rect x="1020" y="200" width="160" height="50" rx="12" fill="#e9d5ff" stroke="#c084fc" stroke-width="2" />
+    <text x="1100" y="230" text-anchor="middle" font-weight="700" font-size="16" fill="#6b21a8">Core Concepts</text>
+  </g>
+
+  <g id="node-benefits" role="img" aria-label="Benefits - primary branch (lower-right)" data-semantic-role="node" data-upstream="node-mind-mapping" data-downstream="leaf-enhanced-memory,leaf-boosts-creativity,leaf-clear-structuring,leaf-problem-solving,leaf-fast-note-taking">
+    <rect x="1020" y="650" width="160" height="50" rx="12" fill="#d1fae5" stroke="#6ee7b7" stroke-width="2" />
+    <text x="1100" y="680" text-anchor="middle" font-weight="700" font-size="16" fill="#064e3b">Benefits</text>
+  </g>
+
+  <g id="node-applications" role="img" aria-label="Applications - primary branch (lower-left)" data-semantic-role="node" data-upstream="node-mind-mapping" data-downstream="leaf-project-mgmt,leaf-brainstorming,leaf-lesson-planning,leaf-exam-prep,leaf-knowledge-base">
+    <rect x="420" y="650" width="160" height="50" rx="12" fill="#ffedd5" stroke="#fdba74" stroke-width="2" />
+    <text x="500" y="680" text-anchor="middle" font-weight="700" font-size="16" fill="#7c2d12">Applications</text>
+  </g>
+
+  <g id="node-techniques" role="img" aria-label="Techniques - primary branch (upper-left)" data-semantic-role="node" data-upstream="node-mind-mapping" data-downstream="leaf-start-in-center,leaf-radiate-outward,leaf-curve-the-lines,leaf-visual-coding,leaf-1-word-per-branch">
+    <rect x="420" y="200" width="160" height="50" rx="12" fill="#fce7f3" stroke="#f9a8d4" stroke-width="2" />
+    <text x="500" y="230" text-anchor="middle" font-weight="700" font-size="16" fill="#831843">Techniques</text>
+  </g>
+
+  <!-- Central Node -->
+
+  <g id="node-mind-mapping" role="img" aria-label="Mind Mapping - central concept of the mind map" data-semantic-role="node" data-downstream="node-core-concepts,node-benefits,node-applications,node-techniques">
+    <rect x="700" y="410" width="200" height="80" rx="40" fill="#e0e7ff" stroke="#818cf8" stroke-width="4" />
+    <text x="800" y="457" text-anchor="middle" font-weight="800" font-size="22" fill="#312e81">Mind Mapping</text>
+  </g>
+
+</svg>

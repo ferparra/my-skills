@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 750" style="background-color: #fafafa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <!-- DIAGRAM_TYPE: pipeline -->
+  <!-- TOPOLOGY: fan-out / broadcast; 1 broadcaster node sending to 6 subscriber nodes via 6 directed edges; total 7 nodes, 6 edges -->
+  <desc>A fan-out (broadcast / publish-subscribe) communication pattern showing 1-to-N distribution. A central Broadcaster (message broker/publisher) sends the same message to six subscriber nodes arranged symmetrically: three on the right (Web Server, Analytics Engine, Notification Service) and three on the left (Audit Logger, Machine Learning Worker, Archival Storage). Each broadcast edge carries the same message (Msg 1) to all subscribers simultaneously.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b" />
+    </marker>
+  </defs>
+
+  <g id="diagram-title" role="heading" data-semantic-role="title">
+    <text x="700" y="60" text-anchor="middle" font-weight="700" font-size="24" fill="#1e293b" letter-spacing="1">FAN-OUT COMMUNICATION PATTERN</text>
+    <text x="700" y="90" text-anchor="middle" font-weight="600" font-size="16" fill="#475569" letter-spacing="0.5">1-to-N BROADCAST / PUBLISH-SUBSCRIBE</text>
+  </g>
+
+  <!-- Edges: broadcaster to right-side subscribers -->
+  <g id="edge-broadcaster-to-subscriber1" role="img" aria-label="Broadcast message from Broadcaster to Subscriber 1 (Web Server)" data-semantic-role="edge" data-from="node-broadcaster" data-to="node-subscriber-1">
+    <path d="M 780 340 Q 880 180 1010 180" stroke="#a855f7" stroke-width="4" fill="none" marker-end="url(#arrow)" />
+    <rect x="830" y="145" width="140" height="24" rx="4" fill="#faf5ff" stroke="#e9d5ff" stroke-width="1.5" />
+    <text x="900" y="161" text-anchor="middle" font-weight="600" font-size="12" fill="#7e22ce">BROADCAST (Msg 1)</text>
+  </g>
+
+  <g id="edge-broadcaster-to-subscriber2" role="img" aria-label="Broadcast message from Broadcaster to Subscriber 2 (Analytics Engine)" data-semantic-role="edge" data-from="node-broadcaster" data-to="node-subscriber-2">
+    <path d="M 800 375 L 1010 375" stroke="#10b981" stroke-width="4" fill="none" marker-end="url(#arrow)" />
+    <rect x="830" y="340" width="140" height="24" rx="4" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1.5" />
+    <text x="900" y="356" text-anchor="middle" font-weight="600" font-size="12" fill="#047857">BROADCAST (Msg 1)</text>
+  </g>
+
+  <g id="edge-broadcaster-to-subscriber3" role="img" aria-label="Broadcast message from Broadcaster to Subscriber 3 (Notification Service)" data-semantic-role="edge" data-from="node-broadcaster" data-to="node-subscriber-3">
+    <path d="M 780 410 Q 880 570 1010 570" stroke="#ec4899" stroke-width="4" fill="none" marker-end="url(#arrow)" />
+    <rect x="830" y="585" width="140" height="24" rx="4" fill="#fdf2f8" stroke="#fbcfe8" stroke-width="1.5" />
+    <text x="900" y="601" text-anchor="middle" font-weight="600" font-size="12" fill="#be185d">BROADCAST (Msg 1)</text>
+  </g>
+
+  <!-- Edges: broadcaster to left-side subscribers -->
+  <g id="edge-broadcaster-to-subscriber4" role="img" aria-label="Broadcast message from Broadcaster to Subscriber 4 (Audit Logger)" data-semantic-role="edge" data-from="node-broadcaster" data-to="node-subscriber-4">
+    <path d="M 620 340 Q 520 180 390 180" stroke="#f97316" stroke-width="4" fill="none" marker-end="url(#arrow)" />
+    <rect x="430" y="145" width="140" height="24" rx="4" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5" />
+    <text x="500" y="161" text-anchor="middle" font-weight="600" font-size="12" fill="#c2410c">BROADCAST (Msg 1)</text>
+  </g>
+
+  <g id="edge-broadcaster-to-subscriber5" role="img" aria-label="Broadcast message from Broadcaster to Subscriber 5 (ML Worker)" data-semantic-role="edge" data-from="node-broadcaster" data-to="node-subscriber-5">
+    <path d="M 600 375 L 390 375" stroke="#84cc16" stroke-width="4" fill="none" marker-end="url(#arrow)" />
+    <rect x="430" y="340" width="140" height="24" rx="4" fill="#f7fee7" stroke="#d9f99d" stroke-width="1.5" />
+    <text x="500" y="356" text-anchor="middle" font-weight="600" font-size="12" fill="#4d7c0f">BROADCAST (Msg 1)</text>
+  </g>
+
+  <g id="edge-broadcaster-to-subscriber6" role="img" aria-label="Broadcast message from Broadcaster to Subscriber 6 (Archival Storage)" data-semantic-role="edge" data-from="node-broadcaster" data-to="node-subscriber-6">
+    <path d="M 620 410 Q 520 570 390 570" stroke="#06b6d4" stroke-width="4" fill="none" marker-end="url(#arrow)" />
+    <rect x="430" y="585" width="140" height="24" rx="4" fill="#ecfeff" stroke="#a5f3fc" stroke-width="1.5" />
+    <text x="500" y="601" text-anchor="middle" font-weight="600" font-size="12" fill="#0e7490">BROADCAST (Msg 1)</text>
+  </g>
+
+  <!-- Subscriber nodes: right side -->
+  <g id="node-subscriber-1" role="img" aria-label="Subscriber 1: Web Server / UI Instance" data-semantic-role="node" data-downstream="" data-upstream="node-broadcaster">
+    <g transform="translate(1020, 150)">
+      <rect width="220" height="60" rx="12" fill="#faf5ff" stroke="#e9d5ff" stroke-width="2" />
+      <text x="110" y="30" text-anchor="middle" font-weight="600" font-size="14" fill="#581c87">SUBSCRIBER 1</text>
+      <text x="110" y="46" text-anchor="middle" font-weight="400" font-size="11" fill="#7e22ce">Web Server / UI Instance</text>
+    </g>
+  </g>
+
+  <g id="node-subscriber-2" role="img" aria-label="Subscriber 2: Analytics Engine" data-semantic-role="node" data-downstream="" data-upstream="node-broadcaster">
+    <g transform="translate(1020, 345)">
+      <rect width="220" height="60" rx="12" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="2" />
+      <text x="110" y="30" text-anchor="middle" font-weight="600" font-size="14" fill="#022c22">SUBSCRIBER 2</text>
+      <text x="110" y="46" text-anchor="middle" font-weight="400" font-size="11" fill="#047857">Analytics Engine</text>
+    </g>
+  </g>
+
+  <g id="node-subscriber-3" role="img" aria-label="Subscriber 3: Notification Service" data-semantic-role="node" data-downstream="" data-upstream="node-broadcaster">
+    <g transform="translate(1020, 540)">
+      <rect width="220" height="60" rx="12" fill="#fdf2f8" stroke="#fbcfe8" stroke-width="2" />
+      <text x="110" y="30" text-anchor="middle" font-weight="600" font-size="14" fill="#4c0b20">SUBSCRIBER 3</text>
+      <text x="110" y="46" text-anchor="middle" font-weight="400" font-size="11" fill="#be185d">Notification Service</text>
+    </g>
+  </g>
+
+  <!-- Subscriber nodes: left side -->
+  <g id="node-subscriber-4" role="img" aria-label="Subscriber 4: Audit Logger" data-semantic-role="node" data-downstream="" data-upstream="node-broadcaster">
+    <g transform="translate(160, 150)">
+      <rect width="220" height="60" rx="12" fill="#fff7ed" stroke="#fed7aa" stroke-width="2" />
+      <text x="110" y="30" text-anchor="middle" font-weight="600" font-size="14" fill="#431407">SUBSCRIBER 4</text>
+      <text x="110" y="46" text-anchor="middle" font-weight="400" font-size="11" fill="#c2410c">Audit Logger</text>
+    </g>
+  </g>
+
+  <g id="node-subscriber-5" role="img" aria-label="Subscriber 5: Machine Learning Worker" data-semantic-role="node" data-downstream="" data-upstream="node-broadcaster">
+    <g transform="translate(160, 345)">
+      <rect width="220" height="60" rx="12" fill="#f7fee7" stroke="#d9f99d" stroke-width="2" />
+      <text x="110" y="30" text-anchor="middle" font-weight="600" font-size="14" fill="#1a2e05">SUBSCRIBER 5</text>
+      <text x="110" y="46" text-anchor="middle" font-weight="400" font-size="11" fill="#4d7c0f">Machine Learning Worker</text>
+    </g>
+  </g>
+
+  <g id="node-subscriber-6" role="img" aria-label="Subscriber 6: Archival Storage" data-semantic-role="node" data-downstream="" data-upstream="node-broadcaster">
+    <g transform="translate(160, 540)">
+      <rect width="220" height="60" rx="12" fill="#ecfeff" stroke="#a5f3fc" stroke-width="2" />
+      <text x="110" y="30" text-anchor="middle" font-weight="600" font-size="14" fill="#083344">SUBSCRIBER 6</text>
+      <text x="110" y="46" text-anchor="middle" font-weight="400" font-size="11" fill="#0e7490">Archival Storage</text>
+    </g>
+  </g>
+
+  <!-- Broadcaster node (central) -->
+  <g id="node-broadcaster" role="img" aria-label="Broadcaster: central message broker that publishes to all subscribers" data-semantic-role="node" data-downstream="node-subscriber-1,node-subscriber-2,node-subscriber-3,node-subscriber-4,node-subscriber-5,node-subscriber-6" data-upstream="">
+    <rect x="600" y="340" width="200" height="70" rx="35" fill="#e0e7ff" stroke="#818cf8" stroke-width="4" />
+    <text x="700" y="375" text-anchor="middle" font-weight="800" font-size="20" fill="#312e81">BROADCASTER</text>
+    <text x="700" y="391" text-anchor="middle" font-weight="400" font-size="11" fill="#4338ca">Message Broker / Publisher</text>
+  </g>
+
+</svg>
