@@ -47,6 +47,11 @@
   - Goal: verify closure signals and planning continuity
   - QMD collections: `periodic` (week/day notes), `inbox` (recent daily captures)
 
+- `obsidian-hub-manager`
+  - Trigger: hub, _hub.md, hub index, hub graph, hub predicate, roll up domain, context compression, memory surface, agent context loading, hub schema, hub_graph, hub tree, domain map
+  - Goal: validate hub schema, enrich predicate graph (hub_graph frontmatter), generate the hub index (`10 Notes/_hub_index.md`), create new hubs, and provide the agent context-loading protocol anchored to the 64-hub tree
+  - QMD collections: `notes` (hub files and hub index live in 10 Notes/)
+
 - `obsidian-zettel-manager`
   - Trigger: zettel, zettel_kind, zettel_id, zettel schema, connection_strength, score zettels, migrate zettels, fleeting capture, promote note, evergreen note, litnote, atomic note, hub synthesis, knowledge note
   - Goal: validate and normalise zettel frontmatter, classify zettel_kind, score connection_strength from link graph, and promote fleeting captures to durable notes

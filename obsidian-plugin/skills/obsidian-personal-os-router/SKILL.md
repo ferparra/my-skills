@@ -58,6 +58,7 @@ Each route targets specific collections to minimise token cost. Never use `-c ob
 | `notebooklm-bases-manager` | `inbox` | `notes` |
 | `key-dates-base-manager` | `periodic` | `inbox` |
 | `weekly-feedback-loop` | `periodic` | `inbox` |
+| `hub-manager` | `notes` | — |
 | `interweave-engine` | `notes` | `clippings` |
 | `agent-memory-capture` | `notes` | `inbox` |
 | `token-budget-guard` | `all` | — |
