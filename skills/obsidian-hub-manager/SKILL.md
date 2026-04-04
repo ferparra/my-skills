@@ -1,15 +1,7 @@
 ---
 name: obsidian-hub-manager
 version: 1.0.0
-description: >
-  Manage _hub.md notes in this personal Obsidian vault as a compressed memory
-  and context system for AI agents and human navigation. Use for: hub schema
-  validation and enforcement, hub predicate graph maintenance (parent/child/
-  cross-domain links via hub_graph frontmatter), generating a hub index aligned
-  with QMD for fast agent context loading, creating new hubs from template, and
-  auditing hub tree integrity. Trigger when requests involve hub files, hub index,
-  hub graph, context compression from vault, agent memory loading from _hub.md
-  hierarchy, or "roll up" / "summarise" operations across a vault domain.
+description: Manage _hub.md notes as a compressed memory layer in this Obsidian vault. Use for hub schema validation, predicate graph maintenance (hub_graph), QMD-aligned hub index generation, hub creation, and tree auditing. Trigger on hub files, hub index, hub graph, context compression, or roll-up requests.
 metadata:
   openclaw:
     os: [darwin]
