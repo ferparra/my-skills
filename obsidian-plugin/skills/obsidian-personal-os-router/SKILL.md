@@ -10,6 +10,7 @@ dependencies:
   - obsidian-key-dates-base-manager
   - obsidian-weekly-feedback-loop
   - obsidian-cv-entry-manager
+  - obsidian-hub-manager
   - obsidian-interweave-engine
   - obsidian-agent-memory-capture
   - obsidian-token-budget-guard
@@ -71,6 +72,7 @@ Each route targets specific collections to minimise token cost. Never use `-c ob
 | `notebooklm-bases-manager` | `inbox` | `notes` |
 | `key-dates-base-manager` | `periodic` | `inbox` |
 | `weekly-feedback-loop` | `periodic` | `inbox` |
+| `hub-manager` | `notes` | — |
 | `cv-entry-manager` | `resources` | `projects` |
 | `interweave-engine` | `notes` | `clippings` |
 | `agent-memory-capture` | `notes` | `inbox` |
