@@ -142,7 +142,7 @@ The script fills stable defaults:
 
 - `recipe_kind` (inferred from tags, title, and existing signals)
 - `title` (from note filename)
-- `description` (from first paragraph of body, or `FIXME`)
+- `description` (from first paragraph of body, or `[UNTITLED RECIPE]` placeholder)
 - `status` (inferred from existing tags)
 - `para_type: resource`
 - `macros` (from existing `calories`, `protein`, `fat`, `carbs` fields)
@@ -319,7 +319,7 @@ low-FODMAP guardrails, rationale sections) is preserved verbatim.
 - Never rewrite note bodies during schema migration.
 - Preserve existing metadata unless the skill owns the field.
 - Prefer filling missing heuristics over overwriting explicit user values.
-- Treat `description` as a required field; inject `FIXME` if not inferable
+- Treat `description` as a required field; inject `[UNTITLED RECIPE]` placeholder if not inferable
   rather than leaving it absent.
 - Do not auto-create missing ingredient or equipment notes during migration;
   unresolved links should be reported as warnings.
