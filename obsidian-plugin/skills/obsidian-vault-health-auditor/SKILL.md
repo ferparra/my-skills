@@ -39,7 +39,7 @@ and optionally auto-fixes correctable problems.
 ### 1. Confirm Dependencies
 
 ```bash
-obsidian --help
+obsidian help
 qmd status
 uvx --version
 ```

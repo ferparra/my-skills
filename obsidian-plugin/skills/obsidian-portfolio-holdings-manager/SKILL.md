@@ -55,7 +55,7 @@ Read `references/holdings-schema.md` for the canonical note contracts and `refer
 ### 1. Confirm Dependencies
 
 ```bash
-obsidian --help
+obsidian help
 qmd status
 uvx --version
 ```

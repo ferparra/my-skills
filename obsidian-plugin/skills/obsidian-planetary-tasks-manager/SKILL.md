@@ -51,7 +51,7 @@ Treat `task_kind` and adjacent `*_kind` fields as a lightweight supertag layer: 
 ### 1. Confirm Dependencies
 
 ```bash
-obsidian --help
+obsidian help
 qmd status
 uvx --version
 ```

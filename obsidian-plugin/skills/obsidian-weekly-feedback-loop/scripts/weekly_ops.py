@@ -61,7 +61,7 @@ def dependency_error(missing: list[str]) -> int:
         "missing": missing,
         "fallback_checklist": [
             "Install/repair Obsidian CLI and qmd, and ensure uvx is available.",
-            "Verify tools: obsidian --help && qmd status && uvx --version",
+            "Verify tools: obsidian help && qmd status && uvx --version",
             "Retry weekly checks after dependencies are available.",
         ],
     }

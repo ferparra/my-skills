@@ -59,7 +59,7 @@ contract, enforced by Pydantic v2 behind the kind. The five kinds are:
 ### 1. Confirm Dependencies
 
 ```bash
-obsidian --help
+obsidian help
 qmd status
 uvx --version
 ```
