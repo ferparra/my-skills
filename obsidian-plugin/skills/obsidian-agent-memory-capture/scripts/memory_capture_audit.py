@@ -25,7 +25,7 @@ def dependency_error(missing: list[str]) -> int:
         "missing": missing,
         "fallback_checklist": [
             "Install/repair Obsidian CLI and qmd, and ensure uvx is available.",
-            "Verify tools: obsidian --help && qmd status && uvx --version",
+            "Verify tools: obsidian help && qmd status && uvx --version",
             "Re-run memory audit before promoting note status.",
         ],
     }
