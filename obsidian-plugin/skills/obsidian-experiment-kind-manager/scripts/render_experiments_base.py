@@ -21,120 +21,10 @@ from pathlib import Path
 
 import yaml
 
-from experiment_models import dump_json, load_markdown_note
+from experiment_models import AuditSummary, dump_json, load_markdown_note
 
 
 BASE_SCHEMA_URL = "vault://schemas/obsidian/bases-2025-09.schema.json"
-
-BASE_DSL: dict = {
-    "$schema": BASE_SCHEMA_URL,
-    "filters": {
-        "and": [
-            {"file.ext": "==", "value": "md"},  # type: ignore[dict-item]  # rendered as YAML filter
-            "file.inFolder(\"10 Notes/Productivity/Experiments\")",
-            "experiment_kind != null",
-        ]
-    },
-    "formulas": {
-        "days_running": (
-            "if(status == \"running\" && start_date, "
-            "(today() - start_date).days.round(0), \"\")"
-        ),
-        "days_until_end": (
-            "if(status == \"running\" && end_date, "
-            "(end_date - today()).days.round(0), \"\")"
-        ),
-        "lifecycle_bucket": (
-            "if(status == \"concluded\" || status == \"archived\", "
-            "\"3 Concluded\", "
-            "if(status == \"running\", \"1 Running\", "
-            "if(status == \"paused\", \"2 Paused\", \"0 Design\")))"
-        ),
-        "outcome_signal": (
-            "if(outcome == \"confirmed\", \"✓ Confirmed\", "
-            "if(outcome == \"refuted\", \"✗ Refuted\", "
-            "if(outcome == \"inconclusive\", \"~ Inconclusive\", "
-            "if(outcome == \"abandoned\", \"⊘ Abandoned\", \"… Ongoing\"))))"
-        ),
-        "updated_relative": "file.mtime.relative()",
-    },
-    "properties": {
-        "file.name": {"displayName": "Experiment"},
-        "experiment_kind": {"displayName": "Kind"},
-        "experiment_id": {"displayName": "ID"},
-        "status": {"displayName": "Status"},
-        "council_owner": {"displayName": "Council"},
-        "domain_tag": {"displayName": "Domain"},
-        "question": {"displayName": "Question"},
-        "outcome": {"displayName": "Outcome"},
-        "confidence": {"displayName": "Confidence"},
-        "start_date": {"displayName": "Started"},
-        "end_date": {"displayName": "Ends"},
-        "duration_days": {"displayName": "Days Planned"},
-        "connection_strength": {"displayName": "Strength"},
-        "formula.days_running": {"displayName": "Days Running"},
-        "formula.days_until_end": {"displayName": "Days Left"},
-        "formula.lifecycle_bucket": {"displayName": "Lifecycle"},
-        "formula.outcome_signal": {"displayName": "Outcome Signal"},
-        "formula.updated_relative": {"displayName": "Updated"},
-    },
-    "views": [
-        {
-            "type": "table",
-            "name": "All Experiments",
-            "groupBy": {
-                "property": "formula.lifecycle_bucket",
-                "direction": "ASC",
-            },
-            "order": [
-                "file.name",
-                "experiment_kind",
-                "experiment_id",
-                "status",
-                "council_owner",
-                "question",
-                "formula.outcome_signal",
-                "start_date",
-                "formula.days_running",
-                "formula.updated_relative",
-            ],
-        },
-        {
-            "type": "table",
-            "name": "Running",
-            "filter": "status == \"running\"",
-            "order": [
-                "file.name",
-                "experiment_kind",
-                "council_owner",
-                "question",
-                "start_date",
-                "formula.days_running",
-                "formula.days_until_end",
-                "confidence",
-                "formula.updated_relative",
-            ],
-        },
-        {
-            "type": "table",
-            "name": "Concluded",
-            "filter": "status == \"concluded\" || status == \"archived\"",
-            "groupBy": {
-                "property": "experiment_kind",
-                "direction": "ASC",
-            },
-            "order": [
-                "file.name",
-                "experiment_kind",
-                "council_owner",
-                "formula.outcome_signal",
-                "confidence",
-                "end_date",
-                "connection_strength",
-            ],
-        },
-    ],
-}
 
 
 def build_base_yaml() -> str:
@@ -248,7 +138,7 @@ def build_base_yaml() -> str:
     )
 
 
-def audit_experiments(vault_root: Path) -> dict:
+def audit_experiments(vault_root: Path) -> AuditSummary:
     """Collect a lightweight audit summary from experiment notes."""
     import fnmatch
 
@@ -278,12 +168,12 @@ def audit_experiments(vault_root: Path) -> dict:
         except Exception:
             continue
 
-    return {
-        "total": len(notes),
-        "by_kind": by_kind,
-        "by_status": by_status,
-        "by_outcome": by_outcome,
-    }
+    return AuditSummary(
+        total=len(notes),
+        by_kind=by_kind,
+        by_status=by_status,
+        by_outcome=by_outcome,
+    )
 
 
 def main() -> int:

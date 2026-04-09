@@ -92,28 +92,28 @@ VALID_CONCLUDED_COGNITIVE = {
 # ---------------------------------------------------------------------------
 
 class TestValidFrontmatter:
-    def test_health_experiment_validates(self):
+    def test_health_experiment_validates(self) -> None:
         result = validate_frontmatter(VALID_HEALTH)
         assert result.ok, result.errors
 
-    def test_technical_experiment_validates(self):
+    def test_technical_experiment_validates(self) -> None:
         result = validate_frontmatter(VALID_TECHNICAL)
         assert result.ok, result.errors
 
-    def test_concluded_cognitive_validates(self):
+    def test_concluded_cognitive_validates(self) -> None:
         result = validate_frontmatter(VALID_CONCLUDED_COGNITIVE)
         assert result.ok, result.errors
 
-    def test_all_kinds_have_council_mapping(self):
+    def test_all_kinds_have_council_mapping(self) -> None:
         for kind in ExperimentKind:
             assert kind.value in COUNCIL_DOMAIN_MAP, f"Missing council mapping for: {kind.value}"
 
-    def test_council_mapping_correct_for_health(self):
+    def test_council_mapping_correct_for_health(self) -> None:
         fm = ExperimentFrontmatter.model_validate(VALID_HEALTH)
         assert fm.council_owner == "sentinel"
         assert fm.domain_tag == "health-and-performance"
 
-    def test_council_mapping_correct_for_technical(self):
+    def test_council_mapping_correct_for_technical(self) -> None:
         fm = ExperimentFrontmatter.model_validate(VALID_TECHNICAL)
         assert fm.council_owner == "architect"
         assert fm.domain_tag == "agentic-systems"
@@ -124,18 +124,18 @@ class TestValidFrontmatter:
 # ---------------------------------------------------------------------------
 
 class TestInvalidFrontmatter:
-    def test_wrong_council_owner_rejected(self):
+    def test_wrong_council_owner_rejected(self) -> None:
         bad = {**VALID_HEALTH, "council_owner": "architect"}
         result = validate_frontmatter(bad)
         assert not result.ok
         assert any("council_owner" in e for e in result.errors)
 
-    def test_wrong_domain_tag_rejected(self):
+    def test_wrong_domain_tag_rejected(self) -> None:
         bad = {**VALID_HEALTH, "domain_tag": "agentic-systems"}
         result = validate_frontmatter(bad)
         assert not result.ok
 
-    def test_concluded_without_findings_rejected(self):
+    def test_concluded_without_findings_rejected(self) -> None:
         bad = {
             **VALID_HEALTH,
             "status": "concluded",
@@ -147,7 +147,7 @@ class TestInvalidFrontmatter:
         assert not result.ok
         assert any("findings" in e for e in result.errors)
 
-    def test_concluded_with_ongoing_outcome_rejected(self):
+    def test_concluded_with_ongoing_outcome_rejected(self) -> None:
         bad = {
             **VALID_HEALTH,
             "status": "concluded",
@@ -159,35 +159,35 @@ class TestInvalidFrontmatter:
         assert not result.ok
         assert any("ongoing" in e for e in result.errors)
 
-    def test_running_without_metrics_rejected(self):
+    def test_running_without_metrics_rejected(self) -> None:
         bad = {**VALID_HEALTH, "metrics": []}
         result = validate_frontmatter(bad)
         assert not result.ok
         assert any("metric" in e.lower() for e in result.errors)
 
-    def test_invalid_experiment_id_rejected(self):
+    def test_invalid_experiment_id_rejected(self) -> None:
         bad = {**VALID_HEALTH, "experiment_id": "my-experiment"}
         result = validate_frontmatter(bad)
         assert not result.ok
         assert any("experiment_id" in e for e in result.errors)
 
-    def test_missing_required_tag_rejected(self):
+    def test_missing_required_tag_rejected(self) -> None:
         bad = {**VALID_HEALTH, "tags": ["type/experiment"]}
         result = validate_frontmatter(bad)
         assert not result.ok
 
-    def test_invalid_date_window_rejected(self):
+    def test_invalid_date_window_rejected(self) -> None:
         bad = {**VALID_HEALTH, "start_date": "2026-04-01", "end_date": "2026-01-01"}
         result = validate_frontmatter(bad)
         assert not result.ok
         assert any("start_date" in e for e in result.errors)
 
-    def test_non_wikilink_potential_link_rejected(self):
+    def test_non_wikilink_potential_link_rejected(self) -> None:
         bad = {**VALID_HEALTH, "potential_links": ["not a wikilink"]}
         result = validate_frontmatter(bad)
         assert not result.ok
 
-    def test_negative_duration_rejected(self):
+    def test_negative_duration_rejected(self) -> None:
         bad = {**VALID_HEALTH, "duration_days": -5}
         result = validate_frontmatter(bad)
         assert not result.ok
@@ -198,26 +198,26 @@ class TestInvalidFrontmatter:
 # ---------------------------------------------------------------------------
 
 class TestTagNormalisation:
-    def test_managed_tags_injected(self):
+    def test_managed_tags_injected(self) -> None:
         tags = normalize_experiment_tags({}, kind="health", status="running")
         assert "type/experiment" in tags
         assert "experiment-kind/health" in tags
         assert "status/running" in tags
 
-    def test_user_tags_preserved(self):
+    def test_user_tags_preserved(self) -> None:
         fm = {"tags": ["personal/sleep", "priority/high"]}
         tags = normalize_experiment_tags(fm, kind="health", status="hypothesis")
         assert "personal/sleep" in tags
         assert "priority/high" in tags
 
-    def test_old_managed_tags_replaced(self):
+    def test_old_managed_tags_replaced(self) -> None:
         fm = {"tags": ["experiment-kind/technical", "status/running"]}
         tags = normalize_experiment_tags(fm, kind="health", status="concluded")
         assert "experiment-kind/health" in tags
         assert "status/concluded" in tags
         assert "experiment-kind/technical" not in tags
 
-    def test_no_duplicates(self):
+    def test_no_duplicates(self) -> None:
         fm = {"tags": ["type/experiment", "type/experiment"]}
         tags = normalize_experiment_tags(fm, kind="cognitive", status="design")
         assert tags.count("type/experiment") == 1

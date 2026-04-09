@@ -331,6 +331,13 @@ class ScaffoldResult(BaseModel):
     warnings: list[str] = Field(default_factory=list)
 
 
+class AuditSummary(BaseModel):
+    total: int
+    by_kind: dict[str, int] = Field(default_factory=dict)
+    by_status: dict[str, int] = Field(default_factory=dict)
+    by_outcome: dict[str, int] = Field(default_factory=dict)
+
+
 # ---------------------------------------------------------------------------
 # Utility functions
 # ---------------------------------------------------------------------------

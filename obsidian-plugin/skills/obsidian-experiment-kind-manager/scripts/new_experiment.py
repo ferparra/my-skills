@@ -27,6 +27,7 @@ from pathlib import Path
 
 from experiment_models import (
     COUNCIL_DOMAIN_MAP,
+    ExperimentFrontmatter,
     ExperimentKind,
     ExperimentOutcome,
     ExperimentStatus,
@@ -93,7 +94,7 @@ def build_frontmatter(
     method: str,
     duration_days: int | None,
     experiment_id: str,
-) -> dict:
+) -> ExperimentFrontmatter:
     today = date.today().isoformat()
     council_owner, domain_tag = COUNCIL_DOMAIN_MAP[kind.value]
     tags = normalize_experiment_tags(
@@ -101,7 +102,7 @@ def build_frontmatter(
         kind=kind.value,
         status=ExperimentStatus.HYPOTHESIS.value,
     )
-    fm: dict = {
+    return ExperimentFrontmatter.model_validate({
         "experiment_kind": kind.value,
         "experiment_id": experiment_id,
         "created": today,
@@ -114,22 +115,16 @@ def build_frontmatter(
         "method": method,
         "metrics": [],
         "duration_days": duration_days,
-        "start_date": None,
-        "end_date": None,
         "interventions": [],
         "controls": [],
         "confounders": [],
         "outcome": ExperimentOutcome.ONGOING.value,
-        "findings": None,
-        "confidence": None,
         "next_experiments": [],
         "connection_strength": 0.5,
         "related": [],
         "potential_links": [],
         "tags": tags,
-    }
-    # Strip None values for cleaner YAML
-    return {k: v for k, v in fm.items() if v is not None}
+    })
 
 
 def main() -> int:
@@ -177,7 +172,7 @@ def main() -> int:
     experiment_id = next_experiment_id(existing)
 
     kind = ExperimentKind(args.kind)
-    fm = build_frontmatter(
+    model = build_frontmatter(
         kind=kind,
         question=args.question,
         hypothesis=args.hypothesis,
@@ -186,7 +181,7 @@ def main() -> int:
         experiment_id=experiment_id,
     )
 
-    ordered = dict(order_frontmatter(fm))
+    ordered = dict(order_frontmatter(model.model_dump(exclude_none=True)))
     body = NOTE_BODY_TEMPLATE.format(
         question=args.question,
         hypothesis=args.hypothesis,
