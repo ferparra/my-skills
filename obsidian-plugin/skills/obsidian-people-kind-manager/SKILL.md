@@ -59,7 +59,7 @@ enforced by Pydantic v2 behind the kind. The seven kinds are: `manager`,
 ### 1. Confirm Dependencies
 
 ```bash
-obsidian --help
+obsidian help
 qmd status
 uvx --version
 ```

@@ -30,7 +30,7 @@ single source of truth, no duplication.
 ```bash
 uvx --version
 git --version
-obsidian --help 2>/dev/null || echo "obsidian CLI optional"
+obsidian help 2>/dev/null || echo "obsidian CLI optional"
 ```
 
 ### 2. Validate

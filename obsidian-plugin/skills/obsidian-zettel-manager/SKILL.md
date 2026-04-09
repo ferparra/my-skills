@@ -53,7 +53,7 @@ Pydantic v2 enforces that contract behind the kind.
 ### 1. Confirm Dependencies
 
 ```bash
-obsidian --help
+obsidian help
 qmd status
 uvx --version
 ```

@@ -473,7 +473,7 @@ def dependency_error(missing: List[str]) -> int:
         fallback_checklist=[
             "Install Obsidian CLI and ensure Obsidian desktop is up to date.",
             "Install qmd: npm install -g @tobilu/qmd",
-            "Verify: obsidian --help && qmd status && uvx --version",
+            "Verify: obsidian help && qmd status && uvx --version",
             "Retry the command after dependencies are available.",
         ],
     )

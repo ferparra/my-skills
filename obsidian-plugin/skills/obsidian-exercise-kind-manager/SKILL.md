@@ -62,7 +62,7 @@ backed by Polars, Pydantic v2, and `uvx`.
 ### 1. Confirm Dependencies
 
 ```bash
-obsidian --help
+obsidian help
 qmd status
 uvx --version
 ```
